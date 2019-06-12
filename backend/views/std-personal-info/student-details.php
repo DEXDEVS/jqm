@@ -66,7 +66,7 @@
   <div class="row">
   	<section class="content-header">
     	<h1 style="color: #3C8DBC;">
-      	<i class="fa fa-user"></i> Student Profile
+      	<i class="fa fa-user"></i> Student Profile / طالب علم کی تفصیل
     	</h1>
 	    <ol class="breadcrumb">
 	        <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -131,7 +131,7 @@
                 <p class="text-muted text-center"><!-- Software Engineer --></p>
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Roll #:</b> <a class="pull-right"><?php 
+                    <b>Roll # رول </b> <a class="pull-right"><?php 
                     if (empty($stdRollNo[0]['std_roll_no'])) {
                       echo "N/A";
                     }
@@ -141,18 +141,18 @@
                     }
                      ?></a>
                   </li>
-                  <li class="list-group-item" style="height: 75px;">
-                    <b>Class:</b><br>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Class / کلاس</b><br>
                     <a><?php echo $className[0]['class_name'] ?></a>
                   </li>
-                  <li class="list-group-item">
-                    <b>Email</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Email / ای میل</b> <a class="pull-left"><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
+                  </li>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Contact # / رابطہ نمبر</b> <a class="pull-left"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
                   </li>
                   <li class="list-group-item">
-                    <b>Contact #:</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Status:</b> <a class="pull-right">
+                    <b>Status / حالت</b> <a class="pull-right">
                       
                       <?php 
                         if ($stdPersonalInfo[0]['status'] == "Active") {?>
@@ -166,8 +166,8 @@
                     <?php } ?>
                   </a>
                   </li>
-                  <li class="list-group-item">
-                    <b>Academic Status:</b> <a class="pull-right">
+                  <li class="list-group-item" style="height: 60px">
+                    <b>Academic Status / <br>تعلیمی حیثیت </b> <a class="pull-right">
                       
                       <?php 
                         if ($stdPersonalInfo[0]['academic_status'] == "Active") {?>
@@ -212,14 +212,13 @@
               <div class="tab-content">
                 <div class="active tab-pane" id="personal">
                   <div class="row">
-                    <div class="col-md-5">
-                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Personal Information</p>
-                    </div>
                     <div class="col-md-7">
+                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Personal Information / ذاتی معلومات</p>
+                    </div>
+                    <div class="col-md-5">
                       <div  style="float: right;">
                         <?=Html::a(' Edit',['update','id'=>$id],['class'=>'btn btn-primary btn-sm fa fa-edit','role'=>'modal-remote']) ?>
-                        <a href="./emails-create?id=<?php echo $id;?>" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a>
-                        <!-- <a href="./sms?id=<?php echo $id;?>" class="btn btn-info btn-sm fa fa-comments-o" style='color: white;'> Send SMS </a> -->
+                        <!-- <a href="./emails-create?id=<?php echo $id;?>" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a> -->
                         
                         <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default">
                           Send SMS
@@ -267,27 +266,27 @@
                         <table class="table table-striped table-hover">
                           <thead>
                             <tr>
-                              <th>Student ID:</th>
+                              <th>Student ID / طالب علم کی شناخت |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_id'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Name:</th>
+                              <th>Student Name / طالب علم کا نام |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_name'] ?></td>
                             </tr>
                             <tr>
-                              <th>Father's Name:</th>
+                              <th>Father's Name / ولد یت  |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_father_name'] ?></td>
                             </tr>
                             <tr>
-                              <th>Gender:</th>
+                              <th>Gender / جنس |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_gender'] ?></td>
                             </tr>
                             <tr>
-                              <th>Date of Birth:</th>
+                              <th>Date of Birth / تاریخ پیدائش |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_DOB'] ?></td>
                             </tr>
                             <tr>
-                              <th>Temporary Address:</th>
+                              <th colspan="2">Temporary Address / عارضی پتہ |</th>
                             </tr>
                             <tr>
                               <td><?php echo $stdPersonalInfo[0]['std_temporary_address'] ?></td>
@@ -299,27 +298,27 @@
                           <table class="table table-stripped">
                           <thead>
                             <tr>
-                              <th>CNIC:</th>
+                              <th>CNIC / شناختی کارڈ |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_b_form'] ?></td>
                             </tr>
                             <tr>
-                              <th>District:</th>
+                              <th>District / ضلع |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_district'] ?></td>
                             </tr>
                             <tr>
-                              <th>Tehseel:</th>
+                              <th>Tehseel / تحصیل |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_tehseel'] ?></td>
                             </tr>
                             <tr>
-                              <th>Religion:</th>
+                              <th>Religion / مذہب |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_religion'] ?></td>
                             </tr>
                             <tr>
-                              <th>Nationality:</th>
+                              <th>Nationality / قومیت |</th>
                               <td><?php echo $stdPersonalInfo[0]['std_nationality'] ?></td>
                             </tr>
                             <tr>
-                              <th>Permanent Address:</th>
+                              <th colspan="2">Permanent Address / مستقل پتہ |</th>
                             </tr>
                             <tr>
                               <td><?php echo $stdPersonalInfo[0]['std_permanent_address'] ?></td>

@@ -68,13 +68,13 @@ use yii\helpers\Url;
         <!-- box start -->
         <div class="box box-primary">
             <div class="box-header">
-                <h2 style="color: #001F3F;"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Student Registration Form</h2>
+                <h2 style="color: #001F3F;"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Student Registration Form / طالب علم رجسٹریشن فارم </h2>
             </div>
             <div class="box-body">  
                 <!-- Personal info start -->
             <h3 style="color: #3C8DBC; margin-top: -10px">
                 <i class="fa fa-info-circle" aria-hidden="true" style="color: #001E3E;"></i>
-                Personal Information <small> <i>( Fields with <span style="color: red;">red stars </span>are required )</i></small> 
+                Personal Information / ذاتی معلومات <small> <i>( Fields with <span style="color: red;">red stars </span>are required )</i></small> 
             </h3>
             <div class="row">
                 <div class="col-md-4">
