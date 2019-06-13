@@ -9,31 +9,11 @@
     $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info WHERE std_id = '$id'")->queryAll();
     $number =  $stdPersonalInfo[0]['std_contact_no'];
     $barcode =  $stdPersonalInfo[0]['barcode'];
-  echo $barcode;
-
+  
     // Student Photo...
     $photo = $stdPersonalInfo[0]['std_photo'];
     //echo $photo;
-    // Stduent Guardian Info.....  
-    $stdGuardianInfo = Yii::$app->db->createCommand("SELECT * FROM std_guardian_info WHERE std_id = '$id'")->queryAll();
-    $stdGuardianId = $stdGuardianInfo[0]['std_guardian_info_id'];
-    // Stduent ICE Info.....  
-    $stdICEInfo = Yii::$app->db->createCommand("SELECT * FROM std_ice_info WHERE std_id = '$id'")->queryAll();
-    // student ICE Name.... 
-    if($stdICEInfo==null){
-      $stdICEName = 'Not updated...';
-      $stdICERelation = 'Not updated...';
-      $stdICEContact = 'Not updated...';
-      $stdICEAddress = 'Not updated...';
-      $stdICEId = 0;
-    }
-    else{
-      $stdICEId = $stdICEInfo[0]['std_ice_id'];
-      $stdICEName = $stdICEInfo[0]['std_ice_name'];  
-      $stdICERelation = $stdICEInfo[0]['std_ice_relation'];  
-      $stdICEContact = $stdICEInfo[0]['std_ice_contact_no'];
-      $stdICEAddress = $stdICEInfo[0]['std_ice_address'];  
-    }
+    
     // Stduent Academic Info..... 
     $stdAcademicInfo = Yii::$app->db->createCommand("SELECT * FROM std_academic_info WHERE std_id = '$id'")->queryAll();
     $stdAcademicId = $stdAcademicInfo[0]['academic_id'];
@@ -43,16 +23,6 @@
     $stdSubjects = $stdSubject[0]['std_subject_name'];
     //var_dump($stdSubjects); 
     $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdAcademicClass'")->queryAll();
-
-    // Stduent Fee Info..... 
-    $stdFeeInfo = Yii::$app->db->createCommand("SELECT * FROM std_fee_details WHERE std_id = '$id'")->queryAll();
-    $stdFeeId = $stdFeeInfo[0]['fee_id'];
-
-     $stdFeeInstallmentDetails = Yii::$app->db->createCommand("SELECT sfi.installment_no,sfi.installment_amount
-       FROM std_fee_installments as sfi
-       INNER JOIN std_fee_details as sfd
-       ON sfd.fee_id = sfi.std_fee_id
-       WHERE sfd.std_id = '$id'")->queryAll();
 
     // fetching student roll number from `std_enrollment_detail` against selected student `$id`
     $stdRollNo = Yii::$app->db->createCommand("SELECT sed.std_roll_no,seh.session_id,seh.section_id
@@ -203,10 +173,7 @@
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#personal" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user-circle" ></i> Personal Info</a></li>
-                <li><a href="#guardian" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user"></i> Guardian Info</a></li>
-                <li><a href="#ice" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user-o"></i> ICE Info</a></li>
                 <li><a href="#academic" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-book"></i> Academic Info</a></li>
-                <li><a href="#fee" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-money"></i> Fee Details</a></li>
               </ul>
               <!-- student personal info Tab start -->
               <div class="tab-content">
@@ -330,148 +297,6 @@
                   <!-- student info close -->
                 </div>
                 <!-- student personal info Tab close -->
-                <!-- ******************************* -->
-                <!-- Guardian tab start here -->
-                <div class="tab-pane" id="guardian">
-                 <div class="row">
-                    <div class="col-md-5">
-                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Guardian Information</p>
-                    </div>
-                    <div class="col-md-3 col-md-offset-4">
-                      <?=Html::a(' Edit',['./std-guardian-info-update','id'=>$stdGuardianId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
-                    
-                    <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-parent">
-                          Send SMS
-                        </button>
-                        <div class="modal fade" id="modal-parent">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">SMS</h4>
-                              </div>
-                              <form method="get" action="">
-                                <div class="modal-body">  
-                                  <label>Reciever Name</label>
-                                  <input type="hidden" name="to" value="<?php echo $stdGuardianInfo[0]['guardian_contact_no_1']; ?>" class="form-control">
-                                  <input type="text" name="std_name" value="<?php echo $stdGuardianInfo[0]['guardian_name']; ?>" class="form-control" readonly=""><br>
-                                  <label>SMS Content</label>
-                                    <textarea name="message" rows="5" class="form-control" id="messagee"></textarea>
-                                    <p>
-                                    <span><b>NOTE:</b> 160 characters = 1 SMS</span>
-                                      <span id="remainingg" class="pull-right">160 characters remaining </span>
-                                    <span id="messagess" style="text-align: center;">/ Count SMS(0)</span>
-                                    <input type="hidden" value="" id="countt" class="form-control"><br>
-                                    <input type="text" value="" id="smss" style="border: none; color: green; font-weight: bold;" class="form-control">
-                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-danger btn-sm pull-left" data-dismiss="modal">Close</button>
-                                  <button type="submit" name="sms" class="btn btn-primary btn-sm fa fa-comments-o"> Send SMS</button>
-                                </div>
-                              </form>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
-                      </div>
-                  </div><hr>
-                  <!-- guardian info start -->
-                    <div class="row">
-                      <div class="col-md-6" style="border-right: 1px dashed;">
-                        <table class="table table-striped table-hover">
-                          <thead>
-                            <tr>
-                              <th>Guardian Name:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_name'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Relation:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_relation'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>CNIC:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_cnic'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Gurdian Email:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_email'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Monthly Income:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_monthly_income'] ?></td>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                      <div class="col-md-6">
-                          <table class="table table-stripped">
-                          <thead>
-                            <tr>
-                              <th>Contact No. 1:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_contact_no_1'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Contact No. 2:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_contact_no_2'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Occupation:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_occupation'] ?></td>
-                            </tr>
-                             <tr>
-                              <th>Designation:</th>
-                              <td><?php echo $stdGuardianInfo[0]['guardian_designation'] ?></td>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                    </div>
-                  <!-- guardian info close -->
-                </div>
-                <!-- Guardian tab close here -->
-                <!-- *********************** -->
-                <!-- ICE tab start here -->
-                <div class="tab-pane" id="ice">
-                 <div class="row">
-                    <div class="col-md-5">
-                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> ICE Information</p>
-                    </div>
-                    <div class="col-md-2 col-md-offset-5">
-                      <?=Html::a(' Edit',['./std-ice-info-update','id'=>$stdICEId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
-                    </div>
-                  </div><hr>
-                  <!-- ICE info start -->
-                    <div class="row">
-                      <div class="col-md-6">
-                        <table class="table table-striped table-hover">
-                          <thead>
-                            <tr>
-                              <th>ICE Name:</th>
-                              <td><?php echo $stdICEName; ?></td>
-                            </tr>
-                            <tr>
-                              <th>Relation:</th>
-                              <td><?php echo $stdICERelation; ?></td>
-                            </tr>
-                            <tr>
-                              <th>Contact No:</th>
-                              <td><?php echo $stdICEContact; ?></td>
-                            </tr>
-                            <tr>
-                              <th>Address:</th>
-                              <td><?php echo $stdICEAddress; ?></td>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                    </div>
-                  <!-- ICE info close -->
-                </div>
-                <!-- ICE tab close here -->
                 <!-- ****************** -->
                 <!-- Academic tab start here -->
                 <div class="tab-pane" id="academic">
@@ -482,7 +307,7 @@
                     <div class="col-md-2 col-md-offset-5">
                       <?=Html::a(' Edit',['./std-academic-info-update','id'=>$stdAcademicId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
                     </div>
-                  </div><hr>
+                  </div>
                   <!-- Academic info start -->
                     <div class="row">
                       <div class="col-md-6" style="border-right:1px dashed; ">
@@ -568,51 +393,6 @@
                 </div>
                 <!-- Academic tab close here -->
                 <!-- *********************** -->
-                <!-- Fee tab start here -->
-                <div class="tab-pane" id="fee">
-                 <div class="row">
-                    <div class="col-md-5">
-                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Fee Information</p>
-                    </div>
-                    <div class="col-md-2 col-md-offset-5">
-                      <?=Html::a(' Edit',['./std-fee-details-update','id'=>$stdFeeId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
-                    </div>
-                  </div><hr>
-                  <!-- Fee info start -->
-                    <div class="row">
-                      <div class="col-md-6" style="border-right:1px dashed; ">
-                        <table class="table table-striped table-hover">
-                          <thead>
-                            <tr>
-                              <th>Fee Category:</th>
-                              <td>Monthly</td>
-                            </tr>
-                            <tr>
-                              <th>Admission Fee:</th>
-                              <td><?php echo  $stdFeeInfo[0]['admission_fee'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Admission Fee Discount:</th>
-                              <td><?php echo  $stdFeeInfo[0]['addmission_fee_discount'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Net Admission Fee:</th>
-                              <td><?php echo  $stdFeeInfo[0]['net_addmission_fee'] ?></td>
-                            </tr>
-                            <tr>
-                              <th>Tuition Fee:</th>
-                              <td><?php echo  $stdFeeInfo[0]['tuition_fee'] ?></td>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                      <!-- <div class="col-md-6">
-                         
-                      </div> -->
-                    </div>
-                  <!-- Fee info close -->
-                </div>
-                <!-- Fee tab close here -->
             </div>
             <!-- /.nav-tabs-custom -->
           </div>

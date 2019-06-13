@@ -6,12 +6,6 @@ use Yii;
 use yii\helpers\Html;
 use common\models\StdRegistration;
 use common\models\StdRegistrationSearch;
-use common\models\StdGuardianInfo;
-use common\models\StdIceInfo;
-use common\models\StdAcademicInfo;
-use common\models\StdFeeDetails;
-use common\models\User;
-use backend\controllers\SmsController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -92,15 +86,11 @@ class StdRegistrationController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdRegistration();
-        $stdGuardianInfo = new StdGuardianInfo();
-        $stdIceInfo = new StdIceInfo();
-        $stdAcademicInfo = new StdAcademicInfo();
-        $stdFeeDetails = new StdFeeDetails();
         $conn = \Yii::$app->db;
         $y = date('y');
         global $prntPassword, $stdPassword;
     
-        if ($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())) {
+        if ($model->load($request->post())) {
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
@@ -117,8 +107,6 @@ class StdRegistrationController extends Controller
                     }
                     $model->status     = "Active";
                     $model->academic_status = "Active";
-                    $stdPassword = rand(1000, 10000);
-                    $model->std_password = $stdPassword;
                     $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0'; 
@@ -132,82 +120,18 @@ class StdRegistrationController extends Controller
                         'std_reg_no' => $std_reg_no],
                         ['std_id' => $std_id]
                     )->execute();
-
-                    $user = new User();
-                    $user->branch_id = $branch_id;
-                    $user->username = $model->std_b_form;
-                    $user->email = $model->std_email;
-                    $user->user_photo = $model->std_photo;
-                    $user->user_type = 'Student';
-                    $user->setPassword($stdPassword);
-                    $user->generateAuthKey();
-                    $user->save();
-
-                    // stdGuardianInfo...
-                    $prntPassword = rand(1000, 10000);
-                    $stdGuardianInfo->guardian_password = $prntPassword;
-                    $stdGuardianInfo->std_id = $model->std_id;
-                    $stdGuardianInfo->created_by = Yii::$app->user->identity->id; 
-                    $stdGuardianInfo->created_at = new \yii\db\Expression('NOW()');
-                    $stdGuardianInfo->updated_by = '0'; 
-                    $stdGuardianInfo->updated_at = '0';
-                    $stdGuardianInfo->save();
-                    // userCNIC...
-                    $userCNIC = Yii::$app->db->createCommand("SELECT id FROM user WHERE username = '$stdGuardianInfo->guardian_cnic'")->queryAll();
-                    if(empty($userCNIC)){
-                        $user = new User();
-                        $user->branch_id = $branch_id;
-                        $user->username = $stdGuardianInfo->guardian_cnic;
-                        $user->email = $stdGuardianInfo->guardian_email;
-                        $user->user_photo = $model->std_photo;
-                        $user->user_type = 'Parent';
-                        $user->setPassword($prntPassword);
-                        $user->generateAuthKey();
-                        $user->save();
-                    }
-                    // stdIceInfo...
-                    $stdIceInfo->std_id = $model->std_id;
-                    $stdIceInfo->created_by = Yii::$app->user->identity->id; 
-                    $stdIceInfo->created_at = new \yii\db\Expression('NOW()');
-                    $stdIceInfo->updated_by = '0'; 
-                    $stdIceInfo->updated_at = '0';
-                    $stdIceInfo->save();
-                    // stdAcademicInfo...
-                    $stdAcademicInfo->std_id = $model->std_id;
-                    $stdAcademicInfo->std_enroll_status = 'unsign'; 
-                    $stdAcademicInfo->created_by = Yii::$app->user->identity->id; 
-                    $stdAcademicInfo->created_at = new \yii\db\Expression('NOW()');
-                    $stdAcademicInfo->updated_by = '0'; 
-                    $stdAcademicInfo->updated_at = '0';
-                    $stdAcademicInfo->save(); 
-                    // stdFeeDetails...
-                    //$count = $stdFeeDetails->no_of_installment;
-                    $stdFeeDetails->std_id = $model->std_id;
-                    $stdFeeDetails->created_by = Yii::$app->user->identity->id; 
-                    $stdFeeDetails->created_at = new \yii\db\Expression('NOW()');
-                    $stdFeeDetails->updated_by = '0'; 
-                    $stdFeeDetails->updated_at = '0';
-                    $stdFeeDetails->save();
                     
                     $transection->commit();
-                    // SMS....
-                    $contact = $stdGuardianInfo->guardian_contact_no_1;
-                    $num = str_replace('-', '', $contact);
-                    $to = str_replace('+', '', $num);
-                    $message = "AOA! \nCongradulations! Your S/D has been successfully registered in Brookfield College. \n\nLogin credentials as Parent (username :".$stdGuardianInfo->guardian_cnic.", Password: ".$prntPassword.") \nLogin credentials as Student (usename:".$model->std_b_form.", Password: ".$stdPassword.")";
-                    $sms = SmsController::sendSMS($to, $message);
+                    Yii::$app->session->setFlash('warning', "Student Registered Successfully!");
                     return $this->redirect(['std-personal-info/index']);
 
                 } catch(Exception $e) {
                     $transection->rollback();
+                    Yii::$app->session->setFlash('error', "Student Registration Failed, Try Again...!");
                 }
         }
         return $this->render('create', [
             'model' => $model,
-            'stdGuardianInfo' => $stdGuardianInfo,
-            'stdIceInfo' => $stdIceInfo,
-            'stdAcademicInfo' => $stdAcademicInfo,
-            'stdFeeDetails' => $stdFeeDetails,
         ]);
     }
 
@@ -222,7 +146,12 @@ class StdRegistrationController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+        	$model->updated_by = Yii::$app->user->identity->id;
+            $model->updated_at = new \yii\db\Expression('NOW()');
+            $model->created_by = $model->created_by;
+            $model->created_at = $model->created_at;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->std_id]);
         }
 
