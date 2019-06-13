@@ -83,21 +83,21 @@ use yii\helpers\Url;
             </div> 
             <div class="row">
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 75px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 170px; top: 4px"></i>
                     <?= $form->field($model, 'std_name')->textInput(['maxlength' => true,'id' => 'std_name', 'required'=> true]) ?>
                 </div>
                 <div class="col-md-4">
-                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 6px"></i>
+                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 130px; top: 4px"></i>
                     <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true,'id' => 'std_father_name']) ?>
                 </div>  
                 <div class="col-md-4">
-                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 156px; top: 6px"></i> -->
+                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 136px; top: 4px"></i>
                     <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
                 </div>     
             </div>
             <div class="row"> 
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 95px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 93px; top: 4px"></i>
                     <label>Student DOB</label>
                     <?= DateTimePicker::widget([
                         'model' => $model,
@@ -114,7 +114,7 @@ use yii\helpers\Url;
                     ]);?>
                 </div>
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 80px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 4px"></i>
                     <?= $form->field($model, 'std_gender')->dropDownList
                     ([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '','id' => 'std_gender']) ?>
                 </div>
@@ -129,11 +129,11 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
                 </div>
                 <div class="col-md-4">
-                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i> -->
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 4px"></i>
                     <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'stdBform', 'onchange' => 'generateBarcode();'], 'mask' => '99999-9999999-9']) ?>
                 </div>
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 84px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 87px; top: 4px"></i>
                     <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
@@ -145,21 +145,21 @@ use yii\helpers\Url;
             </div> 
             <div class="row">  
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 4px"></i>
                     <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 4px"></i>
                     <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
                 </div>  
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 95px; top: 4px"></i>
                     <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
                 </div>   
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 155px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i>
                     <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true, 'id' => 'std_permanent_address']) ?>
                 </div>
                 <div class="col-md-6">
@@ -258,152 +258,4 @@ use yii\helpers\Url;
         generateBarcode();
       });
 
-</script>
-<?php
-$url = \yii\helpers\Url::to("./std-registration/fetch-fee");
-
-$script = <<< JS
-
-$('form#{$model->formName()}').on('beforeSubmit',function(e){
-    var canvas = document.getElementById("canvasTarget");
-    var dataURL = canvas.toDataURL("image/png");
-    var d = document.getElementById('barcode_ID').value = dataURL;   
-}); 
-
-// getting std-personal-info- by std inquiry no...
-$('#inquiryNo').on('change',function(){
-   var stdInquiryNo = $('#inquiryNo').val();
-   
-   $.ajax({
-        type:'post',
-        data:{stdInquiryNo:stdInquiryNo},
-        url: "$url",
-        success: function(result){
-            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
-            console.log(jsonResult);
-            var student = jsonResult[0];
-            $('#std_name').val(student['std_name']);
-            $('#std_father_name').val(student['std_father_name']);
-            $('#std_contact_no').val(student['std_contact_no']);
-            $('#std_father_contact_no').val(student['std_father_contact_no']);
-            $('#previous_class').val(student['std_previous_class']);
-            $('#previous_class_rollno').val(student['std_roll_no']);
-            $('#obtainedMarks').val(student['std_obtained_marks']);
-            $('#totalMarks').val(student['std_total_marks']);
-            $('#percentage').val(student['std_percentage']);
-            $('#std_permanent_address').val(student['std_address']);
-            $('#std_temporary_address').val(student['std_address']);
-        }         
-    }); 
-});
-
-    // calculate totalMarks....
-    $('#totalMarks').on('change',function(){
-        var tMarks = $('#totalMarks').val();
-        var obtMarks = $('#obtainedMarks').val();
-        var percentage = ((parseInt(obtMarks) / parseInt(tMarks))*100);
-        var per = Math.round(percentage)+'%';
-        $('#percentage').val(per);
-        
-    });
-
-    // calculate percentage....
-    $('#percentage').on('focus',function(){
-       var percent = $('#percentage').val();
-       
-       var percentage = parseInt(percent);
-       if (percentage>=90){
-            $('#grade').val('A+');
-       }
-       else if (percentage>=80){
-            $('#grade').val('A'); 
-       }
-       else if (percentage>=70){
-            $('#grade').val('B+');
-       }
-       else if (percentage>=60){
-            $('#grade').val('B');
-       }
-       else if (percentage>=50){
-            $('#grade').val('C');
-       }
-       else if (percentage>=40){
-            $('#grade').val('D');
-       }else{
-            $('#grade').val('F');
-       }
-    });
-
-var noOfInstallment;
-    $('#noOfInstallment').on('change',function(){
-        for (var i = 1 ; i<= 6; i++) {
-            $('#amnt'+i).val('');
-            $('#f'+i).hide();
-        }
-        noOfInstallment = $('#noOfInstallment').val();
-        var tuitionFee = $('#tuitionFee').val();
-        var amountPerInstallment = parseInt(tuitionFee / noOfInstallment);
-
-        for (var i = 1 ; i<= noOfInstallment; i++) {
-            $('#f'+i).show();
-            $('#amnt'+i).val(amountPerInstallment);
-        }
-
-    });
-
-    // calculate concession start....
-    $('#tuitionFee').on('focus',function(){
-        var concession = $('#concession').val();
-        var totalTuitionFee = $('#totalTuitionFee').val();
-        var fee = parseInt(totalTuitionFee - concession);
-        $('#tuitionFee').val(fee);
-    });
-
-    // calculate concession end....
-
-$('#sessionId').on('change',function(){
-   var classId = $('#classId').val();
-   var sessionId = $('#sessionId').val();
-   $.ajax({
-        type:'post',
-        data:{class_Id:classId,session_Id:sessionId},
-        url: "$url",
-        success: function(result){
-            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
-            var Result = jsonResult[0];
-            var addmissionFee = Result['admission_fee'];
-            var monthlyFee = Result['tutuion_fee'];
-            $('#admissionFee').val(addmissionFee);
-            $('#totalTuitionFee').val(monthlyFee);
-        }         
-    }); 
-});
-
-
-$('#classId').on('change',function(){
-    var classId = $('#classId').val();
-   
-   $.ajax({
-        type:'post',
-        data:{class_Id:classId},
-        url: "$url",
-        success: function(result){ 
-            console.log(result);
-            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
-            var options = '';
-            $('#subjectId').empty();
-            $('#subjectId').append("<option>"+"Select Subject combination"+"</option>");
-            for(var i=0; i<jsonResult.length; i++) { 
-                options += '<option value="'+jsonResult[i].std_subject_id+'">'+jsonResult[i].std_subject_name+'</option>';
-            }
-            // Append to the html
-            $('#subjectId').append(options);
-        }         
-    }); 
-});
-
-
-JS;
-$this->registerJs($script);
-?>
 </script>
