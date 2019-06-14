@@ -10,8 +10,10 @@ use Yii;
  * @property int $std_id
  * @property string $std_reg_no
  * @property string $std_name
- * @property string $std_father_name
  * @property string $std_contact_no
+ * @property string $std_father_name
+ * @property string $std_father_contact_no
+ * @property string $std_father_cnic
  * @property string $std_DOB
  * @property string $std_gender
  * @property string $std_permanent_address
@@ -25,6 +27,7 @@ use Yii;
  * @property string $std_tehseel
  * @property string $status
  * @property string $academic_status
+ * @property string $other_info
  * @property string $created_at
  * @property string $updated_at
  * @property int $created_by
@@ -54,8 +57,8 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode'], 'safe'],
+            [['std_reg_no', 'std_name', 'std_father_name','std_father_contact_no', 'std_father_cnic', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
+            [['branch_id', 'std_b_form', 'std_email', 'std_contact_no', 'std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode', 'std_other_info'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
@@ -78,11 +81,14 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_id' => 'ID',
             'std_reg_no' => 'Registration No',
             'std_name' => 'Student Name / طالب علم کا نام',
+            'std_contact_no' => 'Student Contact No. / طالب علم کا رابطہ نمبر  ',
             'branch_id' => 'Branch Name / برانچ کا نام',
-            'std_father_name' => 'Father Name / والد کا نام',
-            'std_contact_no' => 'Contact No / رابطہ نمبر',
+            'std_father_name' => 'Father / Guardian Name / وا لد / سرپرست کا نام  ',
+            'std_father_contact_no' => 'Father / Guardian Contact No. / والد / سرپرست رابطہ نمبر ',
+            'std_father_cnic' => 'Father / Guardian CNIC / وا لد / سرپرست کا سی این آئی سی ',
             'std_DOB' => 'DOB / تاریخ پیدائش',
             'std_gender' => 'Gender / جنس',
+            'std_residency' => 'Student Residency / طالب علم کی رہائش گاہ ',
             'std_permanent_address' => 'Permanent Address / مستقل پتہ',
             'std_temporary_address' => 'Temporary Address / عارضی پتہ',
             'std_email' => 'Email / ای میل',
@@ -94,6 +100,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_tehseel' => 'Tehseel / تحصیل',
             'status' => 'Status / حالت',
             'academic_status' => 'Academic Status / تعلیمی حیثیت',
+            'std_other_info' => 'Student Other Info /   طالب علم کی دیگر معلومات ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

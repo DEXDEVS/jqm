@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\Html;
 use common\models\StdRegistration;
 use common\models\StdRegistrationSearch;
+use common\models\StdAcademicInfo;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,11 +87,12 @@ class StdRegistrationController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdRegistration();
+        $stdAcademicInfo = new StdAcademicInfo();
         $conn = \Yii::$app->db;
         $y = date('y');
         global $prntPassword, $stdPassword;
     
-        if ($model->load($request->post())) {
+        if ($model->load($request->post()) && $stdAcademicInfo->load($request->post())) {
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
@@ -113,16 +115,25 @@ class StdRegistrationController extends Controller
                     $model->updated_at = '0';
                     $model->save();
 
-                    // update std_inquiry_no....
-                    $std_id = StdRegistration::find()->max('std_id');
-                    $std_reg_no = "STD-REG-Y".$y."-0".$std_id;
+                    // update std_reg_no....
+                    $stdID = StdRegistration::find()->max('std_id');
+                    $std_reg_no = "STD-REG-Y".$y."-0".$stdID;
                     $std_registration = Yii::$app->db->createCommand()->update('std_personal_info', [
                         'std_reg_no' => $std_reg_no],
-                        ['std_id' => $std_id]
+                        ['std_id' => $stdID]
                     )->execute();
+
+                    // stdAcademicInfo...
+                    $stdAcademicInfo->std_id = $model->std_id;
+                    $stdAcademicInfo->std_enroll_status = 'unsign'; 
+                    $stdAcademicInfo->created_by = Yii::$app->user->identity->id; 
+                    $stdAcademicInfo->created_at = new \yii\db\Expression('NOW()');
+                    $stdAcademicInfo->updated_by = '0'; 
+                    $stdAcademicInfo->updated_at = '0';
+                    $stdAcademicInfo->save();
                     
                     $transection->commit();
-                    Yii::$app->session->setFlash('warning', "Student Registered Successfully!");
+                    Yii::$app->session->setFlash('success', "Student Registered Successfully!");
                     return $this->redirect(['std-personal-info/index']);
 
                 } catch(Exception $e) {
@@ -131,7 +142,8 @@ class StdRegistrationController extends Controller
                 }
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model,            
+            'stdAcademicInfo' => $stdAcademicInfo,
         ]);
     }
 

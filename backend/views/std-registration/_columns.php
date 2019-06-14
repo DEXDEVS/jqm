@@ -10,35 +10,50 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'branch_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_reg_no',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_id',
-        'value'=>'branch.branch_name',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_father_name',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_contact_no',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_DOB',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_gender',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_father_contact_no',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_father_cnic',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_contact_no',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_DOB',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_gender',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_residency',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'std_permanent_address',
@@ -47,21 +62,9 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'std_temporary_address',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_email',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
-    ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_admit_date',
-    // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_leave_date',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_email',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -89,6 +92,33 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_password',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'status',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'academic_status',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'barcode',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_other_info',
+    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_admit_date',
+    ],// [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_leave_date',
+    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
     // ],
     // [
@@ -103,14 +133,18 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',
     // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'delete_status',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
-        /*'urlCreator' => function($action, $model, $key, $index) { 
+        'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
-        },*/
-        'viewOptions'=>['role'=>'','title'=>'View','data-toggle'=>'tooltip'],
+        },
+        'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api

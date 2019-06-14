@@ -12,17 +12,33 @@
   
     // Student Photo...
     $photo = $stdPersonalInfo[0]['std_photo'];
+
+    if ($stdPersonalInfo[0]['std_leave_date'] == '0000-00-00') {
+      $stdLeaveDate = "N/A";
+    }
+    else{
+      $stdLeaveDate = date('d-m-Y', strtotime($stdPersonalInfo[0]['std_leave_date']));
+    }
+    
     //echo $photo;
     
     // Stduent Academic Info..... 
     $stdAcademicInfo = Yii::$app->db->createCommand("SELECT * FROM std_academic_info WHERE std_id = '$id'")->queryAll();
-    $stdAcademicId = $stdAcademicInfo[0]['academic_id'];
-    $stdAcademicClass = $stdAcademicInfo[0]['class_name_id'];  
-    $stdSubjectID = $stdAcademicInfo[0]['subject_combination']; 
-    $stdSubject = Yii::$app->db->createCommand("SELECT std_subject_name FROM std_subjects WHERE std_subject_id = '$stdSubjectID'")->queryAll();
-    $stdSubjects = $stdSubject[0]['std_subject_name'];
-    //var_dump($stdSubjects); 
-    $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdAcademicClass'")->queryAll();
+    if (!empty($stdAcademicInfo)) {
+      $stdAcademicId = $stdAcademicInfo[0]['academic_id'];
+      $stdAcademicClass = $stdAcademicInfo[0]['class_name_id'];  
+      $stdSubjectID = $stdAcademicInfo[0]['subject_combination'];
+      
+      $stdSubject = Yii::$app->db->createCommand("SELECT std_subject_name FROM std_subjects WHERE std_subject_id = '$stdSubjectID'")->queryAll();
+      if (!empty($stdSubject)) {
+        $stdSubjects = $stdSubject[0]['std_subject_name'];
+      }
+      //var_dump($stdSubjects); 
+      $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdAcademicClass'")->queryAll();
+    }
+     
+
+    
 
     // fetching student roll number from `std_enrollment_detail` against selected student `$id`
     $stdRollNo = Yii::$app->db->createCommand("SELECT sed.std_roll_no,seh.session_id,seh.section_id
@@ -54,7 +70,7 @@
         $message = $_GET['message'];
         // sms ....
         $type = "xml";
-        $id = "Brookfieldclg";
+        $id = "Brookfieldclgggg";
         $pass = "college42";
         $lang = "English";
         $mask = "Brookfield";
@@ -100,7 +116,7 @@
                 <h3 class="profile-username text-center" style="color: #3C8DBC;"><?php echo $stdPersonalInfo[0]['std_name'] ?></h3>
                 <p class="text-muted text-center"><!-- Software Engineer --></p>
                 <ul class="list-group list-group-unbordered">
-                  <li class="list-group-item">
+                  <!-- <li class="list-group-item">
                     <b>Roll # رول </b> <a class="pull-right"><?php 
                     if (empty($stdRollNo[0]['std_roll_no'])) {
                       echo "N/A";
@@ -110,16 +126,27 @@
                       echo $stdRollNo[0]['std_roll_no'];
                     }
                      ?></a>
-                  </li>
-                  <li class="list-group-item" style="height: 50px;">
+                  </li> -->
+                  <!-- <li class="list-group-item" style="height: 50px;">
                     <b>Class / کلاس</b><br>
-                    <a><?php echo $className[0]['class_name'] ?></a>
+                    <a class="pull-right"><?php echo $className[0]['class_name'] ?></a>
+                  </li> -->
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Email / ای میل</b> <a class="pull-right"><br><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
-                    <b>Email / ای میل</b> <a class="pull-left"><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
+                    <b>Contact # / رابطہ نمبر</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
-                    <b>Contact # / رابطہ نمبر</b> <a class="pull-left"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
+                    <b>Admission Date / داخلہ کی تاریخ </b> <a class="pull-right"><?php echo date('d-m-Y', strtotime($stdPersonalInfo[0]['std_admit_date'])); ?>
+
+                    </a>
+                  </li>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Leave Date /  </b> <a class="pull-right"><?php echo $stdLeaveDate; ?></a>
+                  </li>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Student Residency / طالب علم کی رہائش گاہ </b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_residency']; ?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Status / حالت</b> <a class="pull-right">
@@ -159,6 +186,7 @@
                       <?php } ?>
                   </a>
                   </li>
+                  
                 </ul>
                 <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
               </div>
@@ -314,7 +342,7 @@
                         <table class="table table-striped table-hover">
                           <thead>
                             <tr>
-                              <th>Session:</th>
+                              <!-- <th>Session:</th>
                               <td>
                                 <?php 
                                 if(empty($stdRollNo[0]['session_id'])){
@@ -324,11 +352,11 @@
                                         $sessName = Yii::$app->db->createCommand("SELECT session_name FROM    std_sessions WHERE session_id = '$sessId'")->queryAll();
                                         echo $sessName[0]['session_name'];
                                 }
-                                ?>
+                                ?> -->
                               </td>
                             </tr>
                             <tr>
-                              <th>Section:</th>
+                              <!-- <th>Section:</th>
                               <td>
                                  <?php 
                                 if(empty($stdRollNo[0]['section_id'])){
@@ -338,24 +366,24 @@
                                     $secName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$secId'")->queryAll();
                                     echo $secName[0]['section_name'];
                                   } 
-                                ?> 
+                                ?>  -->
                               </td>
                             </tr>
                             <tr  colspan="2">
                               <th>Class:</th>
                               <td><?php echo $className[0]['class_name']; ?></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                               <th>Subject Combination:</th>
                             </tr>
                             <tr>
-                              <td colspan="2"><?php echo $stdSubjects ?></td>
-                            </tr>
+                              <td colspan="2"><?php //echo $stdSubjects ?></td>
+                            </tr> -->
                           </thead>
                         </table>
                       </div>
                       <div class="col-md-6">
-                         <table class="table table-striped table-hover">
+                         <!-- <table class="table table-striped table-hover">
                           <thead>
                             <tr>
                               <th>Previous Class:</th>
@@ -384,7 +412,7 @@
                             <tr>
                               <th>Percentage:</th>
                               <td><?php echo round($stdAcademicInfo[0]['percentage'],2)."%"?></td>
-                            </tr>
+                            </tr> -->
                           </thead>
                         </table> 
                       </div>

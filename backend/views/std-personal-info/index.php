@@ -34,14 +34,6 @@ CrudAsset::register($this);
             'pjax' => true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
-                ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/std-registration'],
-                    ['role'=>'','title'=> 'Create new Std Personal Infos','class'=>'btn btn-success']).
-                    Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
-                    '{toggleData}'
-                    //'{export}'
-                ],
                 $gridColumns = [
                     'std_id',
                     'std_name',
@@ -50,20 +42,28 @@ CrudAsset::register($this);
                     'std_DOB',
                     'std_gender',
                     'std_permanent_address',
-                    'std_temporary_address',
+                    //'std_temporary_address',
                     'std_email:email',
-                    'std_photo',
                     'std_b_form',
                     'std_district',
                     'std_religion',
-                    'std_nationality',
-                    'std_tehseel',
+                    //'std_nationality',
+                    //'std_tehseel',
                 ],
                 //Reader a export dropdown menu
                 ExportMenu::widget([
                     'dataProvider' => $dataProvider,
                     'columns' => $gridColumns
                 ]),
+                ['content'=>
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/std-registration'],
+                    ['role'=>'','title'=> 'Create new Std Personal Infos','class'=>'btn btn-success']).
+                    Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
+                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
+                    '{toggleData}'
+                    //'{export}'
+                ],
+                
             ],          
             'striped' => true,
             'condensed' => true,

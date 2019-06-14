@@ -82,7 +82,9 @@ class StdPersonalInfoSearch extends StdPersonalInfo
                 ->andFilterWhere(['like', 'std_nationality', $this->std_nationality])
                 ->andFilterWhere(['like', 'std_tehseel', $this->std_tehseel])
                 ->andFilterWhere(['like', 'status', $this->status])
-                ->andFilterWhere(['like', 'academic_status', $this->academic_status]);
+                ->andFilterWhere(['like', 'academic_status', $this->academic_status])
+                ->andFilterWhere(['like', 'std_admit_date', $this->std_admit_date])
+                ->andFilterWhere(['like', 'std_leave_date', $this->std_leave_date]);
 
             return $dataProvider;
         } else {
@@ -126,7 +128,9 @@ class StdPersonalInfoSearch extends StdPersonalInfo
                 ->andFilterWhere(['like', 'std_nationality', $this->std_nationality])
                 ->andFilterWhere(['like', 'std_tehseel', $this->std_tehseel])
                 ->andFilterWhere(['like', 'status', $this->status])
-                ->andFilterWhere(['like', 'academic_status', $this->academic_status]);
+                ->andFilterWhere(['like', 'academic_status', $this->academic_status])
+                ->andFilterWhere(['like', 'std_admit_date', $this->std_admit_date])
+                ->andFilterWhere(['like', 'std_leave_date', $this->std_leave_date]);
 
             return $dataProvider;
         }

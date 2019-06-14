@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2019 at 09:11 PM
--- Server version: 10.1.22-MariaDB
--- PHP Version: 7.1.4
+-- Generation Time: Jun 14, 2019 at 10:16 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `school_db`
+-- Database: `jqm_db`
 --
 
 -- --------------------------------------------------------
@@ -132,6 +132,7 @@ CREATE TABLE `auth_assignment` (
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('Accountant', '6', NULL),
+('admin', '97', NULL),
 ('dexdevs', '1', NULL),
 ('dexdevs2', '4', NULL),
 ('Inquiry Head', '48', NULL),
@@ -162,6 +163,7 @@ CREATE TABLE `auth_item` (
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('Accountant', 1, 'can login', NULL, NULL, NULL, NULL),
 ('add-institute', 1, 'create institute Name', NULL, NULL, NULL, NULL),
+('admin', 1, 'admin of the application', NULL, NULL, NULL, NULL),
 ('dexdevs', 1, 'Admin of the application', NULL, NULL, NULL, NULL),
 ('dexdevs2', 1, NULL, NULL, NULL, NULL, NULL),
 ('Inquiry Head', 1, 'Inquiry Head can manage activities of student inquiries only.', NULL, NULL, NULL, NULL),
@@ -190,6 +192,8 @@ CREATE TABLE `auth_item_child` (
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Accountant', 'login'),
+('admin', 'login'),
+('admin', 'navigation '),
 ('dexdevs', 'login'),
 ('dexdevs', 'navigation '),
 ('dexdevs2', 'login'),
@@ -248,7 +252,7 @@ CREATE TABLE `branches` (
 --
 
 INSERT INTO `branches` (`branch_id`, `institute_id`, `branch_code`, `branch_name`, `branch_type`, `branch_location`, `branch_contact_no`, `branch_email`, `status`, `branch_head_name`, `branch_head_contact_no`, `branch_head_email`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(5, 2, 'RYK01', 'Main Branch', 'Group', 'Dawood Pull, Habib Colony ', '068-58-75860', 'abclearning@gmail.com', 'Active', 'Ma\'am Nasreen Akram', '+92-333-7668866', 'nasreenakram@gmail.com', '2019-03-16 07:01:14', '2019-03-16 07:01:14', 1, 1, 1),
+(5, 2, 'RYK01', 'Main Branch', 'Group', 'Jammia Qadria Road', '068-58-75860', 'jammiaqadria@gmail.com', 'Active', 'Qari Nauman Sahab', '+92-333-7668866', 'qarinauman@gmail.com', '2019-06-14 20:01:48', '2019-06-14 20:01:48', 1, 97, 1),
 (6, 2, 'RYK02', 'Sub Campus', 'Group', 'Business Man Colony', '068-58-87526', 'subcampus@gmail.com', 'Active', 'Ma\'am Nadia Gull', '+92-345-3456787', 'nadiagull@gmail.com', '2019-03-16 07:03:19', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
@@ -448,7 +452,12 @@ INSERT INTO `emp_attendance` (`att_id`, `branch_id`, `emp_id`, `att_date`, `chec
 (30, 5, 7, '2019-04-27', '00:00:00', '00:00:00', 'A', 1, 0, '2019-04-27 08:51:34', '0000-00-00 00:00:00'),
 (31, 5, 8, '2019-04-27', '00:00:00', '00:00:00', 'A', 1, 0, '2019-04-27 08:51:34', '0000-00-00 00:00:00'),
 (32, 5, 9, '2019-04-27', '00:00:00', '00:00:00', 'A', 1, 0, '2019-04-27 08:51:34', '0000-00-00 00:00:00'),
-(33, 5, 11, '2019-04-27', '00:00:00', '00:00:00', 'A', 1, 0, '2019-04-27 08:51:34', '0000-00-00 00:00:00');
+(33, 5, 11, '2019-04-27', '00:00:00', '00:00:00', 'A', 1, 0, '2019-04-27 08:51:34', '0000-00-00 00:00:00'),
+(34, 5, 2, '2019-05-13', '11:23:08', '11:24:29', 'P', 1, 1, '2019-05-13 06:23:08', '2019-05-13 06:24:29'),
+(35, 5, 1, '2019-05-13', '23:26:36', '19:40:30', 'P', 1, 1, '2019-05-13 18:26:36', '2019-05-13 14:40:30'),
+(36, 5, 3, '2019-05-04', '11:33:40', NULL, 'P', 1, 0, '2019-05-04 06:33:40', '0000-00-00 00:00:00'),
+(37, 5, 2, '2019-05-18', '11:51:03', NULL, 'P', 1, 0, '2019-05-18 06:51:03', '0000-00-00 00:00:00'),
+(38, 5, 2, '2019-05-20', '12:11:36', NULL, 'P', 1, 0, '2019-05-20 07:11:36', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -566,6 +575,7 @@ CREATE TABLE `emp_info` (
   `emp_fb_ID` varchar(30) NOT NULL,
   `emp_gender` enum('Male','Female') NOT NULL,
   `emp_photo` varchar(200) NOT NULL,
+  `barcode` longblob NOT NULL,
   `emp_dept_id` varchar(11) NOT NULL,
   `emp_designation_id` int(11) NOT NULL,
   `emp_type_id` int(11) NOT NULL,
@@ -577,6 +587,7 @@ CREATE TABLE `emp_info` (
   `emp_passing_year` int(11) NOT NULL,
   `emp_institute_name` varchar(50) NOT NULL,
   `degree_scan_copy` varchar(200) NOT NULL,
+  `emp_cv` varchar(200) NOT NULL,
   `emp_salary` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -589,17 +600,27 @@ CREATE TABLE `emp_info` (
 -- Dumping data for table `emp_info`
 --
 
-INSERT INTO `emp_info` (`emp_id`, `emp_reg_no`, `emp_name`, `emp_father_name`, `emp_cnic`, `emp_contact_no`, `emp_perm_address`, `emp_temp_address`, `emp_marital_status`, `emp_fb_ID`, `emp_gender`, `emp_photo`, `emp_dept_id`, `emp_designation_id`, `emp_type_id`, `emp_salary_type`, `group_by`, `emp_branch_id`, `emp_email`, `emp_qualification`, `emp_passing_year`, `emp_institute_name`, `degree_scan_copy`, `emp_salary`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 'EMP-Y19-1', 'Kinza Mustafa', 'G Mustafa', '45102-0511722-2', '+92-345-6789098', 'RYK', 'RYK', 'Single', 'Kinza@gmail.com', 'Female', 'uploads/Kinza Mustafa_emp_photo.jpg', '1', 1, 4, 'Salaried', 'Faculty', 5, 'kinza.fatima.522@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Kinza Mustafa_degree_scan_copy.jpg', 10000, '2019-04-18 07:06:58', '2019-04-06 06:01:51', 3, 1, 1),
-(2, 'EMP-Y19-2', 'Nadia', 'Gull', '88888-8888888-8', '+92-345-6789999', 'ryk', 'ryk', 'Single', 'fghj@gmail.com', 'Female', 'uploads/nadia_emp_photo.jpg', '1', 4, 5, 'Per Lecture', 'Faculty', 5, 'fghj@gmail.com', 'BSCS', 2019, 'fghjk', 'uploads/Nadia_degree_scan_copy.png', 1300, '2019-04-06 05:40:28', '2019-04-06 05:40:28', 3, 4, 1),
-(3, 'EMP-Y19-3', 'Nauman', 'shahid', '31303-0511722-2', '+92-331-5698895', 'RYK', 'RYK', 'Married', 'nauman@gmail.com', 'Male', 'uploads/Nauman_emp_photo.jpg', '1,7', 4, 5, 'Per Lecture', 'Faculty', 5, 'nauman@gmail.com', 'BSCS', 2108, 'Superior', 'uploads/Nauman_degree_scan_copy.jpg', 1000, '2019-04-18 07:07:22', '2019-04-06 06:05:48', 8, 1, 1),
-(4, 'EMP-Y19-4', 'Ayesha', 'Ali', '46545-4654654-6', '+92-345-6787654', 'RYK', 'RYK', 'Single', 'ayesha@gmail.com', 'Female', 'uploads/Ayesha_emp_photo.png', '1', 9, 4, 'Salaried', 'Faculty', 5, 'ayesha@gmail.com', 'BSCS', 2018, 'Superior', 'uploads/Ayesha_degree_scan_copy.xps', 40000, '2019-04-20 08:15:20', '2019-04-20 08:15:20', 8, 3, 1),
-(5, 'EMP-Y19-5', 'Qasim Khan', 'M. Ali Khan', '12345-6789098-7', '34', 'RYK', 'RYK', 'Married', 'qasim@gmail.com', 'Male', '0', '', 4, 4, 'Salaried', 'Faculty', 5, 'ali@gmail.com', 'BSCS', 2018, 'Superior College', '0', 25000, '2019-02-24 06:39:07', '0000-00-00 00:00:00', 9, 0, 1),
-(6, 'EMP-Y19-6', 'Shahzaib Akram', 'Akram Ali', '12345-6543234-5', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'shahzaib@gmail.com', 'Male', '0', '', 4, 4, 'Salaried', 'Faculty', 5, 'shahzaib@gmail.com', 'MSC Maths', 2018, 'IUB', '0', 25000, '2019-02-24 07:02:07', '2019-02-24 07:02:07', 9, 9, 1),
-(7, 'EMP-Y19-7', 'Adnan Akram', 'Akram Ali', '12345-6787654-3', '92', 'RYK', 'RYK', 'Single', 'adnan@gmail.com', 'Male', '0', '', 4, 4, 'Salaried', 'Faculty', 5, 'adnan@gmail.com', 'MSC Maths', 2018, 'IUB', '0', 25000, '2019-02-24 07:04:41', '2019-02-24 07:04:41', 9, 9, 1),
-(8, 'EMP-Y19-8', 'Sajid Umar', 'Umar Khan', '12345-6787654-7', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'sajid@gmail.com', 'Male', 'uploads/Sajid Umar_emp_photo.jpeg', '', 4, 4, 'Salaried', 'Faculty', 5, 'sajid@gmail.com', 'MSC Maths', 2018, 'IUB', '0', 25000, '2019-02-24 07:01:02', '0000-00-00 00:00:00', 9, 0, 1),
-(9, 'EMP-Y19-9', 'Zia ur Rehman', 'A. Rehman', '31303-2345678-8', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'zia@gmail.com', 'Male', 'uploads/Zia ur Rehman_emp_photo.jpg', '', 4, 4, 'Salaried', 'Faculty', 5, 'zia@gmail.com', 'MSC Physics', 2018, 'IUB', '0', 30000, '2019-02-25 04:39:20', '0000-00-00 00:00:00', 9, 0, 1),
-(11, 'EMP-Y19-10', 'Sana Asad', 'Asad Ali', '31303-3456789-8', '+92-315-8410500', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Sana Asad_emp_photo.jpg', '', 4, 2, 'Salaried', 'Faculty', 5, 'sana@gmail.com', 'M.Phil', 2017, 'QAU', 'uploads/Sana Asad_degree_scan_copy.jpg', 15000, '2019-04-04 07:52:55', '0000-00-00 00:00:00', 1, 0, 1);
+INSERT INTO `emp_info` (`emp_id`, `emp_reg_no`, `emp_name`, `emp_father_name`, `emp_cnic`, `emp_contact_no`, `emp_perm_address`, `emp_temp_address`, `emp_marital_status`, `emp_fb_ID`, `emp_gender`, `emp_photo`, `barcode`, `emp_dept_id`, `emp_designation_id`, `emp_type_id`, `emp_salary_type`, `group_by`, `emp_branch_id`, `emp_email`, `emp_qualification`, `emp_passing_year`, `emp_institute_name`, `degree_scan_copy`, `emp_cv`, `emp_salary`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
+(1, 'EMP-Y19-1', 'Kinza Mustafa', 'G Mustafa', '45102-0511722-2', '+92-345-6789098', 'RYK', 'RYK', 'Single', 'Kinza@gmail.com', 'Female', 'uploads/Kinza Mustafa_emp_photo.jpg', '', '1', 1, 4, 'Salaried', 'Faculty', 5, 'kinza.fatima.522@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Kinza Mustafa_degree_scan_copy.jpg', '', 10000, '2019-04-18 07:06:58', '2019-04-06 06:01:51', 3, 1, 1),
+(2, 'EMP-Y19-2', 'Nadia', 'Gull', '88888-8888888-8', '+92-345-6789999', 'ryk', 'ryk', 'Single', 'fghj@gmail.com', 'Female', 'uploads/nadia_emp_photo.jpg', '', '1', 4, 5, 'Per Lecture', 'Faculty', 6, 'fghj@gmail.com', 'BSCS', 2019, 'fghjk', 'uploads/Nadia_degree_scan_copy.png', '', 1300, '2019-05-31 04:54:51', '2019-04-06 05:40:28', 3, 4, 1),
+(3, 'EMP-Y19-3', 'Nauman', 'shahid', '31303-0511722-2', '+92-331-5698895', 'RYK', 'RYK', 'Married', 'nauman@gmail.com', 'Male', 'uploads/Nauman_emp_photo.jpg', '', '1,7', 4, 5, 'Per Lecture', 'Faculty', 5, 'nauman@gmail.com', 'BSCS', 2108, 'Superior', 'uploads/Nauman_degree_scan_copy.jpg', '', 1000, '2019-04-18 07:07:22', '2019-04-06 06:05:48', 8, 1, 1),
+(4, 'EMP-Y19-4', 'Ayesha', 'Ali', '46545-4654654-6', '+92-345-6787654', 'RYK', 'RYK', 'Single', 'ayesha@gmail.com', 'Female', 'uploads/Ayesha_emp_photo.png', '', '1', 9, 4, 'Salaried', 'Faculty', 6, 'ayesha@gmail.com', 'BSCS', 2018, 'Superior', 'uploads/Ayesha_degree_scan_copy.xps', '', 40000, '2019-05-31 04:55:35', '2019-04-20 08:15:20', 8, 3, 1),
+(5, 'EMP-Y19-5', 'Qasim Khan', 'M. Ali Khan', '12345-6789098-7', '34', 'RYK', 'RYK', 'Married', 'qasim@gmail.com', 'Male', '0', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'ali@gmail.com', 'BSCS', 2018, 'Superior College', '0', '', 25000, '2019-02-24 06:39:07', '0000-00-00 00:00:00', 9, 0, 1),
+(6, 'EMP-Y19-6', 'Shahzaib Akram', 'Akram Ali', '12345-6543234-5', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'shahzaib@gmail.com', 'Male', '0', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'shahzaib@gmail.com', 'MSC Maths', 2018, 'IUB', '0', '', 25000, '2019-02-24 07:02:07', '2019-02-24 07:02:07', 9, 9, 1),
+(7, 'EMP-Y19-7', 'Adnan Akram', 'Akram Ali', '12345-6787654-3', '92', 'RYK', 'RYK', 'Single', 'adnan@gmail.com', 'Male', '0', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'adnan@gmail.com', 'MSC Maths', 2018, 'IUB', '0', '', 25000, '2019-02-24 07:04:41', '2019-02-24 07:04:41', 9, 9, 1),
+(8, 'EMP-Y19-8', 'Sajid Umar', 'Umar Khan', '12345-6787654-7', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'sajid@gmail.com', 'Male', 'uploads/Sajid Umar_emp_photo.jpeg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'sajid@gmail.com', 'MSC Maths', 2018, 'IUB', '0', '', 25000, '2019-02-24 07:01:02', '0000-00-00 00:00:00', 9, 0, 1),
+(9, 'EMP-Y19-9', 'Zia ur Rehman', 'A. Rehman', '31303-2345678-8', '92', 'Gulshan Iqbal', 'Gulshan Iqbal', 'Single', 'zia@gmail.com', 'Male', 'uploads/Zia ur Rehman_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'zia@gmail.com', 'MSC Physics', 2018, 'IUB', '0', '', 30000, '2019-02-25 04:39:20', '0000-00-00 00:00:00', 9, 0, 1),
+(11, 'EMP-Y19-10', 'Sana Asad', 'Asad Ali', '31303-3456789-8', '+92-315-8410500', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Sana Asad_emp_photo.jpg', '', '', 4, 2, 'Salaried', 'Faculty', 5, 'sana@gmail.com', 'M.Phil', 2017, 'QAU', 'uploads/Sana Asad_degree_scan_copy.jpg', '', 15000, '2019-04-04 07:52:55', '0000-00-00 00:00:00', 1, 0, 1),
+(12, 'EMP-Y19-12', 'Hira Tahir', 'M Tahir', '31303-9879879-8', '+92-374-6783___', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Hira Tahir_emp_photo.jpg', '', '', 1, 4, 'Salaried', 'Faculty', 6, 'hira07@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Hira Tahir_degree_scan_copy.jpg', 'uploads/Hira Tahir_emp_cv.jpg', 50000, '2019-05-20 06:56:58', '0000-00-00 00:00:00', 1, 0, 1),
+(13, 'EMP-Y19-13', 'Laraib Mariyam', 'M Matloob', '31303-1231231-2', '+92-987-6543234', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Laraib Mariyam_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'hira07@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Laraib Mariyam_degree_scan_copy.jpg', 'uploads/Laraib Mariyam_emp_cv.jpg', 50000, '2019-05-20 07:48:03', '0000-00-00 00:00:00', 1, 0, 1),
+(15, 'EMP-Y19-14', 'Nawal Shareef', 'M Shareef', '87556-8765676-5', '+76-543-4567___', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Nawal Shareef_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'nawal@gmail.com', 'BSCS', 2017, 'iub', 'uploads/Nawal Shareef_degree_scan_copy.jpg', 'uploads/Nawal Shareef_emp_cv.jpg', 60000, '2019-05-21 06:26:13', '0000-00-00 00:00:00', 1, 0, 1),
+(16, 'EMP-Y19-16', 'Musaab Shareef', 'M Shareef', '23456-7898765-4', '+98-765-4323456', 'RYK', 'RYK', 'Single', '', 'Male', 'uploads/Musaab Shareef_emp_photo.jpg', '', '', 4, 1, 'Salaried', 'Faculty', 5, 'nawal@gmail.com', 'BSCS', 2017, 'iub', 'uploads/Musaab Shareef_degree_scan_copy.jpg', 'uploads/Musaab Shareef_emp_cv.jpg', 60000, '2019-05-22 05:48:29', '2019-05-22 05:48:29', 1, 1, 1),
+(17, 'EMP-Y19-17', 'Nawal Shareef', 'M Shareef', '34567-8987654-3', '+98-765-4323456', 'RYK', 'RYK', 'Single', '', 'Female', 'uploads/Nawal Shareef_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'nawal@gmail.com', 'BSCS', 2017, 'iub', 'uploads/Nawal Shareef_degree_scan_copy.jpg', 'uploads/Nawal Shareef_emp_cv.jpg', 40000, '2019-05-22 05:48:03', '0000-00-00 00:00:00', 1, 0, 1),
+(19, 'EMP-Y19-18', 'ertyui', 'rtyui', '87654-3456788-7', '+98-765-4345678', 'RYK', 'RYK', 'Single', '', 'Male', 'uploads/ertyui_emp_photo.jpg', '', '', 5, 1, 'Salaried', 'Faculty', 5, 'musaab03@gmail.com', 'BSCS', 2017, 'iub', 'uploads/ertyui_degree_scan_copy.jpg', 'uploads/ertyui_emp_cv.jpg', 60000, '2019-05-22 06:06:10', '0000-00-00 00:00:00', 1, 0, 1),
+(21, 'EMP-Y19-20', 'Adeela Atif', 'M Irshad', '67548-6547864-3', '+92-876-5433456', 'RYK', 'RYK', 'Married', '', 'Female', 'uploads/Adeela Atif_emp_photo.jpg', '', '', 3, 4, 'Salaried', 'Faculty', 5, 'adeela@gmail.com', 'BSCS', 2017, 'IUB RYK', '0', 'uploads/Adeela Atif_emp_cv.jpg', 7000, '2019-05-22 08:16:55', '0000-00-00 00:00:00', 1, 0, 1),
+(22, 'EMP-Y19-22', 'Hira Farhan', 'M Irshad', '77788-6669966-6', '+92-987-6543456', 'RYK', 'RYK', 'Married', '', 'Female', 'uploads/Hira Farhan_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'hira@gmail.com', 'MCS', 2000, 'KFUITE', 'uploads/Hira Farhan_degree_scan_copy.jpg', 'uploads/Hira Farhan_emp_cv.jpg', 30000, '2019-05-22 08:27:12', '0000-00-00 00:00:00', 1, 0, 1),
+(23, 'EMP-Y19-23', 'Ali Irshad', 'M Irshad', '89646-7892536-8', '+98-765-43456__', 'RYK', 'RYK', 'Married', '', 'Male', 'uploads/Ali Irshad_emp_photo.jpg', '', '', 4, 4, 'Salaried', 'Faculty', 5, 'ali09@gmail.com', 'BSCS', 2017, 'KFUITE', 'uploads/Ali Irshad_degree_scan_copy.jpg', 'uploads/Ali Irshad_emp_cv.jpg', 30000, '2019-05-22 08:39:35', '0000-00-00 00:00:00', 1, 0, 1),
+(24, 'EMP-Y19-24', 'Saad Shareef', 'M Shareef', '46897-6456775-4', '+92-876-5434567', 'RYK', 'RYK', 'Married', '', 'Male', 'uploads/Saad Shareef_emp_photo.jpg', 0x646174613a696d6167652f706e673b6261736536342c6956424f5277304b47676f414141414e5355684555674141414e494141414261434159414141444e65676a334141414850556c455156523458753264506378745178534733314d536e55496e6f6946525342514b4a4552444e424b466e2f68705249686f4a4472684374464a4e4349524a51714e52434d6f75416b536859614b526b524e532f6e4a2b733473333977354d3376576e44756e6d6d636e4e2f664c506e76507a3776584f2b396161362b39393037533566525062434141416b6368634f394f3068767033314574634249496749417551535373414153754867474964505559306749496f456a5941416a4d514142466d6f45696253795041455261336751415941594345476b47697253785041495161586b544149415a4345436b47536a5378764949514b546c545141415a6941416b5761675342764c497743526c6a6342414a69424145536167534a744c4938415246726542414267426749516151614b744c45384168427065524d4167426b49514b515a4b4e4c4738676841704f564e4141426d494143525a7142494738736a4543665332646e5a575153753357346e4f39542b74383150382f32324c7a2b6d50486272754e467a7666396a2b32754e5a617664664c367434364c7a79444563485575746a32692f355848526564534f69353772646844424c344a4c314161444e723033357659476b586f454c786543326b5573696571474f47704545554d38317368723834677559744635524d592f6776654d686243336d454f6b69764b5646326e4768594249463535466138466f45584a7230576d704934715571493172742f65416a7a47697949714f496c305a4e765155446b577178464b6a506a364b6442477634747064784f61354865486134646f4e7139376f5172546c736b5664336d683852624b686f445375486135647a515a3638525645676b674836587869704d4e6249424170455958375348336a6947594e6f7935573548374a694f7355376666596845596b57644a4c4470433149327633767a4b6853503146682f52334a3831426a45534d5249793051524a63752f3471693275334c776d4453424470774243696164365272464d30566946474f69526d744b794a577274306636686d62464544374d556f45514f7445614e33587756465170487359324f6247363464726c30766855335762762f56506f695556557567535032464935496d48306e5052785639784b50772f764f786c6e2f3362482f6e486259503544474b6b667361754862627458736f456f7030767461557273766f773354524654556136305657337045565039707652476d69535a695238555878692b4243736f466b773262362b46676a702f716236752b44696f4865765171796468633368626469765767714f616f7175486134647268323259335559315550496b456b694153526d6a6b35736e62704c5561314a454b3565704a7375436a74515a477535425245676b68586c4479527464756e37376d504e50684f76466151504a492b6a615a35716257727632306f6d71675977572f6b2b6e46446c706566564e2f4a634b7a62526671623944667037776d4a414967456b534153524f6f2b3539534c2f3871344b4b2b696f4e6175654d66344b55704d694a46343079705a4f374a325a4f303648334c6f715646534d6c3669583559545263746965497943787969635a436753696f51696f5569486a7a5830416b706970485a31416c6b37736e5a6b37636a616b6257726c575163572f75474968302b486a46534f54434b582b2b4a344d6a4e345a48786e634b6a6f4c4b4279675971477962457542414a496b456b694d54486d4775466c623058725551656a4975345536334541713464316438483565396272385631673648366d792f323464726832754861346472683275486131542b6133484e762b5435537171666773793538316f57765557785538504875373337745766512b5344546f6a7a774a4f6e4b664a74727673516d4e534c494552584c4e375a544c6f6b676f456f714549764639704f4c6c49434f78486f7245652b334f6c7844652f5831346e7755696e6473467a795078504e4a3252666a4d4f4178465170465170416b563568414a496b456b694e544d454f44615462677a7a73745065506e4a56434a3173743738444149724978442f394f584b4b444633454f6767414a457745524359674142456d67416954594141524d49475147414341684270416f6730415149514352734167516b49514b514a494e49454345436b696731634c2b6b3937617339666b752f7679627054556c6653587053306a2b5333705830764b51504a4c30733656394a643076365070317a6a3652664a583069365947736e36665376724c72577952394b756c325365557831762f76365477625839366d39664f4470504c384c787439573738665a3533376e42374d3975647a717448452b6a4a3858704c304e7a7753524b6f5977634f536e7042304b52484a69474f624761397652706962306a372f33517a3352556e76534c7057307475535873304d3752704a7230683676324a38526f3779654f2f4c6a4e61492b6c31477045636b665a694e5a2b74384f367a56647a34506d376352337865504c583759654778632b66785735684e454b71362b47636444616438586b76365539494b6b4f7955396e716e50485157522f704430567a72586c4d6f324d7a5a72777733546a4e59325534397973392f755436706e76376e4b4f41462b6b58526449704b50306675783431766e353851762b3761326e35623055564c5463727774596c686674306d366f62456f7245676f694a526439587a5666696152774d695275336e6d596e32547947424b5a43375336354c655369763073306e4a544a48793837625579495a676264316361636555783068716d79746737734c6c626c6e7466484d334932706b37627637616e2b3333453954506c4e645531582f4839644f75486235366d6e4762455a726975477273796c53376f36354b325247367a474c7134475279636e31733651664d3966486a503957535a2b6e447374594b69654b472f37586b75354b73566a756775566a3976303262696461535a7979627a2f2f4f556d6656647a4d2f4879506d32772b6a7958466461567575616b6f306f6f4970446d5841627a7464754e354e464d685679527a3964787471376c61356235652f474848753572646d5034324e544731793764534b54772b2b366c7976735634316b61746235747647576435503631344b3164435039595663585656777256724c423535764a43547a4e3234664a38547a74544c4d336d35676658634f683943726d61322b75644266363549755a726c326258612b5647337a6f377a73656378576d74746a6335706c62555a49713179705a6e6e53524741534365466c385a585151416972584b6c6d65644a455942494a345758786c6442344a784933307136764d714d6d5363496e4143422b2f34446c735875364c527a68774141414141415355564f524b35435949493d, '', 4, 3, 'Salaried', 'Faculty', 5, 'saad@gmail.com', 'MCS', 2017, 'KFUITE', 'uploads/Saad Shareef_degree_scan_copy.jpg', 'uploads/Saad Shareef_emp_cv.jpg', 55000, '2019-05-22 08:42:23', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -632,7 +653,8 @@ CREATE TABLE `emp_leave` (
 INSERT INTO `emp_leave` (`app_id`, `branch_id`, `emp_id`, `leave_type`, `starting_date`, `ending_date`, `applying_date`, `no_of_days`, `leave_purpose`, `status`, `remarks`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 (1, 5, 1, 'Casual Leave', '2019-04-26', '2019-04-28', '2019-04-26', 3, 'Personal Reason', 'Accepted', 'Best of Luck...!!!', '2019-04-26 15:36:59', '2019-04-26 15:36:59', 68, 1),
 (2, 5, 1, 'Medical Leave', '2019-04-29', '2019-04-26', '2019-04-26', 2, 'Medical Leave', 'Rejected', 'Rejected', '2019-04-26 14:55:01', '2019-04-26 14:55:01', 68, 1),
-(3, 5, 3, 'Casual Leave', '2019-04-26', '2019-04-30', '2019-04-26', 5, 'awain', 'Pending', '', '2019-04-26 14:43:56', '0000-00-00 00:00:00', 69, 0);
+(3, 5, 3, 'Casual Leave', '2019-04-26', '2019-04-30', '2019-04-26', 5, 'awain', 'Accepted', '', '2019-06-13 06:19:33', '2019-06-13 06:19:33', 69, 1),
+(4, 5, 3, 'Medical Leave', '2019-05-25', '2019-05-28', '2019-05-25', 3, 'I am sick', 'Accepted', 'Best of luck', '2019-05-25 06:04:13', '2019-05-25 06:04:13', 69, 1);
 
 -- --------------------------------------------------------
 
@@ -658,7 +680,14 @@ INSERT INTO `emp_reference` (`emp_ref_id`, `emp_id`, `ref_name`, `ref_contact_no
 (2, 4, 'Sir Ahmad', '32', '68798-7513465-4', 'KIPS Principal'),
 (3, 8, 'Anas', '92', '31303-5678987-6', 'Teacher'),
 (4, 9, 'Anas', '92', '31303-3456788-7', 'Teacher'),
-(6, 11, 'Rana Faraz Ahmed', '92', '31303-0987654-5', 'CEO');
+(6, 11, 'Rana Faraz Ahmed', '92', '31303-0987654-5', 'CEO'),
+(7, 16, 'Anas', '+87-654-3234567', '23456-7898765-4', 'Teacher'),
+(8, 17, 'Anas', '+98-765-4323456', '98765-4323456-7', 'uhhu'),
+(10, 19, '', '', '', ''),
+(12, 21, '', '', '', ''),
+(13, 22, '', '', '', ''),
+(14, 23, '', '', '', ''),
+(15, 24, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -767,12 +796,8 @@ INSERT INTO `exams_category` (`exam_category_id`, `category_name`, `description`
 (2, 'Weekly Tests', 'Weekly Class Tests', '2019-03-11 09:34:40', '0000-00-00 00:00:00', 0, 0),
 (3, 'First Term', 'First Term Exams', '2019-03-11 09:35:27', '0000-00-00 00:00:00', 0, 0),
 (4, 'Mid Term', 'Mid Term Exams', '2019-03-11 09:35:49', '0000-00-00 00:00:00', 0, 0),
-(5, 'Final Term', 'Final Term Exams', '2019-03-11 09:36:04', '0000-00-00 00:00:00', 0, 0),
-(6, 'December Test', 'December Test / Exams', '2019-03-11 09:36:44', '0000-00-00 00:00:00', 0, 0),
-(7, 'Quiz', 'Subject Quiz', '2019-03-11 09:37:15', '0000-00-00 00:00:00', 0, 0),
-(8, 'Assignment', 'Class Assignment', '2019-03-11 09:37:35', '0000-00-00 00:00:00', 0, 0),
-(9, 'Presentation', 'Class Presentation', '2019-03-11 09:37:56', '0000-00-00 00:00:00', 0, 0),
-(10, 'Sendups', 'Class Sendups', '2019-03-11 09:38:11', '0000-00-00 00:00:00', 0, 0);
+(5, 'Final Term Examination', 'Final Term Exams', '2019-05-22 19:11:12', '0000-00-00 00:00:00', 0, 0),
+(6, 'December Test', 'December Test / Exams', '2019-03-11 09:36:44', '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -786,8 +811,6 @@ CREATE TABLE `exams_criteria` (
   `class_id` int(11) NOT NULL,
   `exam_start_date` date NOT NULL,
   `exam_end_date` date NOT NULL,
-  `exam_start_time` time NOT NULL,
-  `exam_end_time` time NOT NULL,
   `exam_room` varchar(15) NOT NULL,
   `exam_status` varchar(50) NOT NULL,
   `exam_type` varchar(10) NOT NULL,
@@ -801,8 +824,50 @@ CREATE TABLE `exams_criteria` (
 -- Dumping data for table `exams_criteria`
 --
 
-INSERT INTO `exams_criteria` (`exam_criteria_id`, `exam_category_id`, `class_id`, `exam_start_date`, `exam_end_date`, `exam_start_time`, `exam_end_time`, `exam_room`, `exam_status`, `exam_type`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 5, 6, '2019-04-12', '2019-04-19', '08:00:00', '11:00:00', 'Room-1', 'conducted', 'Regular', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3);
+INSERT INTO `exams_criteria` (`exam_criteria_id`, `exam_category_id`, `class_id`, `exam_start_date`, `exam_end_date`, `exam_room`, `exam_status`, `exam_type`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 5, 1, '2019-05-30', '2019-06-08', '', 'Inactive', 'Regular', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exams_room`
+--
+
+CREATE TABLE `exams_room` (
+  `exam_room_id` int(11) NOT NULL,
+  `exam_schedule_id` int(11) NOT NULL,
+  `class_head_id` int(11) NOT NULL,
+  `exam_room` int(15) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `exams_room`
+--
+
+INSERT INTO `exams_room` (`exam_room_id`, `exam_schedule_id`, `class_head_id`, `exam_room`, `emp_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 1, 1, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(2, 1, 3, 8, 3, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(3, 1, 4, 7, 7, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(4, 2, 2, 4, 4, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(5, 2, 3, 7, 6, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(6, 2, 4, 4, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(7, 3, 2, 4, 3, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(8, 3, 3, 4, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(9, 3, 4, 6, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(10, 4, 2, 5, 4, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(11, 4, 3, 11, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(12, 4, 4, 6, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(13, 5, 2, 3, 4, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(14, 5, 3, 11, 6, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(15, 5, 4, 2, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(16, 6, 2, 4, 1, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(17, 6, 3, 6, 7, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00'),
+(18, 6, 4, 4, 5, 1, 0, '2019-05-30 07:45:31', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -814,9 +879,9 @@ CREATE TABLE `exams_schedule` (
   `exam_schedule_id` int(11) NOT NULL,
   `exam_criteria_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
-  `emp_attendance` varchar(2) NOT NULL,
   `date` date NOT NULL,
+  `exam_start_time` time NOT NULL,
+  `exam_end_time` time NOT NULL,
   `full_marks` int(5) NOT NULL,
   `passing_marks` int(5) NOT NULL,
   `status` varchar(50) NOT NULL,
@@ -830,13 +895,13 @@ CREATE TABLE `exams_schedule` (
 -- Dumping data for table `exams_schedule`
 --
 
-INSERT INTO `exams_schedule` (`exam_schedule_id`, `exam_criteria_id`, `subject_id`, `emp_id`, `emp_attendance`, `date`, `full_marks`, `passing_marks`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 1, 1, 1, '', '2019-04-12', 100, 33, 'not', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3),
-(2, 1, 2, 3, '', '2019-04-13', 100, 33, 'not', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3),
-(3, 1, 4, 1, '', '2019-04-15', 100, 33, 'result prepared', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3),
-(4, 1, 8, 1, '', '2019-04-16', 100, 33, 'not', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3),
-(5, 1, 7, 4, '', '2019-04-17', 50, 17, 'not', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3),
-(6, 1, 10, 3, '', '2019-04-18', 100, 33, 'not', '2019-04-19 19:13:16', '2019-04-19 19:13:16', 1, 3);
+INSERT INTO `exams_schedule` (`exam_schedule_id`, `exam_criteria_id`, `subject_id`, `date`, `exam_start_time`, `exam_end_time`, `full_marks`, `passing_marks`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 1, 1, '2019-05-30', '08:00:00', '11:00:00', 100, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1),
+(2, 1, 2, '2019-05-31', '08:00:00', '11:00:00', 100, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1),
+(3, 1, 4, '2019-06-01', '08:00:00', '11:00:00', 100, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1),
+(4, 1, 8, '2019-06-03', '08:00:00', '11:00:00', 100, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1),
+(5, 1, 7, '2019-06-05', '08:00:00', '11:00:00', 50, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1),
+(6, 1, 10, '2019-06-08', '08:00:00', '11:00:00', 50, 33, 'not', '2019-05-31 05:04:21', '2019-05-31 05:04:21', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -894,45 +959,6 @@ CREATE TABLE `fee_transaction_detail` (
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `fee_transaction_detail`
---
-
-INSERT INTO `fee_transaction_detail` (`fee_trans_detail_id`, `fee_trans_detail_head_id`, `fee_type_id`, `fee_amount`, `collected_fee_amount`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1, 1, 2955, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(2, 1, 2, 1955, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(3, 2, 1, 3000, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(4, 2, 2, 2000, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(5, 3, 1, 3000, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(6, 3, 2, 2000, 0, '2019-04-18 07:14:23', '0000-00-00 00:00:00', 0, 0, 1),
-(7, 4, 2, 1955, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(8, 4, 8, 4910, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(9, 5, 2, 2000, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(10, 5, 8, 5000, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(11, 6, 2, 2000, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(12, 6, 8, 5000, 0, '2019-04-18 07:35:43', '0000-00-00 00:00:00', 0, 0, 1),
-(13, 7, 2, 1955, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(14, 7, 8, 6865, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(15, 8, 2, 1955, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(16, 9, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(17, 9, 8, 7000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(18, 10, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(19, 11, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(20, 11, 8, 7000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(21, 12, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(22, 13, 1, 4000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
-(23, 13, 2, 2500, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
-(24, 14, 1, 4000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
-(25, 14, 2, 3000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
-(26, 15, 1, 4000, 0, '2019-04-26 08:40:16', '0000-00-00 00:00:00', 0, 0, 1),
-(27, 15, 2, 3000, 0, '2019-04-26 08:40:16', '0000-00-00 00:00:00', 0, 0, 1),
-(28, 16, 2, 1955, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1),
-(29, 16, 8, 10775, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1),
-(30, 17, 2, 2000, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1),
-(31, 17, 8, 1000, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1),
-(32, 18, 2, 2000, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1),
-(33, 18, 8, 11000, 0, '2019-04-26 17:01:06', '0000-00-00 00:00:00', 0, 0, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -961,27 +987,6 @@ CREATE TABLE `fee_transaction_head` (
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `fee_transaction_head`
---
-
-INSERT INTO `fee_transaction_head` (`fee_trans_id`, `voucher_no`, `branch_id`, `class_name_id`, `session_id`, `section_id`, `std_id`, `std_name`, `month`, `transaction_date`, `total_amount`, `paid_amount`, `remaining`, `collection_date`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1001, 5, 1, 4, 3, 5, 'Aniqa Gull', '', '2019-04-18 12:14:23', 4910, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:35:43', '0000-00-00 00:00:00', 1, 0, 1),
-(2, 1002, 5, 1, 4, 3, 8, 'Sadia Gull', '', '2019-04-18 12:14:23', 5000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:35:43', '0000-00-00 00:00:00', 1, 0, 1),
-(3, 1003, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:14:23', 5000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:35:43', '0000-00-00 00:00:00', 1, 0, 1),
-(4, 1004, 5, 1, 4, 3, 5, 'Aniqa Gull', '', '2019-04-18 12:35:43', 6865, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:41:25', '0000-00-00 00:00:00', 1, 0, 1),
-(5, 1005, 5, 1, 4, 3, 8, 'Sadia Gull', '', '2019-04-18 12:35:43', 7000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
-(6, 1006, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:35:43', 7000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
-(7, 1007, 5, 1, 4, 3, 5, 'Aniqa Gull', '', '2019-04-18 12:41:26', 10775, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-26 17:01:06', '0000-00-00 00:00:00', 1, 0, 1),
-(8, 1008, 5, 1, 4, 3, 8, 'Sadia Gull', '', '2019-04-18 12:41:26', 11000, 10000, 1000, '2019-04-26 14:21:13', 'Added to next month', '2019-04-26 17:01:06', '0000-00-00 00:00:00', 1, 0, 1),
-(9, 1009, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:41:26', 11000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-26 17:01:06', '0000-00-00 00:00:00', 1, 0, 1),
-(10, 1010, 6, 11, 6, 5, 1, 'zahid saeed', '', '2019-04-26 13:40:15', 6500, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:15', '0000-00-00 00:00:00', 4, 0, 1),
-(11, 1011, 6, 11, 6, 5, 46, 'Wqas', '', '2019-04-26 13:40:15', 7000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:15', '0000-00-00 00:00:00', 4, 0, 1),
-(12, 1012, 6, 11, 6, 5, 47, 'Sheeza ', '', '2019-04-26 13:40:16', 7000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:16', '0000-00-00 00:00:00', 4, 0, 1),
-(13, 1013, 5, 1, 4, 3, 5, 'Aniqa Gull', '', '2019-04-26 22:01:06', 12730, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 17:01:06', '0000-00-00 00:00:00', 1, 0, 1),
-(14, 1014, 5, 1, 4, 3, 8, 'Sadia Gull', '', '2019-04-26 22:01:06', 3000, 3000, 0, '2019-04-26 22:02:34', 'Paid', '2019-04-26 17:02:34', '0000-00-00 00:00:00', 1, 0, 1),
-(15, 1015, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-26 22:01:06', 13000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 17:01:06', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1090,7 +1095,7 @@ CREATE TABLE `institute` (
 --
 
 INSERT INTO `institute` (`institute_id`, `institute_name`, `institute_logo`, `institute_account_no`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(2, 'ABC Learning School', 'uploads/ABC Learning School_photo.jpg', 'xyz, RYK', '2019-03-16 06:57:39', '2019-03-16 06:57:39', 1, 1, 1);
+(2, 'Madrasa Jammia Qadria', 'uploads/Madrasa Jammia Qadria_photo.jpg', 'xyz, RYK', '2019-06-14 19:59:15', '2019-06-14 19:59:15', 1, 97, 1);
 
 -- --------------------------------------------------------
 
@@ -1150,15 +1155,6 @@ CREATE TABLE `marks_details` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `marks_details`
---
-
-INSERT INTO `marks_details` (`marks_detail_id`, `marks_head_id`, `subject_id`, `obtained_marks`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(7, 1, 4, '80', 68, 0, '2019-04-18 15:10:21', '0000-00-00 00:00:00'),
-(8, 2, 4, '90', 68, 0, '2019-04-18 15:10:22', '0000-00-00 00:00:00'),
-(9, 3, 4, 'A', 68, 3, '2019-04-18 15:13:13', '2019-04-18 15:13:13');
-
 -- --------------------------------------------------------
 
 --
@@ -1168,6 +1164,7 @@ INSERT INTO `marks_details` (`marks_detail_id`, `marks_head_id`, `subject_id`, `
 CREATE TABLE `marks_head` (
   `marks_head_id` int(11) NOT NULL,
   `exam_criteria_id` int(11) NOT NULL,
+  `class_head_id` int(10) NOT NULL,
   `std_id` int(11) NOT NULL,
   `grand_total` double NOT NULL,
   `percentage` varchar(10) NOT NULL,
@@ -1178,15 +1175,6 @@ CREATE TABLE `marks_head` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `marks_head`
---
-
-INSERT INTO `marks_head` (`marks_head_id`, `exam_criteria_id`, `std_id`, `grand_total`, `percentage`, `grade`, `exam_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 0, '', '', '', 68, 0, '2019-04-13 06:48:20', '0000-00-00 00:00:00'),
-(2, 1, 8, 0, '', '', '', 68, 0, '2019-04-13 06:48:20', '0000-00-00 00:00:00'),
-(3, 1, 18, 0, '', '', '', 68, 0, '2019-04-13 06:48:21', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1210,16 +1198,136 @@ CREATE TABLE `marks_weightage_details` (
 --
 
 INSERT INTO `marks_weightage_details` (`weightage_detail_id`, `weightage_head_id`, `weightage_type_id`, `marks`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 1, 1, 5, '2019-04-23 09:11:35', '0000-00-00 00:00:00', 1, 0),
-(2, 1, 2, 5, '2019-04-23 09:11:35', '0000-00-00 00:00:00', 1, 0),
-(3, 1, 3, 5, '2019-04-23 09:11:35', '0000-00-00 00:00:00', 1, 0),
-(4, 1, 4, 5, '2019-04-23 09:11:35', '0000-00-00 00:00:00', 1, 0),
-(5, 1, 6, 80, '2019-04-23 09:11:35', '0000-00-00 00:00:00', 1, 0),
-(6, 2, 1, 5, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0),
-(7, 2, 2, 5, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0),
-(8, 2, 3, 5, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0),
-(9, 2, 4, 5, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0),
-(10, 2, 6, 80, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0);
+(1, 1, 1, 5, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(2, 1, 2, 5, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(3, 1, 3, 5, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(4, 1, 4, 5, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(5, 1, 5, 10, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(6, 1, 6, 70, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(7, 2, 1, 5, '2019-05-19 14:37:47', '0000-00-00 00:00:00', 1, 0),
+(8, 2, 2, 5, '2019-05-19 14:37:47', '0000-00-00 00:00:00', 1, 0),
+(9, 2, 5, 10, '2019-05-19 14:37:47', '0000-00-00 00:00:00', 1, 0),
+(10, 2, 6, 80, '2019-05-19 14:37:47', '0000-00-00 00:00:00', 1, 0),
+(11, 3, 1, 5, '2019-05-19 14:38:55', '0000-00-00 00:00:00', 1, 0),
+(12, 3, 2, 5, '2019-05-19 14:38:55', '0000-00-00 00:00:00', 1, 0),
+(13, 3, 6, 90, '2019-05-19 14:38:55', '0000-00-00 00:00:00', 1, 0),
+(14, 4, 1, 5, '2019-05-19 14:40:51', '0000-00-00 00:00:00', 1, 0),
+(15, 4, 2, 5, '2019-05-19 14:40:51', '0000-00-00 00:00:00', 1, 0),
+(16, 4, 7, 20, '2019-05-19 14:40:51', '0000-00-00 00:00:00', 1, 0),
+(17, 4, 6, 70, '2019-05-19 14:40:51', '0000-00-00 00:00:00', 1, 0),
+(18, 5, 1, 5, '2019-05-19 14:42:02', '0000-00-00 00:00:00', 1, 0),
+(19, 5, 2, 5, '2019-05-19 14:42:02', '0000-00-00 00:00:00', 1, 0),
+(20, 5, 6, 40, '2019-05-19 14:42:02', '0000-00-00 00:00:00', 1, 0),
+(21, 6, 1, 5, '2019-05-19 14:42:59', '0000-00-00 00:00:00', 1, 0),
+(22, 6, 2, 5, '2019-05-19 14:42:59', '0000-00-00 00:00:00', 1, 0),
+(23, 6, 6, 40, '2019-05-19 14:42:59', '0000-00-00 00:00:00', 1, 0),
+(24, 7, 1, 5, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(25, 7, 4, 5, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(26, 7, 3, 5, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(27, 7, 2, 5, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(28, 7, 6, 80, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(29, 8, 1, 5, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(30, 8, 5, 5, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(31, 8, 3, 5, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(32, 8, 4, 5, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(33, 8, 6, 80, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(34, 9, 1, 5, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(35, 9, 2, 5, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(36, 9, 4, 5, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(37, 9, 5, 5, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(38, 9, 6, 80, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(39, 10, 6, 40, '2019-05-22 19:10:37', '0000-00-00 00:00:00', 1, 0),
+(40, 10, 7, 20, '2019-05-22 19:10:37', '0000-00-00 00:00:00', 1, 0),
+(41, 11, 1, 5, '2019-05-22 19:16:50', '0000-00-00 00:00:00', 1, 0),
+(42, 11, 2, 5, '2019-05-22 19:16:50', '0000-00-00 00:00:00', 1, 0),
+(43, 11, 6, 90, '2019-05-22 19:16:50', '0000-00-00 00:00:00', 1, 0),
+(44, 12, 1, 5, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(45, 12, 2, 5, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(46, 12, 3, 5, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(47, 12, 5, 5, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(48, 12, 6, 80, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(49, 13, 1, 5, '2019-05-22 19:19:14', '0000-00-00 00:00:00', 1, 0),
+(50, 13, 2, 5, '2019-05-22 19:19:14', '0000-00-00 00:00:00', 1, 0),
+(51, 13, 6, 90, '2019-05-22 19:19:14', '0000-00-00 00:00:00', 1, 0),
+(52, 14, 5, 5, '2019-05-22 19:19:50', '0000-00-00 00:00:00', 1, 0),
+(53, 14, 3, 5, '2019-05-22 19:19:50', '0000-00-00 00:00:00', 1, 0),
+(54, 14, 6, 40, '2019-05-22 19:19:50', '0000-00-00 00:00:00', 1, 0),
+(55, 15, 7, 10, '2019-05-22 19:20:37', '0000-00-00 00:00:00', 1, 0),
+(56, 15, 6, 40, '2019-05-22 19:20:37', '0000-00-00 00:00:00', 1, 0),
+(57, 16, 1, 5, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(58, 16, 2, 5, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(59, 16, 3, 5, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(60, 16, 4, 5, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(61, 16, 6, 80, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(62, 17, 1, 5, '2019-05-22 19:21:31', '0000-00-00 00:00:00', 1, 0),
+(63, 17, 2, 5, '2019-05-22 19:21:31', '0000-00-00 00:00:00', 1, 0),
+(64, 17, 6, 90, '2019-05-22 19:21:31', '0000-00-00 00:00:00', 1, 0),
+(65, 18, 5, 5, '2019-05-22 19:21:49', '0000-00-00 00:00:00', 1, 0),
+(66, 18, 6, 45, '2019-05-22 19:21:49', '0000-00-00 00:00:00', 1, 0),
+(67, 19, 1, 5, '2019-05-22 19:22:14', '0000-00-00 00:00:00', 1, 0),
+(68, 19, 2, 5, '2019-05-22 19:22:14', '0000-00-00 00:00:00', 1, 0),
+(69, 19, 6, 90, '2019-05-22 19:22:14', '0000-00-00 00:00:00', 1, 0),
+(70, 20, 6, 75, '2019-05-22 19:22:34', '0000-00-00 00:00:00', 1, 0),
+(71, 21, 5, 10, '2019-05-22 19:22:51', '0000-00-00 00:00:00', 1, 0),
+(72, 21, 6, 40, '2019-05-22 19:22:51', '0000-00-00 00:00:00', 1, 0),
+(73, 22, 1, 5, '2019-05-22 19:23:52', '0000-00-00 00:00:00', 1, 0),
+(74, 22, 2, 5, '2019-05-22 19:23:52', '0000-00-00 00:00:00', 1, 0),
+(75, 22, 3, 5, '2019-05-22 19:23:52', '0000-00-00 00:00:00', 1, 0),
+(76, 22, 6, 85, '2019-05-22 19:23:52', '0000-00-00 00:00:00', 1, 0),
+(77, 23, 1, 5, '2019-05-22 19:24:31', '0000-00-00 00:00:00', 1, 0),
+(78, 23, 2, 5, '2019-05-22 19:24:31', '0000-00-00 00:00:00', 1, 0),
+(79, 23, 6, 65, '2019-05-22 19:24:31', '0000-00-00 00:00:00', 1, 0),
+(80, 24, 6, 50, '2019-05-22 19:24:43', '0000-00-00 00:00:00', 1, 0),
+(81, 25, 7, 20, '2019-05-22 19:25:05', '0000-00-00 00:00:00', 1, 0),
+(82, 25, 6, 80, '2019-05-22 19:25:05', '0000-00-00 00:00:00', 1, 0),
+(83, 26, 1, 5, '2019-05-22 19:25:37', '0000-00-00 00:00:00', 1, 0),
+(84, 26, 2, 5, '2019-05-22 19:25:37', '0000-00-00 00:00:00', 1, 0),
+(85, 26, 3, 5, '2019-05-22 19:25:37', '0000-00-00 00:00:00', 1, 0),
+(86, 26, 6, 85, '2019-05-22 19:25:37', '0000-00-00 00:00:00', 1, 0),
+(87, 27, 7, 10, '2019-05-22 19:25:57', '0000-00-00 00:00:00', 1, 0),
+(88, 27, 6, 40, '2019-05-22 19:25:57', '0000-00-00 00:00:00', 1, 0),
+(89, 28, 2, 20, '2019-05-22 19:26:24', '0000-00-00 00:00:00', 1, 0),
+(90, 28, 6, 80, '2019-05-22 19:26:24', '0000-00-00 00:00:00', 1, 0),
+(91, 29, 7, 30, '2019-05-22 19:27:14', '0000-00-00 00:00:00', 1, 0),
+(92, 29, 6, 70, '2019-05-22 19:27:14', '0000-00-00 00:00:00', 1, 0),
+(93, 30, 6, 50, '2019-05-22 19:27:27', '0000-00-00 00:00:00', 1, 0),
+(94, 31, 3, 10, '2019-05-22 19:27:58', '0000-00-00 00:00:00', 1, 0),
+(95, 31, 2, 10, '2019-05-22 19:27:58', '0000-00-00 00:00:00', 1, 0),
+(96, 31, 6, 80, '2019-05-22 19:27:58', '0000-00-00 00:00:00', 1, 0),
+(97, 32, 6, 80, '2019-05-22 19:28:18', '0000-00-00 00:00:00', 1, 0),
+(98, 33, 6, 50, '2019-05-22 19:28:31', '0000-00-00 00:00:00', 1, 0),
+(99, 34, 2, 10, '2019-05-22 19:29:09', '0000-00-00 00:00:00', 1, 0),
+(100, 34, 3, 10, '2019-05-22 19:29:09', '0000-00-00 00:00:00', 1, 0),
+(101, 34, 6, 80, '2019-05-22 19:29:09', '0000-00-00 00:00:00', 1, 0),
+(102, 35, 6, 50, '2019-05-22 19:29:24', '0000-00-00 00:00:00', 1, 0),
+(103, 36, 3, 20, '2019-05-22 19:29:53', '0000-00-00 00:00:00', 1, 0),
+(104, 36, 6, 80, '2019-05-22 19:29:53', '0000-00-00 00:00:00', 1, 0),
+(105, 37, 6, 50, '2019-05-22 19:30:06', '0000-00-00 00:00:00', 1, 0),
+(106, 38, 6, 50, '2019-05-22 19:30:29', '0000-00-00 00:00:00', 1, 0),
+(107, 39, 2, 5, '2019-05-22 19:30:57', '0000-00-00 00:00:00', 1, 0),
+(108, 39, 6, 70, '2019-05-22 19:30:57', '0000-00-00 00:00:00', 1, 0),
+(109, 40, 6, 50, '2019-05-22 19:31:08', '0000-00-00 00:00:00', 1, 0),
+(110, 41, 6, 75, '2019-05-22 19:32:05', '0000-00-00 00:00:00', 1, 0),
+(111, 42, 6, 75, '2019-05-22 19:32:18', '0000-00-00 00:00:00', 1, 0),
+(112, 43, 7, 25, '2019-05-22 19:33:11', '0000-00-00 00:00:00', 1, 0),
+(113, 43, 6, 75, '2019-05-22 19:33:11', '0000-00-00 00:00:00', 1, 0),
+(114, 44, 6, 80, '2019-05-22 19:33:25', '0000-00-00 00:00:00', 1, 0),
+(115, 45, 6, 50, '2019-05-22 19:33:40', '0000-00-00 00:00:00', 1, 0),
+(116, 46, 6, 100, '2019-05-22 19:33:57', '0000-00-00 00:00:00', 1, 0),
+(117, 47, 6, 50, '2019-05-22 19:34:09', '0000-00-00 00:00:00', 1, 0),
+(118, 48, 6, 50, '2019-05-22 19:34:21', '0000-00-00 00:00:00', 1, 0),
+(119, 49, 7, 25, '2019-05-22 19:35:16', '0000-00-00 00:00:00', 1, 0),
+(120, 49, 6, 75, '2019-05-22 19:35:16', '0000-00-00 00:00:00', 1, 0),
+(121, 50, 7, 25, '2019-05-22 19:35:35', '0000-00-00 00:00:00', 1, 0),
+(122, 50, 6, 75, '2019-05-22 19:35:35', '0000-00-00 00:00:00', 1, 0),
+(123, 51, 7, 25, '2019-05-22 19:35:51', '0000-00-00 00:00:00', 1, 0),
+(124, 51, 6, 75, '2019-05-22 19:35:51', '0000-00-00 00:00:00', 1, 0),
+(125, 52, 6, 80, '2019-05-22 19:36:06', '0000-00-00 00:00:00', 1, 0),
+(126, 53, 6, 50, '2019-05-22 19:36:21', '0000-00-00 00:00:00', 1, 0),
+(127, 54, 6, 100, '2019-05-22 19:36:36', '0000-00-00 00:00:00', 1, 0),
+(128, 55, 6, 50, '2019-05-22 19:36:57', '0000-00-00 00:00:00', 1, 0),
+(129, 56, 6, 50, '2019-05-22 19:37:10', '0000-00-00 00:00:00', 1, 0),
+(130, 57, 6, 80, '2019-05-22 20:04:08', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1243,8 +1351,63 @@ CREATE TABLE `marks_weightage_head` (
 --
 
 INSERT INTO `marks_weightage_head` (`marks_weightage_id`, `exam_category_id`, `class_id`, `subjects_id`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 5, 4, 1, '2019-04-23 11:30:11', '0000-00-00 00:00:00', 1, 0),
-(2, 5, 4, 2, '2019-04-23 12:26:23', '0000-00-00 00:00:00', 1, 0);
+(1, 5, 1, 1, '2019-05-19 14:34:23', '0000-00-00 00:00:00', 1, 0),
+(2, 5, 1, 2, '2019-05-19 14:37:47', '0000-00-00 00:00:00', 1, 0),
+(3, 5, 1, 4, '2019-05-19 14:38:55', '0000-00-00 00:00:00', 1, 0),
+(4, 5, 1, 8, '2019-05-19 14:40:51', '0000-00-00 00:00:00', 1, 0),
+(5, 5, 1, 7, '2019-05-19 14:42:02', '0000-00-00 00:00:00', 1, 0),
+(6, 5, 1, 10, '2019-05-19 14:42:59', '0000-00-00 00:00:00', 1, 0),
+(7, 3, 2, 1, '2019-05-22 19:06:46', '0000-00-00 00:00:00', 1, 0),
+(8, 5, 2, 2, '2019-05-22 19:09:03', '0000-00-00 00:00:00', 1, 0),
+(9, 5, 2, 4, '2019-05-22 19:09:54', '0000-00-00 00:00:00', 1, 0),
+(10, 5, 2, 10, '2019-05-22 19:10:37', '0000-00-00 00:00:00', 1, 0),
+(11, 5, 3, 1, '2019-05-22 19:16:50', '0000-00-00 00:00:00', 1, 0),
+(12, 5, 3, 2, '2019-05-22 19:18:38', '0000-00-00 00:00:00', 1, 0),
+(13, 5, 3, 4, '2019-05-22 19:19:14', '0000-00-00 00:00:00', 1, 0),
+(14, 5, 3, 9, '2019-05-22 19:19:50', '0000-00-00 00:00:00', 1, 0),
+(15, 5, 3, 8, '2019-05-22 19:20:37', '0000-00-00 00:00:00', 1, 0),
+(16, 5, 4, 1, '2019-05-22 19:21:09', '0000-00-00 00:00:00', 1, 0),
+(17, 5, 4, 2, '2019-05-22 19:21:31', '0000-00-00 00:00:00', 1, 0),
+(18, 5, 4, 9, '2019-05-22 19:21:49', '0000-00-00 00:00:00', 1, 0),
+(19, 5, 5, 1, '2019-05-22 19:22:14', '0000-00-00 00:00:00', 1, 0),
+(20, 5, 5, 4, '2019-05-22 19:22:34', '0000-00-00 00:00:00', 1, 0),
+(21, 5, 5, 9, '2019-05-22 19:22:51', '0000-00-00 00:00:00', 1, 0),
+(22, 5, 6, 2, '2019-05-22 19:23:52', '0000-00-00 00:00:00', 1, 0),
+(23, 5, 6, 4, '2019-05-22 19:24:31', '0000-00-00 00:00:00', 1, 0),
+(24, 5, 6, 9, '2019-05-22 19:24:43', '0000-00-00 00:00:00', 1, 0),
+(25, 5, 7, 1, '2019-05-22 19:25:05', '0000-00-00 00:00:00', 1, 0),
+(26, 5, 7, 2, '2019-05-22 19:25:37', '0000-00-00 00:00:00', 1, 0),
+(27, 5, 7, 8, '2019-05-22 19:25:57', '0000-00-00 00:00:00', 1, 0),
+(28, 5, 8, 1, '2019-05-22 19:26:24', '0000-00-00 00:00:00', 1, 0),
+(29, 5, 8, 6, '2019-05-22 19:27:14', '0000-00-00 00:00:00', 1, 0),
+(30, 5, 8, 9, '2019-05-22 19:27:27', '0000-00-00 00:00:00', 1, 0),
+(31, 5, 9, 1, '2019-05-22 19:27:58', '0000-00-00 00:00:00', 1, 0),
+(32, 5, 9, 2, '2019-05-22 19:28:18', '0000-00-00 00:00:00', 1, 0),
+(33, 5, 9, 3, '2019-05-22 19:28:31', '0000-00-00 00:00:00', 1, 0),
+(34, 5, 11, 1, '2019-05-22 19:29:09', '0000-00-00 00:00:00', 1, 0),
+(35, 5, 11, 5, '2019-05-22 19:29:24', '0000-00-00 00:00:00', 1, 0),
+(36, 5, 11, 4, '2019-05-22 19:29:53', '0000-00-00 00:00:00', 1, 0),
+(37, 5, 11, 9, '2019-05-22 19:30:06', '0000-00-00 00:00:00', 1, 0),
+(38, 5, 12, 7, '2019-05-22 19:30:29', '0000-00-00 00:00:00', 1, 0),
+(39, 5, 12, 4, '2019-05-22 19:30:57', '0000-00-00 00:00:00', 1, 0),
+(40, 5, 12, 9, '2019-05-22 19:31:08', '0000-00-00 00:00:00', 1, 0),
+(41, 5, 13, 11, '2019-05-22 19:32:05', '0000-00-00 00:00:00', 1, 0),
+(42, 5, 13, 13, '2019-05-22 19:32:18', '0000-00-00 00:00:00', 1, 0),
+(43, 5, 13, 12, '2019-05-22 19:33:11', '0000-00-00 00:00:00', 1, 0),
+(44, 5, 13, 2, '2019-05-22 19:33:25', '0000-00-00 00:00:00', 1, 0),
+(45, 5, 13, 3, '2019-05-22 19:33:40', '0000-00-00 00:00:00', 1, 0),
+(46, 5, 13, 4, '2019-05-22 19:33:57', '0000-00-00 00:00:00', 1, 0),
+(47, 5, 13, 5, '2019-05-22 19:34:09', '0000-00-00 00:00:00', 1, 0),
+(48, 5, 13, 9, '2019-05-22 19:34:21', '0000-00-00 00:00:00', 1, 0),
+(49, 5, 14, 11, '2019-05-22 19:35:16', '0000-00-00 00:00:00', 1, 0),
+(50, 5, 14, 13, '2019-05-22 19:35:35', '0000-00-00 00:00:00', 1, 0),
+(51, 5, 14, 12, '2019-05-22 19:35:51', '0000-00-00 00:00:00', 1, 0),
+(52, 5, 14, 2, '2019-05-22 19:36:06', '0000-00-00 00:00:00', 1, 0),
+(53, 5, 14, 3, '2019-05-22 19:36:21', '0000-00-00 00:00:00', 1, 0),
+(54, 5, 14, 4, '2019-05-22 19:36:36', '0000-00-00 00:00:00', 1, 0),
+(55, 5, 14, 5, '2019-05-22 19:36:57', '0000-00-00 00:00:00', 1, 0),
+(56, 5, 14, 7, '2019-05-22 19:37:10', '0000-00-00 00:00:00', 1, 0),
+(57, 5, 2, 1, '2019-05-22 20:04:08', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1361,6 +1524,49 @@ INSERT INTO `notice` (`notice_id`, `notice_title`, `notice_description`, `notice
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `room_id` int(11) NOT NULL,
+  `room_name` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`room_id`, `room_name`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 'Room-1', '2019-05-25 19:47:51', '0000-00-00 00:00:00', 0, 0),
+(2, 'Room-2', '2019-05-25 19:49:27', '0000-00-00 00:00:00', 0, 0),
+(3, 'Room-3', '2019-05-25 19:49:56', '0000-00-00 00:00:00', 1, 0),
+(4, 'Room-4', '2019-05-25 19:50:04', '0000-00-00 00:00:00', 1, 0),
+(5, 'Room-5', '2019-05-25 19:50:20', '0000-00-00 00:00:00', 0, 0),
+(6, 'Room-6', '2019-05-25 19:50:34', '0000-00-00 00:00:00', 1, 0),
+(7, 'Room-7', '2019-05-25 19:50:41', '0000-00-00 00:00:00', 1, 0),
+(8, 'Room-8', '2019-05-25 19:50:48', '0000-00-00 00:00:00', 1, 0),
+(9, 'Room-9', '2019-05-25 19:50:56', '0000-00-00 00:00:00', 1, 0),
+(10, 'Room-10', '2019-05-25 19:51:00', '0000-00-00 00:00:00', 1, 0),
+(11, 'Room-11', '2019-05-25 19:51:05', '0000-00-00 00:00:00', 1, 0),
+(12, 'Room-12', '2019-05-25 19:51:10', '0000-00-00 00:00:00', 1, 0),
+(13, 'Room-13', '2019-05-25 19:51:13', '0000-00-00 00:00:00', 1, 0),
+(14, 'Room-14', '2019-05-25 19:51:19', '0000-00-00 00:00:00', 1, 0),
+(15, 'Room-15', '2019-05-25 19:51:22', '0000-00-00 00:00:00', 1, 0),
+(16, 'Room-16', '2019-05-25 19:51:26', '0000-00-00 00:00:00', 1, 0),
+(17, 'Room-17', '2019-05-25 19:51:32', '0000-00-00 00:00:00', 1, 0),
+(18, 'Room-18', '2019-05-25 19:51:38', '0000-00-00 00:00:00', 1, 0),
+(19, 'Room-19', '2019-05-25 19:51:55', '0000-00-00 00:00:00', 1, 0),
+(20, 'Room-20', '2019-05-25 19:51:59', '0000-00-00 00:00:00', 1, 0),
+(21, 'Computer Lab-1', '2019-05-25 19:52:17', '0000-00-00 00:00:00', 1, 0),
+(22, 'Computer Lab-2', '2019-05-25 19:52:25', '0000-00-00 00:00:00', 1, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sms`
 --
 
@@ -1392,7 +1598,7 @@ CREATE TABLE `std_academic_info` (
   `academic_id` int(11) NOT NULL,
   `std_id` int(11) NOT NULL,
   `class_name_id` int(11) NOT NULL,
-  `subject_combination` int(11) NOT NULL,
+  `subject_combination` int(11) DEFAULT NULL,
   `previous_class` varchar(50) NOT NULL,
   `passing_year` int(32) DEFAULT NULL,
   `previous_class_rollno` int(11) DEFAULT NULL,
@@ -1408,39 +1614,6 @@ CREATE TABLE `std_academic_info` (
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `std_academic_info`
---
-
-INSERT INTO `std_academic_info` (`academic_id`, `std_id`, `class_name_id`, `subject_combination`, `previous_class`, `passing_year`, `previous_class_rollno`, `total_marks`, `obtained_marks`, `grades`, `percentage`, `Institute`, `std_enroll_status`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1, 11, 14, '6th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1),
-(4, 5, 1, 7, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
-(7, 8, 1, 6, 'KG', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
-(8, 11, 8, 12, '4th', 2018, 12345, 1100, 880, 'A', '80%', 'National Garrison ', 'unsign', '2019-03-29 16:22:47', '0000-00-00 00:00:00', 1, 0, 1),
-(9, 12, 4, 8, '9th', 2018, 12345, 1100, 880, 'A', '80%', 'National Garrison ', 'unsign', '2019-03-29 16:28:53', '0000-00-00 00:00:00', 1, 0, 1),
-(10, 14, 2, 6, '10th', 0, 12345, 111, 111, 'A+', '100%', 'Colony High School', 'unsign', '2019-04-06 07:48:09', '0000-00-00 00:00:00', 1, 0, 1),
-(11, 18, 1, 5, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'National Garrison ', 'signed', '2019-04-06 08:17:48', '0000-00-00 00:00:00', 1, 0, 1),
-(12, 20, 4, 8, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'unsign', '2019-03-30 08:16:47', '0000-00-00 00:00:00', 1, 0, 1),
-(13, 21, 4, 8, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'unsign', '2019-03-30 08:18:35', '0000-00-00 00:00:00', 1, 0, 1),
-(14, 22, 4, 8, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'unsign', '2019-03-30 08:19:18', '0000-00-00 00:00:00', 1, 0, 1),
-(15, 26, 6, 10, '9th', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-03-30 09:14:55', '0000-00-00 00:00:00', 1, 0, 1),
-(16, 27, 8, 12, '10th', NULL, 12345, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-03-30 09:20:29', '0000-00-00 00:00:00', 1, 0, 1),
-(17, 30, 8, 12, '4th', NULL, NULL, NULL, NULL, '', '', 'Colony High School', 'unsign', '2019-04-01 10:58:14', '0000-00-00 00:00:00', 1, 0, 1),
-(18, 31, 3, 7, '', NULL, NULL, NULL, NULL, '', '', 'Colony High School', 'unsign', '2019-04-01 11:06:08', '0000-00-00 00:00:00', 1, 0, 1),
-(19, 33, 6, 10, 'Matric', NULL, 265641, 1050, 2018, 'B+', '71%', 'National Garrison ', 'unsign', '2019-04-02 07:26:26', '0000-00-00 00:00:00', 1, 0, 1),
-(20, 37, 6, 10, 'Matric', NULL, 265641, 1050, 2018, 'B+', '71%', 'National Garrison ', 'unsign', '2019-04-02 07:29:38', '0000-00-00 00:00:00', 1, 0, 1),
-(21, 39, 6, 10, 'Matric', NULL, 265641, 1050, 2018, 'B+', '71%', 'National Garrison ', 'unsign', '2019-04-02 07:33:07', '0000-00-00 00:00:00', 1, 0, 1),
-(22, 40, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:40:52', '0000-00-00 00:00:00', 17, 0, 1),
-(23, 42, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:42:26', '0000-00-00 00:00:00', 17, 0, 1),
-(24, 45, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:46:11', '0000-00-00 00:00:00', 17, 0, 1),
-(25, 46, 11, 14, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 17, 0, 1),
-(26, 47, 11, 14, '', NULL, NULL, NULL, NULL, '', '', 'Colony High School', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 1, 0, 1),
-(27, 48, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:08:15', '0000-00-00 00:00:00', 1, 0, 1),
-(28, 50, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:11:53', '0000-00-00 00:00:00', 1, 0, 1),
-(29, 52, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:14:51', '0000-00-00 00:00:00', 1, 0, 1),
-(30, 53, 2, 6, 'KG-1', NULL, NULL, NULL, NULL, 'F', '', 'National Garrison ', 'signed', '2019-04-04 17:18:16', '0000-00-00 00:00:00', 1, 0, 1),
-(31, 54, 13, 1, '', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'signed', '2019-04-06 07:49:06', '0000-00-00 00:00:00', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1470,8 +1643,8 @@ CREATE TABLE `std_attendance` (
 CREATE TABLE `std_class_name` (
   `class_name_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `class_name` varchar(120) NOT NULL,
-  `class_name_description` varchar(255) NOT NULL,
+  `class_name` varchar(120) CHARACTER SET utf8 NOT NULL,
+  `class_name_description` varchar(255) CHARACTER SET utf8 NOT NULL,
   `status` enum('Active','Inactive') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1485,20 +1658,15 @@ CREATE TABLE `std_class_name` (
 --
 
 INSERT INTO `std_class_name` (`class_name_id`, `branch_id`, `class_name`, `class_name_description`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 5, 'KG-1', 'KG-1', 'Active', '2019-03-16 01:27:49', '2019-03-16 01:27:49', 1, 1, 1),
+(1, 5, 'محمد علی', 'محمد علی', 'Active', '2019-06-14 12:23:35', '2019-06-14 12:23:35', 1, 1, 1),
 (2, 5, 'Nursery', 'Nursery', 'Active', '2019-03-16 01:28:12', '2019-03-16 01:28:12', 1, 1, 1),
 (3, 5, 'Prep', 'Prep', 'Active', '2019-03-16 01:28:25', '2019-03-16 01:28:25', 1, 1, 1),
-(4, 5, 'One', 'One', 'Active', '2019-03-16 01:28:33', '2019-03-16 01:28:33', 1, 1, 1),
-(5, 5, 'Two', 'Two', 'Active', '2019-03-16 01:28:45', '2019-03-16 01:28:45', 1, 1, 1),
-(6, 5, 'Three', 'Three', 'Active', '2019-03-16 01:28:56', '2019-03-16 01:28:56', 1, 1, 1),
-(7, 5, 'Four', 'Four', 'Active', '2019-03-16 01:29:09', '2019-03-16 01:29:09', 1, 1, 1),
+(4, 5, '1st', 'One', 'Active', '2019-05-24 04:53:12', '2019-03-16 01:28:33', 1, 1, 1),
+(5, 5, '2nd', 'Two', 'Active', '2019-05-24 04:53:17', '2019-03-16 01:28:45', 1, 1, 1),
+(6, 5, '3rd', 'Three', 'Active', '2019-05-24 04:53:23', '2019-03-16 01:28:56', 1, 1, 1),
+(7, 5, '4th', 'Four', 'Active', '2019-05-24 04:53:27', '2019-03-16 01:29:09', 1, 1, 1),
 (8, 5, '5th', '5th', 'Active', '2019-03-18 05:31:59', '2019-03-16 01:29:26', 1, 1, 1),
-(9, 6, '6th', '6th', 'Active', '2019-03-18 05:30:32', '2019-03-16 01:29:36', 1, 1, 1),
-(11, 6, '7th', '7th', 'Active', '2019-03-18 05:45:19', '2019-03-18 05:45:19', 1, 1, 1),
-(12, 6, '8th ', '8th ', 'Active', '2019-03-18 05:45:28', '2019-03-18 05:45:28', 3, 1, 1),
-(13, 6, '9th', '9th', 'Active', '2019-03-18 05:45:36', '2019-03-18 05:45:36', 3, 1, 1),
-(14, 6, '10th', '10th', 'Inactive', '2019-04-20 08:12:28', '2019-04-20 08:12:28', 1, 3, 1),
-(16, 5, 'Play Group', 'Play Group', 'Active', '2019-03-20 05:02:23', '0000-00-00 00:00:00', 4, 0, 1);
+(9, 5, '6th', '6th', 'Active', '2019-06-14 11:09:56', '2019-06-14 11:08:19', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1540,6 +1708,16 @@ CREATE TABLE `std_enrollment_head` (
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `std_enrollment_head`
+--
+
+INSERT INTO `std_enrollment_head` (`std_enroll_head_id`, `branch_id`, `class_name_id`, `session_id`, `section_id`, `std_enroll_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
+(1, 5, 3, 4, 3, 'Prep-2019 - 2020 -Green', '2019-05-08 05:19:21', '0000-00-00 00:00:00', 1, 0, 1),
+(2, 5, 1, 4, 1, 'KG-1-2019 - 2020 -Red', '2019-05-23 04:08:33', '0000-00-00 00:00:00', 1, 0, 1),
+(3, 5, 1, 4, 2, 'KG-1-2019 - 2020 -Blue', '2019-05-23 04:09:41', '0000-00-00 00:00:00', 1, 0, 1),
+(4, 5, 1, 4, 3, 'KG-1-2019 - 2020 -Green', '2019-05-23 04:11:15', '0000-00-00 00:00:00', 1, 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1560,39 +1738,6 @@ CREATE TABLE `std_fee_details` (
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `std_fee_details`
---
-
-INSERT INTO `std_fee_details` (`fee_id`, `std_id`, `admission_fee`, `addmission_fee_discount`, `net_addmission_fee`, `concession_id`, `tuition_fee`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1, 5000, 1000, 4000, 0, 2500, '2019-03-20 06:42:01', '0000-00-00 00:00:00', 4, 0, 1),
-(2, 5, 3000, 45, 2955, 45, 1955, '2019-03-21 12:37:27', '0000-00-00 00:00:00', 1, 0, 1),
-(4, 8, 3000, 0, 3000, 0, 2000, '2019-03-21 12:51:47', '0000-00-00 00:00:00', 1, 0, 1),
-(5, 11, 4000, 0, 4000, 0, 3000, '2019-03-29 16:22:47', '0000-00-00 00:00:00', 1, 0, 1),
-(6, 12, 4000, 0, 4000, 0, 3000, '2019-03-29 16:28:53', '0000-00-00 00:00:00', 1, 0, 1),
-(7, 14, 3000, 0, 3000, 0, 2000, '2019-03-30 08:01:03', '0000-00-00 00:00:00', 1, 0, 1),
-(8, 18, 3000, 0, 3000, 0, 2000, '2019-03-30 08:09:30', '0000-00-00 00:00:00', 1, 0, 1),
-(9, 20, 4000, 0, 4000, 0, 3000, '2019-03-30 08:16:48', '0000-00-00 00:00:00', 1, 0, 1),
-(10, 21, 4000, 0, 4000, 0, 3000, '2019-03-30 08:18:35', '0000-00-00 00:00:00', 1, 0, 1),
-(11, 22, 4000, 0, 4000, 0, 3000, '2019-03-30 08:19:18', '0000-00-00 00:00:00', 1, 0, 1),
-(12, 26, 4000, 0, 4000, 0, 3000, '2019-03-30 09:14:55', '0000-00-00 00:00:00', 1, 0, 1),
-(13, 27, 4000, 0, 4000, 0, 3000, '2019-03-30 09:20:29', '0000-00-00 00:00:00', 1, 0, 1),
-(14, 30, 4000, 0, 4000, 0, 3000, '2019-04-01 10:58:14', '0000-00-00 00:00:00', 1, 0, 1),
-(15, 31, 3000, 0, 3000, 0, 2000, '2019-04-01 11:06:08', '0000-00-00 00:00:00', 1, 0, 1),
-(16, 33, 4000, 0, 4000, 100, 2900, '2019-04-02 07:26:26', '0000-00-00 00:00:00', 1, 0, 1),
-(17, 37, 4000, 0, 4000, 100, 2900, '2019-04-02 07:29:38', '0000-00-00 00:00:00', 1, 0, 1),
-(18, 39, 4000, 0, 4000, 100, 2900, '2019-04-02 07:33:07', '0000-00-00 00:00:00', 1, 0, 1),
-(19, 40, 4000, 0, 4000, 0, 3000, '2019-04-02 08:40:52', '0000-00-00 00:00:00', 17, 0, 1),
-(20, 42, 4000, 0, 4000, 0, 3000, '2019-04-02 08:42:26', '0000-00-00 00:00:00', 17, 0, 1),
-(21, 45, 4000, 0, 4000, 0, 3000, '2019-04-02 08:46:11', '0000-00-00 00:00:00', 17, 0, 1),
-(22, 46, 4000, 0, 4000, 0, 3000, '2019-04-02 08:50:28', '0000-00-00 00:00:00', 17, 0, 1),
-(23, 47, 4000, 0, 4000, 0, 3000, '2019-04-02 09:00:30', '0000-00-00 00:00:00', 1, 0, 1),
-(24, 48, 3000, 0, 3000, 200, 1800, '2019-04-04 05:08:15', '0000-00-00 00:00:00', 1, 0, 1),
-(25, 50, 3000, 0, 3000, 200, 1800, '2019-04-04 05:11:53', '0000-00-00 00:00:00', 1, 0, 1),
-(26, 52, 3000, 0, 3000, 200, 1800, '2019-04-04 05:14:51', '0000-00-00 00:00:00', 1, 0, 1),
-(27, 53, 3000, 0, 3000, 200, 1800, '2019-04-04 06:58:51', '0000-00-00 00:00:00', 1, 0, 1),
-(28, 54, 5000, 0, 5000, 0, 3000, '2019-04-06 07:28:03', '0000-00-00 00:00:00', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1676,39 +1821,6 @@ CREATE TABLE `std_guardian_info` (
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `std_guardian_info`
---
-
-INSERT INTO `std_guardian_info` (`std_guardian_info_id`, `std_id`, `guardian_name`, `guardian_relation`, `guardian_cnic`, `guardian_email`, `guardian_contact_no_1`, `guardian_contact_no_2`, `guardian_monthly_income`, `guardian_occupation`, `guardian_designation`, `guardian_password`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1, 'M Saeed', 'Father', '45678-9098765-4', 'ahmed@gmail.com', '+92-567-8987656', '+92-567-8987654', 45000, 'Govt. Employe', 'ghjnbv', '', '2019-03-20 06:42:01', '0000-00-00 00:00:00', 4, 0, 1),
-(5, 5, 'M. Ahmed', 'Father', '31303-1234567-8', 'ahmed@gmail.com', '+92-300-7976242', '', 45000, 'Govt. Employe', '', '', '2019-04-18 08:10:10', '0000-00-00 00:00:00', 1, 0, 1),
-(8, 8, 'M Saeed', 'Father', '31303-4567890-9', 'ahmed@gmail.com', '+92-345-6789009', '', 45000, 'Govt. Employe', '', '', '2019-03-21 12:51:46', '0000-00-00 00:00:00', 1, 0, 1),
-(11, 11, 'M.Ibrahim', 'Father', '31303-6854548-9', 'ibrahim@yahoo.com', '+92-345-0784638', '+92-764-8378347', 60000, 'Self Business', '', '', '2019-03-29 16:22:46', '0000-00-00 00:00:00', 1, 0, 1),
-(12, 12, 'M.Ibrahim', 'Father', '31303-2345678-9', 'ibrahim@yahoo.com', '+92-234-5678909', '', 60000, 'Govt. Employe', '', '', '2019-03-29 16:28:52', '0000-00-00 00:00:00', 1, 0, 1),
-(14, 14, 'wwwwww', 'wwwwww', '22222-2222222-2', 'ahmed@gmail.com', '+22-222-2222222', '+22-222-2222222', 22222222, 'qqqqqqq', 'wwwwww', '', '2019-03-30 08:01:02', '0000-00-00 00:00:00', 1, 0, 1),
-(15, 18, 'M. Ahmed', 'Father', '55555-5555555-5', 'ibrahim@yahoo.comj', '+55-555-5555555', '+88-888-8888888', 45000, 'Self Business', 'wwwwww', '', '2019-03-30 08:09:29', '0000-00-00 00:00:00', 1, 0, 1),
-(17, 20, 'M.Ibrahimkbkjhj', 'Father', '44444-4444444-4', 'ahmed@gmail.comkkkk', '+55-555-5555555', '', 45000, 'Govt. Employe', '', '', '2019-03-30 08:16:46', '0000-00-00 00:00:00', 1, 0, 1),
-(18, 21, 'M.Ibrahimkbkjhjkkk', 'Father', '44444-4444444-4', 'ahmed@gmail.comkkkkmm', '+55-555-5555555', '', 45000, 'Govt. Employe', '', '', '2019-03-30 08:18:34', '0000-00-00 00:00:00', 1, 0, 1),
-(19, 22, 'M.Ibrahimkbkjhjkkksss', 'Father', '44444-4444444-4', 'ahmed@gmail.comkkkkmm111', '+55-555-5555555', '', 45000, 'Govt. Employe', '', '', '2019-03-30 08:19:17', '0000-00-00 00:00:00', 1, 0, 1),
-(22, 26, 'M.Ibrahim', 'Father', '31303-3456789-1', 'ibrahim@gmail.com', '+92-234-5678907', '', NULL, '', '', '', '2019-03-30 09:14:54', '0000-00-00 00:00:00', 1, 0, 1),
-(23, 27, 'Iftikhar Ali', 'Father', '31303-9876543-0', 'iftikhar@gmail.com', '+92-234-5678998', '', NULL, '', '', '', '2019-03-30 09:20:28', '0000-00-00 00:00:00', 1, 0, 1),
-(26, 30, 'M.Shafi', 'Father', '98765-4312345-6', 'shafi@gmail.com', '+92-345-6789876', '', NULL, '', '', '', '2019-04-01 10:58:13', '0000-00-00 00:00:00', 1, 0, 1),
-(27, 31, 'M.Ameen', 'Father', '34567-8909876-5', 'ameen@gmail.com', '+92-456-7899876', '', NULL, '', '', '', '2019-04-01 11:06:07', '0000-00-00 00:00:00', 1, 0, 1),
-(28, 33, 'M Saeed', 'Father', '31303-0437738-3', 'anasshafqat@gmail.com', '+92-331-3772105', '', 45000, 'Govt. Employe', 'Engineer', '', '2019-04-02 07:26:25', '0000-00-00 00:00:00', 1, 0, 1),
-(29, 37, 'M Saeed', 'Father', '31303-0437738-4', 'anasshafqat001@gmail.com', '+92-331-3772105', '', 45000, 'Govt. Employe', 'Engineer', '', '2019-04-02 07:29:37', '0000-00-00 00:00:00', 1, 0, 1),
-(30, 39, 'M Saeed', 'Father', '31303-0438738-4', 'anasshafqat021@gmail.com', '+92-331-3772105', '', 45000, 'Govt. Employe', 'Engineer', '', '2019-04-02 07:33:06', '0000-00-00 00:00:00', 1, 0, 1),
-(31, 40, 'Umer', 'Father', '31303-7655676-4', 'umer@gmail.com', '+92-315-8410500', '', NULL, '', '', '', '2019-04-02 08:40:51', '0000-00-00 00:00:00', 17, 0, 1),
-(32, 42, 'Umer', 'Father', '31303-7655876-4', 'umer01@gmail.com', '+92-315-8410500', '', NULL, '', '', '', '2019-04-02 08:42:25', '0000-00-00 00:00:00', 17, 0, 1),
-(33, 45, 'Umer', 'Father', '31303-8655876-4', 'umer02@gmail.com', '+92-315-8410500', '', NULL, '', '', '', '2019-04-02 08:46:10', '0000-00-00 00:00:00', 17, 0, 1),
-(34, 46, 'Umer', 'Father', '31303-8675876-4', 'umer03@gmail.com', '+92-315-8410500', '', NULL, '', '', '', '2019-04-02 08:50:27', '0000-00-00 00:00:00', 17, 0, 1),
-(35, 47, 'Umer', 'Father', '31303-6546676-7', 'mumer@gmail.com', '+92-456-7898765', '', NULL, '', '', '', '2019-04-02 09:00:29', '0000-00-00 00:00:00', 1, 0, 1),
-(36, 48, 'M. Saeed', 'Father', '31303-0437738-3', '', '+92-331-7375027', '', 60000, 'Self Business', 'wwwwww', '', '2019-04-04 05:08:15', '0000-00-00 00:00:00', 1, 0, 1),
-(37, 50, 'M. Saeed', 'Father', '31303-0437738-4', '', '+92-331-7375027', '', 60000, 'Self Business', 'wwwwww', '', '2019-04-04 05:11:53', '0000-00-00 00:00:00', 1, 0, 1),
-(38, 52, 'M. Saeed', 'Father', '31303-0437738-5', '', '+92-331-7375027', '', 60000, 'Self Business', 'wwwwww', '', '2019-04-04 05:14:50', '0000-00-00 00:00:00', 1, 0, 1),
-(39, 53, 'Asad Shafqat', 'Father', '31303-0437738-5', '', '+92-306-3772105', '', 45000, '', '', '1012', '2019-04-04 06:58:50', '0000-00-00 00:00:00', 1, 0, 1),
-(40, 54, 'Umer', 'Father', '31303-5678987-8', '', '+92-331-7375027', '', 45000, '', '', '8238', '2019-04-06 07:28:02', '0000-00-00 00:00:00', 4, 0, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1728,39 +1840,6 @@ CREATE TABLE `std_ice_info` (
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `std_ice_info`
---
-
-INSERT INTO `std_ice_info` (`std_ice_id`, `std_id`, `std_ice_name`, `std_ice_relation`, `std_ice_contact_no`, `std_ice_address`, `created_at`, `created_by`, `updated_at`, `updated_by`, `delete_status`) VALUES
-(1, 1, 'Anas', 'Mamu Gjjlij', '+92-456-7899876', 'Gulshan Iqbal', '2019-03-20 06:42:01', 4, '0000-00-00 00:00:00', 0, 1),
-(5, 5, 'Anas', 'Mamu Gjjlij', '+92-234-5678987', 'Gulshan Iqbal', '2019-03-21 12:37:27', 1, '0000-00-00 00:00:00', 0, 1),
-(8, 8, 'Anas', 'Cousin', '+92-345-6789009', 'Gulshan Iqbal', '2019-03-21 12:51:46', 1, '0000-00-00 00:00:00', 0, 1),
-(9, 11, 'Aniqa Gull', 'Dost ', '+92-678-0980808', 'Jaddah Town RYK', '2019-03-29 16:22:47', 1, '0000-00-00 00:00:00', 0, 1),
-(10, 12, 'Anas', 'Cousin', '+92-234-5678765', 'Jaddah Town RYK', '2019-03-29 16:28:53', 1, '0000-00-00 00:00:00', 0, 1),
-(12, 14, 'sss', 'sssss', '+22-222-2222222', 'sssssss', '2019-03-30 08:01:03', 1, '0000-00-00 00:00:00', 0, 1),
-(13, 18, 'bbbbbbbb', 'Mamu Gjjlij', '+22-222-2222222', 'Gulshan Iqbal', '2019-03-30 08:09:30', 1, '0000-00-00 00:00:00', 0, 1),
-(14, 20, 'kmklm', 'lkjnl', '+54-444-4444444', 'sssssss', '2019-03-30 08:16:47', 1, '0000-00-00 00:00:00', 0, 1),
-(15, 21, 'kmklm', 'lkjnl', '+54-444-4444444', 'sssssss', '2019-03-30 08:18:35', 1, '0000-00-00 00:00:00', 0, 1),
-(16, 22, 'kmklm', 'lkjnl', '+54-444-4444444', 'sssssss', '2019-03-30 08:19:18', 1, '0000-00-00 00:00:00', 0, 1),
-(17, 26, 'bbbbbbbb', '', '', '', '2019-03-30 09:14:55', 1, '0000-00-00 00:00:00', 0, 1),
-(18, 27, 'Aniqa Gull', '', '', '', '2019-03-30 09:20:29', 1, '0000-00-00 00:00:00', 0, 1),
-(19, 30, 'Aniqa Gull', '', '', '', '2019-04-01 10:58:14', 1, '0000-00-00 00:00:00', 0, 1),
-(20, 31, 'Shahid', '', '', '', '2019-04-01 11:06:08', 1, '0000-00-00 00:00:00', 0, 1),
-(21, 33, 'Anas', '', '', '', '2019-04-02 07:26:26', 1, '0000-00-00 00:00:00', 0, 1),
-(22, 37, 'Anas', '', '', '', '2019-04-02 07:29:38', 1, '0000-00-00 00:00:00', 0, 1),
-(23, 39, 'Anas', '', '', '', '2019-04-02 07:33:07', 1, '0000-00-00 00:00:00', 0, 1),
-(24, 40, 'Aniqa Gull', '', '', '', '2019-04-02 08:40:52', 17, '0000-00-00 00:00:00', 0, 1),
-(25, 42, 'Aniqa Gull', '', '', '', '2019-04-02 08:42:26', 17, '0000-00-00 00:00:00', 0, 1),
-(26, 45, 'Aniqa Gull', '', '', '', '2019-04-02 08:46:11', 17, '0000-00-00 00:00:00', 0, 1),
-(27, 46, 'Aniqa Gull', '', '', '', '2019-04-02 08:50:28', 17, '0000-00-00 00:00:00', 0, 1),
-(28, 47, 'Shahid', '', '', '', '2019-04-02 09:00:30', 1, '0000-00-00 00:00:00', 0, 1),
-(29, 48, 'Anas', '', '', '', '2019-04-04 05:08:15', 1, '0000-00-00 00:00:00', 0, 1),
-(30, 50, 'Anas', '', '', '', '2019-04-04 05:11:53', 1, '0000-00-00 00:00:00', 0, 1),
-(31, 52, 'Anas', '', '', '', '2019-04-04 05:14:51', 1, '0000-00-00 00:00:00', 0, 1),
-(32, 53, 'Anas', 'Uncle', '+92-331-7375027', '', '2019-04-04 06:58:51', 1, '0000-00-00 00:00:00', 0, 1),
-(33, 54, 'Aniqa Gull', '', '', '', '2019-04-06 07:28:03', 4, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1823,63 +1902,37 @@ INSERT INTO `std_inquiry` (`std_inquiry_id`, `branch_id`, `std_inquiry_no`, `inq
 CREATE TABLE `std_personal_info` (
   `std_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
-  `std_reg_no` varchar(50) NOT NULL,
+  `std_reg_no` varchar(50) CHARACTER SET latin1 NOT NULL,
   `std_name` varchar(50) NOT NULL,
-  `std_father_name` varchar(50) NOT NULL,
-  `std_contact_no` varchar(15) NOT NULL,
+  `std_father_name` varchar(100) NOT NULL,
+  `std_father_contact_no` varchar(15) NOT NULL,
+  `std_father_cnic` varchar(15) NOT NULL,
+  `std_contact_no` varchar(15) CHARACTER SET latin1 NOT NULL,
   `std_DOB` date NOT NULL,
-  `std_gender` enum('Male','Female') NOT NULL,
+  `std_gender` enum('Male','Female') CHARACTER SET latin1 NOT NULL,
+  `std_residency` enum('عکا متی','غیر عکا متی') NOT NULL,
   `std_permanent_address` varchar(255) NOT NULL,
   `std_temporary_address` varchar(255) NOT NULL,
-  `std_email` varchar(84) NOT NULL,
+  `std_email` varchar(84) CHARACTER SET latin1 NOT NULL,
   `std_photo` varchar(200) NOT NULL,
-  `std_b_form` varchar(255) NOT NULL,
-  `std_district` varchar(50) NOT NULL,
-  `std_religion` varchar(50) NOT NULL,
-  `std_nationality` varchar(50) NOT NULL,
-  `std_tehseel` varchar(50) NOT NULL,
-  `std_password` varchar(20) NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
-  `academic_status` enum('Active','Promote','Left','Struck off') NOT NULL,
+  `std_b_form` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `std_district` varchar(50) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `std_religion` varchar(100) NOT NULL,
+  `std_nationality` varchar(100) NOT NULL,
+  `std_tehseel` varchar(50) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `std_password` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `status` enum('Active','Inactive') CHARACTER SET latin1 NOT NULL,
+  `std_admit_date` date NOT NULL,
+  `std_leave_date` date NOT NULL,
+  `academic_status` enum('Active','Promote','Left','Struck off') CHARACTER SET latin1 NOT NULL,
+  `barcode` longblob NOT NULL,
+  `std_other_info` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `std_personal_info`
---
-
-INSERT INTO `std_personal_info` (`std_id`, `branch_id`, `std_reg_no`, `std_name`, `std_father_name`, `std_contact_no`, `std_DOB`, `std_gender`, `std_permanent_address`, `std_temporary_address`, `std_email`, `std_photo`, `std_b_form`, `std_district`, `std_religion`, `std_nationality`, `std_tehseel`, `std_password`, `status`, `academic_status`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 6, 'STD-Y19-1', 'zahid saeed', 'M saeed', '+92-567-8909876', '2019-03-20', 'Male', 'RYK', 'RYK', 'zahid@gmail.com', 'uploads/zahid saeed_photo.jpg', '92876-5456789-8', 'RYK', 'Islam', 'Pakistani', 'RYK', '', 'Active', 'Active', '2019-03-20 06:42:01', '0000-00-00 00:00:00', 4, 0, 1),
-(5, 5, 'STD-Y19-2', 'Aniqa Gull', 'Iftikhar Ali', '+92-345-6789876', '2019-03-21', 'Female', 'RYK', 'RYK', 'asra@gmail.com', 'uploads/Aniqa Gull_photo.jpg', '31303-3456789-8', 'RYK', 'Islam', 'Pakistani', 'RYK', '', 'Active', 'Active', '2019-04-19 11:46:17', '2019-04-19 11:46:17', 1, 3, 1),
-(8, 5, 'STD-Y19-6', 'Sadia Gull', 'Iftikhar Ali', '+92-456-7890987', '2019-03-21', 'Female', 'RYK', 'RYK', 'sadia@gmail.com', 'uploads/Sadia Gull_photo.jpg', '31303-3456789-0', 'RYK', 'Islam', 'Pakistani', 'RYK', '', 'Active', 'Active', '2019-03-21 12:51:46', '0000-00-00 00:00:00', 1, 0, 1),
-(11, 5, 'STD-Y19-9', 'Fatima Bibi ', 'M. Ibrahim ', '+92-098-7654326', '2019-03-29', 'Female', 'Jinnah Park RYK', 'Jinnah  Park RYK', 'fatim44@gmail.com', 'uploads/Fatima Bibi _photo.jpg', '09876-5421223-4', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-29 16:22:45', '0000-00-00 00:00:00', 1, 0, 1),
-(12, 5, 'STD-Y19-12', 'Ihsan-ul-Haq', 'M. Ahmed', '+92-876-5433456', '2019-03-29', 'Male', 'Jinnah Park RYK', 'Jinnah  Park RYK', 'ihsan@gmail.com', 'uploads/Ihsan-ul-Haq_photo.jpg', '31303-9876543-3', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-29 16:28:50', '0000-00-00 00:00:00', 1, 0, 1),
-(14, 5, 'STD-Y19-13', 'Testing 1', 'M. Ahmed', '', '2019-03-30', 'Male', 'wwwwwww', 'wwwwwwww', '', 'uploads/Testing 1_photo.jpg', '22222-2222222-2', 'asdsa', 'wwwwwww', 'wwwww', 'qqqqqq', '', 'Active', 'Active', '2019-03-30 08:01:01', '0000-00-00 00:00:00', 1, 0, 1),
-(18, 5, 'STD-Y19-15', 'Asra', 'Mustafa', '', '2019-07-10', 'Male', 'RYK', 'RYK', 'fatim44@gmail.comj', 'uploads/Asra_photo.jpg', '55555-5555555-5', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'RYK', '', 'Active', 'Active', '2019-03-30 08:09:28', '0000-00-00 00:00:00', 1, 0, 1),
-(20, 5, 'STD-Y19-19', 'uygjgv', 'ggfg', '+32-222-2222222', '2019-03-05', 'Female', 'RYK', '', 'hdfgd@gvjv.com', 'uploads/uygjgv_photo.jpg', '55555-5555555-5', 'asdsa', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-30 08:16:45', '0000-00-00 00:00:00', 1, 0, 1),
-(21, 5, 'STD-Y19-21', 'uygjgvhbhjbj', 'ggfg', '+32-222-2222222', '2019-03-05', 'Female', 'RYK', '', 'hdfgd@gvjv.commmm', 'uploads/uygjgvhbhjbj_photo.jpg', '55555-5555555-5', 'asdsa', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-30 08:18:32', '0000-00-00 00:00:00', 1, 0, 1),
-(22, 5, 'STD-Y19-22', 'uygjgvhbhjbjmoiio', 'ggfg', '+32-222-2222222', '2019-03-05', 'Female', 'RYK', '', 'hdfgd@gvjv.commmm444', 'uploads/uygjgvhbhjbjmoiio_photo.jpg', '55555-5555555-5', 'asdsa', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-30 08:19:16', '0000-00-00 00:00:00', 1, 0, 1),
-(26, 5, 'STD-Y19-23', 'zahid saeed', 'Mustafa', '+92-234-5678900', '2019-03-30', 'Male', 'Jinnah Park RYK', '', 'zahid@gmail.com', 'uploads/std_default.jpg', '31303-3456789-0', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-30 09:14:53', '0000-00-00 00:00:00', 1, 0, 1),
-(27, 5, 'STD-Y19-27', 'Nadia Gull', 'Iftikhar Ali', '+92-345-6789098', '2019-03-30', 'Female', 'Jinnah Park RYK', '', 'nadia@gmail.com', 'uploads/std_default.jpg', '31303-1123456-7', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-03-30 09:20:27', '0000-00-00 00:00:00', 1, 0, 1),
-(30, 5, 'STD-Y19-28', 'Asmat Ara', 'M.Shafi', '+92-345-6789098', '2019-04-01', 'Female', 'Jinnah Park RYK', 'Jinnah  Park RYK', 'asmat@gmail.com', 'uploads/Asmat Ara_photo.jpg', '31303-2345698-7', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-01 10:58:12', '0000-00-00 00:00:00', 1, 0, 1),
-(31, 5, 'STD-Y19-31', 'Aisha Ameen', 'M.Ameen', '+92-456-7898765', '2019-04-01', 'Female', 'Jinnah Park RYK', 'Jinnah  Park RYK', 'aisha@gmail.com', 'uploads/Aisha Ameen_photo.jpg', '87654-3236789-0', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-01 11:06:06', '0000-00-00 00:00:00', 1, 0, 1),
-(33, 5, 'STD-Y19-32', 'Saif-ur-Rehman', 'M. Khalil', '+92-333-3333333', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', 'Chak # 145/p, Adaam Sahaba', 'saif@gmail.com', 'uploads/std_default.jpg', '31303-4944949-4', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 07:26:24', '0000-00-00 00:00:00', 1, 0, 1),
-(37, 5, 'STD-Y19-34', 'Saif-ur-Rehman', 'M. Khalil', '+92-333-3333333', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', 'Chak # 145/p, Adaam Sahaba', 'saif02@gmail.com', 'uploads/std_default.jpg', '31303-4944949-5', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 07:29:36', '0000-00-00 00:00:00', 1, 0, 1),
-(39, 5, 'STD-Y19-38', 'Saif-ur-Rehman', 'M. Khalil', '+92-333-3333333', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', 'Chak # 145/p, Adaam Sahaba', 'saif03@gmail.com', 'uploads/std_default.jpg', '31303-4977949-5', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 07:33:05', '0000-00-00 00:00:00', 1, 0, 1),
-(40, 5, 'STD-Y19-40', 'Wqas', 'Umer', '+92-345-6789098', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas@gmail.com', 'uploads/std_default.jpg', '31303-8765670-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:40:50', '0000-00-00 00:00:00', 17, 0, 1),
-(42, 5, 'STD-Y19-41', 'Wqas', 'Umer', '+92-345-6789098', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas01@gmail.com', 'uploads/std_default.jpg', '31303-8765679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:42:24', '0000-00-00 00:00:00', 17, 0, 1),
-(45, 5, 'STD-Y19-43', 'Wqas', 'Umer', '+92-345-6789698', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas02@gmail.com', 'uploads/std_default.jpg', '31303-8785679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:46:08', '0000-00-00 00:00:00', 17, 0, 1),
-(46, 6, 'STD-Y19-46', 'Wqas', 'Umer', '+92-345-6789698', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas03@gmail.com', 'uploads/std_default.jpg', '31303-8385679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-26 08:35:32', '0000-00-00 00:00:00', 17, 0, 1),
-(47, 6, 'STD-Y19-47', 'Sheeza ', 'Umer', '', '2019-04-02', 'Female', 'Chak # 145/p, Adaam Sahaba', '', 'sheeza@gmail.com', 'uploads/Sheeza _photo.jpg', '31303-7654456-7', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-26 08:35:18', '0000-00-00 00:00:00', 1, 0, 1),
-(48, 5, 'STD-Y19-48', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-4', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:08:14', '0000-00-00 00:00:00', 1, 0, 1),
-(50, 5, 'STD-Y19-49', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-3', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:11:52', '0000-00-00 00:00:00', 1, 0, 1),
-(52, 5, 'STD-Y19-51', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-5', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:14:49', '0000-00-00 00:00:00', 1, 0, 1),
-(53, 5, 'STD-Y19-53', 'M. Azaan', 'Asad Shafqat', '+92-333-3333333', '2019-04-04', 'Male', 'RYK', 'RYK', '', 'uploads/std_default.jpg', '31303-0561894-8', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'RYK', '9127', 'Active', 'Active', '2019-04-04 06:58:49', '0000-00-00 00:00:00', 1, 0, 1),
-(54, 6, 'STD-Y19-54', 'Inam', 'Umer', '+92-345-6789987', '2019-04-06', 'Female', 'Jinnah Park RYK', '', '', 'uploads/std_default.jpg', '31303-4567777-7', 'RYK', 'Islam', 'Pakistani', 'RYK', '3561', 'Active', 'Active', '2019-04-06 07:28:01', '0000-00-00 00:00:00', 4, 0, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1939,7 +1992,7 @@ CREATE TABLE `std_sessions` (
 --
 
 INSERT INTO `std_sessions` (`session_id`, `session_branch_id`, `session_name`, `session_start_date`, `session_end_date`, `status`, `installment_cycle`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(4, 5, '2019 - 2020 ', '2019-03-01', '2020-03-31', 'Active', 4, '2019-03-16 07:04:49', '2019-03-16 07:04:49', 1, 1, 1),
+(4, 5, '2019 - 2020 ', '2019-03-01', '2020-03-31', 'Active', 4, '2019-05-25 18:29:22', '2019-03-16 07:04:49', 1, 1, 1),
 (6, 6, '2019 - 2020', '2019-03-01', '2020-03-31', 'Active', 0, '2019-03-16 07:05:16', '0000-00-00 00:00:00', 1, 0, 1),
 (7, 5, '2020 - 2021', '2019-03-19', '2019-03-19', 'Inactive', 0, '2019-04-26 17:15:40', '2019-04-26 17:15:40', 4, 4, 1);
 
@@ -1965,16 +2018,16 @@ INSERT INTO `std_subjects` (`std_subject_id`, `class_id`, `std_subject_name`) VA
 (3, 13, 'Computer,Chemistry,Physics,English A,English B,Urdu A,Urdu B,Islamiat'),
 (4, 14, 'Computer,Chemistry,Physics,English A,English B,Urdu A,Urdu B,Pak-Studies'),
 (5, 1, 'Math,English A,Urdu A,Computer,Pak-Studies,Drawing'),
-(6, 2, 'Math,English A,Urdu A,Islamiat'),
-(7, 3, 'Math,English A,Urdu A,Islamiat'),
-(8, 4, 'Math,English A,Urdu A,Islamiat'),
-(9, 5, 'Math,English A,Urdu A,Islamiat'),
-(10, 6, 'Math,English A,Urdu A,Islamiat'),
-(11, 7, 'Math,English A,Urdu A,Islamiat'),
-(12, 8, 'Math,English A,Urdu A,Islamiat'),
-(13, 9, 'Math,English A,Urdu A,Islamiat'),
-(14, 11, 'Math,English A,Urdu A,Islamiat'),
-(15, 12, 'Math,English A,Urdu A,Islamiat');
+(6, 2, 'Math,English A,Urdu A,Drawing'),
+(7, 3, 'Math,English A,Urdu A,Islamiat,Computer'),
+(8, 4, 'Math,English A,Islamiat'),
+(9, 5, 'Math,Urdu A,Islamiat'),
+(10, 6, 'English A,Urdu A,Islamiat'),
+(11, 7, 'Math,English A,Computer'),
+(12, 8, 'Math,Science,Islamiat'),
+(13, 9, 'Math,English A,English B'),
+(14, 11, 'Math,Urdu B,Urdu A,Islamiat'),
+(15, 12, 'Pak-Studies,Urdu A,Islamiat');
 
 -- --------------------------------------------------------
 
@@ -2034,6 +2087,30 @@ CREATE TABLE `teacher_subject_assign_detail` (
   `delete_status` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `teacher_subject_assign_detail`
+--
+
+INSERT INTO `teacher_subject_assign_detail` (`teacher_subject_assign_detail_id`, `teacher_subject_assign_detail_head_id`, `incharge`, `class_id`, `subject_id`, `no_of_lecture`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
+(1, 1, 0, 2, 1, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(2, 1, 0, 3, 1, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(3, 1, 0, 4, 1, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(4, 1, 0, 2, 8, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(5, 1, 0, 3, 8, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(6, 1, 0, 4, 8, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(7, 1, 0, 2, 10, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(8, 1, 0, 3, 10, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(9, 1, 0, 4, 10, '1 Lecture', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(10, 2, 0, 2, 2, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(11, 2, 0, 3, 2, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(12, 2, 0, 4, 2, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(13, 2, 0, 2, 4, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(14, 2, 0, 3, 4, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(15, 2, 0, 4, 4, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(16, 2, 0, 2, 7, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(17, 2, 0, 3, 7, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1),
+(18, 2, 0, 4, 7, '1 Lecture', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -2050,6 +2127,68 @@ CREATE TABLE `teacher_subject_assign_head` (
   `updated_by` int(11) NOT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `teacher_subject_assign_head`
+--
+
+INSERT INTO `teacher_subject_assign_head` (`teacher_subject_assign_head_id`, `teacher_id`, `teacher_subject_assign_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
+(1, 1, 'Kinza Mustafa', '2019-05-23 04:13:13', '0000-00-00 00:00:00', 1, 0, 1),
+(2, 3, 'Nauman', '2019-05-23 04:13:41', '0000-00-00 00:00:00', 1, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_table_detail`
+--
+
+CREATE TABLE `time_table_detail` (
+  `time_table_d_id` int(11) NOT NULL,
+  `time_table_h_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `room` varchar(10) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `time_table_detail`
+--
+
+INSERT INTO `time_table_detail` (`time_table_d_id`, `time_table_h_id`, `subject_id`, `start_time`, `end_time`, `room`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(2, 5, 8, '08:00:00', '08:40:00', 'Room-1', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00'),
+(3, 5, 9, '08:40:00', '09:20:00', 'Room-1', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00'),
+(4, 5, 2, '09:20:00', '10:00:00', 'Room-1', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00'),
+(5, 5, 4, '10:20:00', '11:00:00', 'Room-1', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00'),
+(6, 5, 1, '11:00:00', '11:40:00', 'Room-1', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_table_head`
+--
+
+CREATE TABLE `time_table_head` (
+  `time_table_h_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `days` varchar(200) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Active',
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `time_table_head`
+--
+
+INSERT INTO `time_table_head` (`time_table_h_id`, `class_id`, `days`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(5, 1, 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday', 'Active', 1, 0, '2019-05-10 06:31:30', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2083,52 +2222,9 @@ INSERT INTO `user` (`id`, `branch_id`, `first_name`, `last_name`, `username`, `e
 (1, 5, 'Dexterous', 'Developers', 'dexdevs', 'anas@dexdevs.com', 'dexdevs', 'pQEdYTAVV_wLtqIALoSZ-vELIA0mdsOx', '$2y$13$ClHehtUhZZQqsocCsPnEwer2wfQd4gTcpwSOJTkWnvoMD/oFzfCpG', NULL, 'userphotos/dexdevs_photo.png', 1, 10, 1552727256, 1552727256),
 (3, 5, 'Super', 'Admin', 'Superadmin', 'superadmin@gmail.com', 'Superadmin', 'xqZuT3vxOiZ-rsN56V6wjZhi7VXMpKnD', '$2y$13$9TnNqeWAHECax0kmKSBzK.tGW/ePQm6IkutslR9ITYIXocjs4nnX.', NULL, 'userphotos/Superadmin_photo.png', 1, 10, 1552883449, 1552883449),
 (4, 6, 'Dexterous', 'Developers', 'dexdevsdeveloper', 'admin@dexdevs.com', 'dexdevs2', 'm4vI7EWTZ61_eTBrJf_tliCWdgRfCKzM', '$2y$13$k6pJmBNM4hrkgZh0SYhcC.dZLxMLOjsJtVo55TV4QiVIJ4F6t7lIW', NULL, 'userphotos/dexdevs2_photo.png', 1, 10, 1552894313, 1552894313),
-(5, 5, 'Ihsan-ul-Haq', '', 'Ihsan-ul-Haq', 'ihsan@gmail.com', 'Student', 'YhAUQBMAbxKoGoOKQUCYtRmSzeGVgTkC', '$2y$13$slaoR8WgBm/Cw8xf7s42uOpzu3rzlyQOA3IITvE..uJQq5q42boni', NULL, 'uploads/Ihsan-ul-Haq_photo.jpg', 1, 10, 1553876932, 1553876932),
-(6, 5, 'M.Ibrahim', '', 'M.Ibrahim', 'ibrahim@yahoo.com', 'Parent', '1TDh1_yAaACE06N-3zYlwKkdSrd4XGZw', '$2y$13$foDb1DlWdzSNXASbTBydL.K8fg4W/gu6DpZJGvGdnQ2CLg2SHU5Ai', NULL, 'uploads/Ihsan-ul-Haq_photo.jpg', 1, 10, 1553876933, 1553876933),
-(9, 5, 'Testing 1', '', 'Testing 1', '', 'Student', 'MqOnmKAzSW2OggPy8wlXEQPkxPVfMLP2', '$2y$13$BotKemaxfH9xIjzyLQtyV.LNhdpQ6MgFeppuzWzmfTFPkobjGW2Lq', NULL, 'uploads/Testing 1_photo.jpg', 1, 10, 1553932862, 1553932862),
-(10, 5, 'wwwwww', '', 'wwwwww', 'ahmed@gmail.com', 'Parent', '3h5HuNHkjAoU-d7uxte1geh_siugXfNP', '$2y$13$LlUR6vVGeBn9US1fkDcpi.x1lqjhdceIK8yp.MsKBlClk7Cwq4bZK', NULL, 'uploads/Testing 1_photo.jpg', 1, 10, 1553932863, 1553932863),
-(13, 5, 'Asra', '', 'Asra', 'fatim44@gmail.comj', 'Student', '9o0jc8p_YOyUptheKmEV_XvmfDt7WnCv', '$2y$13$Qd2VcVAtHxGZrEm/FvQK5uEBbg/NqmDC8a66sRDNLLWuGb2Gl7DAi', NULL, 'uploads/Asra_photo.jpg', 1, 10, 1553933369, 1553933369),
-(14, 5, 'M. Ahmed', '', 'M. Ahmed', 'ibrahim@yahoo.comj', 'Parent', 'juKYwUgW8CyhFNIQdIOCntRrka5qDHob', '$2y$13$om93XmCfyTx0F9AfOZQgwu4jf/AOIgShbeQrqKezWNmkMRrmDXOyS', NULL, 'uploads/Asra_photo.jpg', 1, 10, 1553933370, 1553933370),
-(17, 5, 'uygjgv', '', 'uygjgv', 'hdfgd@gvjv.com', 'Student', 'hGR0UHnx97AKmWSO3_NcCwsFR1oZyjLm', '$2y$13$58OkeEG22cvRwHhvpeJVaOnys1UqAF5LALAKliF2HOhqVv1QHr6nq', NULL, 'uploads/uygjgv_photo.jpg', 1, 10, 1553933806, 1553933806),
-(18, 5, 'M.Ibrahimkbkjhj', '', 'M.Ibrahimkbkjhj', 'ahmed@gmail.comkkkk', 'Parent', 'nOCgxEh_8STPgjx_vMi8pQp6tS_UItaS', '$2y$13$Ug9jVMc0aYQsf9jN9pavTOnyBoY7JW1Zlp7mX//F4BCcsIiahOogW', NULL, 'uploads/uygjgv_photo.jpg', 1, 10, 1553933807, 1553933807),
-(19, 5, 'uygjgvhbhjbj', '', 'uygjgvhbhjbj', 'hdfgd@gvjv.commmm', 'Student', '9EYMJGBEpQKPd_wDDKZjxzl3WBsLDYJn', '$2y$13$BmTWlHqsEwJzOCN2Hf6kO.Dbr204Xv3qzQVo1hkaZJXVnmzrs6HhW', NULL, 'uploads/uygjgvhbhjbj_photo.jpg', 1, 10, 1553933914, 1553933914),
-(20, 5, 'M.Ibrahimkbkjhjkkk', '', 'M.Ibrahimkbkjhjkkk', 'ahmed@gmail.comkkkkmm', 'Parent', 'LzRb4Ds_F7qMvpAmKI0S4XXta0Z4_vdh', '$2y$13$XYSG02DE.dlvlI9.vzluuOacn3G7JrCy0YQL5AlPGZlDx7.q9cTu2', NULL, 'uploads/uygjgvhbhjbj_photo.jpg', 1, 10, 1553933915, 1553933915),
-(21, 5, 'uygjgvhbhjbjmoiio', '', 'uygjgvhbhjbjmoiio', 'hdfgd@gvjv.commmm444', 'Student', 'qjBA_eMGQsS54ifne9j-Zn1VuxEqyo3O', '$2y$13$z15I8HlXcUehkiDpM3.L/uUXETzx5GZP4fexHgUo61/h4q.u.ockS', NULL, 'uploads/uygjgvhbhjbjmoiio_photo.jpg', 1, 10, 1553933957, 1553933957),
-(22, 5, 'M.Ibrahimkbkjhjkkkss', '', 'M.Ibrahimkbkjhjkkksss', 'ahmed@gmail.comkkkkmm111', 'Parent', 'SuD6UXVFTcRZihpwbUFBHCRrnAluUJ6T', '$2y$13$Iat8R.a8hr9VpweedPOahuCZLkOGlgKJ/DgEPD4VJTsS1iTeru6SW', NULL, 'uploads/uygjgvhbhjbjmoiio_photo.jpg', 1, 10, 1553933958, 1553933958),
-(28, 5, '', '', '31303-3456789-0', 'zahid@gmail.com', 'Student', 'c9-oZ7eEtUJhqdlwcQ4NEwKWTqs6xyMn', '$2y$13$5qx4neqgy7ZydQm0JKycUuwXWiuFUwtqAOYlPZgqPCD1R/eypVon6', NULL, 'uploads/std_default.jpg', 1, 10, 1553937294, 1553937294),
-(29, 5, '', '', '31303-3456789-1', 'ibrahim@gmail.com', 'Parent', 'NgkBxjlFlm3yTt6OLQSJhN0bdgOhqgyN', '$2y$13$hCf1PZCtoH7XAYjSE5NVgua.wZ9E/h2TCVqDuc0iPJb847KeEHRmq', NULL, 'uploads/std_default.jpg', 1, 10, 1553937295, 1553937295),
-(30, 5, '', '', '31303-1123456-7', 'nadia@gmail.com', 'Student', 'ys6HuC41jCc4oSMwsN0rICo3BU4gPDMR', '$2y$13$rclLNs7PcbhW9yTXZ7ELJ.Qmcs.AYyGA5gBHPcNn2znHARhcKQRwK', NULL, 'uploads/std_default.jpg', 1, 10, 1553937628, 1553937628),
-(31, 5, '', '', '31303-9876543-0', 'iftikhar@gmail.com', 'Parent', 'HDJBFBmssXY-7Z-ArlQOETapWML_Vtq_', '$2y$13$xgn0P3tFIicypl.nXcvz2e9KV5RIKKRnRgbNZ0ESedkB.xbaHiISm', NULL, 'uploads/std_default.jpg', 1, 10, 1553937629, 1553937629),
-(36, 5, '', '', '31303-2345698-7', 'asmat@gmail.com', 'Student', 'fRb3hJXoJ_jaciI7boaiUIdkkiwHXYXD', '$2y$13$s14gEFeBq5ByZDKICdhUs.OxGweNmNN0JGqUQnw8FCmsy31mdExOy', NULL, 'uploads/Asmat Ara_photo.jpg', 1, 10, 1554116293, 1554116293),
-(37, 5, '', '', '98765-4312345-6', 'shafi@gmail.com', 'Parent', 'UER6Cj6gxltg6x4rzwd2Q1XIvQBW53VP', '$2y$13$13drBwftKaK/0sVSepurGOVUTYZu/.t/VnYf5zjLVGWQa3BZQD3ia', NULL, 'uploads/Asmat Ara_photo.jpg', 1, 10, 1554116294, 1554116294),
-(38, 5, '', '', '87654-3236789-0', 'aisha@gmail.com', 'Student', 'h-jlmTGKCBbHNnuoSoPF2DEfI7W1QCzf', '$2y$13$kA6jM/ShH8NbH1fxIlys.OcKC4bjOWI.8WZcQImk50dziNZUkklgS', NULL, 'uploads/Aisha Ameen_photo.jpg', 1, 10, 1554116767, 1554116767),
-(39, 5, '', '', '34567-8909876-5', 'ameen@gmail.com', 'Parent', '6-gkPVNjnEu9YHhngAR6Byo5Z8d_xnLt', '$2y$13$xHa/Rt0ecdBYqMGAumOgTOhxJZyhn.R4Um2TquV9tV0g9OoLbsbQK', NULL, 'uploads/Aisha Ameen_photo.jpg', 1, 10, 1554116768, 1554116768),
-(41, 5, '', '', '31303-4944949-4', 'saif@gmail.com', 'Student', 'AZdVtNQSIMYr8Mskq8BSLdYx-k86j2vj', '$2y$13$KCQ1UwvqHhkYyGYLtJ04iuBHXBL2jOddDfIiN/SnMZBC3t1hCEFFa', NULL, 'uploads/std_default.jpg', 1, 10, 1554189985, 1554189985),
-(42, 5, '', '', '31303-0437738-3', 'anasshafqat@gmail.com', 'Parent', '8hBoUwgV3BT5e7_Cr1ndQxowe4s6vkRj', '$2y$13$NfQxk1NyWH9uJOdu7qn7beKKDh2ZsbGCTqrhVMGFzp2yWV7Xcu0WO', NULL, 'uploads/std_default.jpg', 1, 10, 1554189986, 1554189986),
-(45, 5, '', '', '31303-4944949-5', 'saif02@gmail.com', 'Student', 'Jz4Ct2vVt_PhKd_aE9LlCXEsHj_K_Qx7', '$2y$13$M9H.19qDcPJYDD5ewmdRWehUEIPsL9lTduol4gr4LTE5Irm9HE9M.', NULL, 'uploads/std_default.jpg', 1, 10, 1554190177, 1554190177),
-(46, 5, '', '', '31303-0437738-4', 'anasshafqat001@gmail.com', 'Parent', 'yxCyJp-x1PXdNvPegxJTnEtgecuZ6lZ1', '$2y$13$QByXz/5taD.L63zRaXnciuWMb1fcztJLww6FZEOMhmdFe1jSmmOJi', NULL, 'uploads/std_default.jpg', 1, 10, 1554190178, 1554190178),
-(47, 5, '', '', '31303-4977949-5', 'saif03@gmail.com', 'Student', 'DPY4qR1BloCcrtm05aBEvwbvzWUjrfzO', '$2y$13$YplVem/a.4G5alfJgq6ju.bNb4VVXsqS97jb6IsCNalWmqk0hsQvy', NULL, 'uploads/std_default.jpg', 1, 10, 1554190386, 1554190386),
-(48, 5, '', '', '31303-0438738-4', 'anasshafqat021@gmail.com', 'Parent', 'AkjFHItltztxSvNGBgnpcaBbRz2QSR7_', '$2y$13$qHR4ylBTKs5Dp2zZJsvzJ.tuKZErQ9hXUIteK2zdiANAtzel/g1mC', NULL, 'uploads/std_default.jpg', 1, 10, 1554190387, 1554190387),
-(49, 5, '', '', '31303-8765670-9', 'waqas@gmail.com', 'Student', 'aG1VzSxGkDFltyO-WtRV6-ER3Z-c3bTI', '$2y$13$A3U1Q3lh2EvABFSSk8uxK.G/WVO1Wl.iI6e6qS987xugYN26tOtQi', NULL, 'uploads/std_default.jpg', 1, 10, 1554194451, 1554194451),
-(50, 5, '', '', '31303-7655676-4', 'umer@gmail.com', 'Parent', 'bfl-5ycyM_tCy3EFblr1UZVRQvtp9sP5', '$2y$13$YaW.T7SaAccegVhPFZWLwOX5sdGZAZFIQhUjcXjqZ.6FuMqDnxeP2', NULL, 'uploads/std_default.jpg', 1, 10, 1554194452, 1554194452),
-(51, 5, '', '', '31303-8765679-9', 'waqas01@gmail.com', 'Student', 'frEz0ytpHO_gAdthytF4lQCF0Yy3pqtX', '$2y$13$VIb6IXuS82Od9NpxgoXpuO0s8sp.t/Uy7OGH6WfQZB.4gP0ZYKX12', NULL, 'uploads/std_default.jpg', 1, 10, 1554194545, 1554194545),
-(52, 5, '', '', '31303-7655876-4', 'umer01@gmail.com', 'Parent', 'ohCn22tTF0a1vDlb1EmGN97oOaeuO91j', '$2y$13$OsZZShYl0AO6MQOvj.ax0edbt9e9iDemDqe9MV2Kj4ERRnj0HD5ZO', NULL, 'uploads/std_default.jpg', 1, 10, 1554194546, 1554194546),
-(54, 5, '', '', '31303-8785679-9', 'waqas02@gmail.com', 'Student', 'kBsZRR5GQD1C3l82eWqGUWkhjyCA74v8', '$2y$13$AeEwzLB7Az7vyNjwvZTyselJKcoPhydclrm8oJfxunr55RTIPLZdK', NULL, 'uploads/std_default.jpg', 1, 10, 1554194770, 1554194770),
-(55, 5, '', '', '31303-8655876-4', 'umer02@gmail.com', 'Parent', 'oGx3RiIEgHRVSYILZd8kD6eALjDZOXX0', '$2y$13$2SELQvUjzhs8SV0n/AXnM.NDMkCGwEpN3WK0NByZCAn8lqZ/ncIJO', NULL, 'uploads/std_default.jpg', 1, 10, 1554194771, 1554194771),
-(56, 5, '', '', '31303-8385679-9', 'waqas03@gmail.com', 'Student', 'Y9QCyCECqIfe09soiHNTIJDRJTGBHrAC', '$2y$13$gvoIpYU0EylLZY/ugQ3Ty.DCzmXk55cbTOgrH7hKADdvdtWvxB2hm', NULL, 'uploads/std_default.jpg', 1, 10, 1554195027, 1554195027),
-(57, 5, '', '', '31303-8675876-4', 'umer03@gmail.com', 'Parent', '9bPWjQEYIT24LzHKyOUds82AUhWoAuv7', '$2y$13$kKA2pngdTXisBRmzeNqRQOtHZOTyayWQMrRJWn0N6OxgrHAegeQ3W', NULL, 'uploads/std_default.jpg', 1, 10, 1554195028, 1554195028),
-(58, 5, '', '', '31303-7654456-7', 'sheeza@gmail.com', 'Student', 'd5jVDFqxEjaMzVjky1_zHoBXKxHvm3dV', '$2y$13$J3zavmZIiSf1pdea3XkITeJNN37xoaOhWezofv8NnZ0Mxy9bF3NBO', NULL, 'uploads/Sheeza _photo.jpg', 1, 10, 1554195629, 1554195629),
-(59, 5, '', '', '31303-6546676-7', 'mumer@gmail.com', 'Parent', 'hsBBvUCe-th9rbJKn5jp3oFmq2M4HIda', '$2y$13$mfgPvfqH5QNqNKeVbSAPk.HW7L/7PWfd4doX2VlFru3vrkCeuLAkq', NULL, 'uploads/Sheeza _photo.jpg', 1, 10, 1554195630, 1554195630),
-(60, 5, '', '', '31303-8489489-4', 'zahid@gmail.com', 'Student', '98SjZ6mjC5LMGmp7kIx_FmR4yx5XY5Hv', '$2y$13$QqM8vOSY5k2kAyDlLCKwxOcxcClyvt0pziSujAtV5RpkmM99Y7KA2', NULL, 'uploads/Zahid Saeed_photo.jpg', 1, 10, 1554354495, 1554354495),
-(61, 5, '', '', '31303-8489489-3', 'zahid@gmail.com', 'Student', 'RaTgt9C48sYZhN5ylGqTECTM0L74QxNj', '$2y$13$CT0tZ3Z6LkCThFmHo7jhRem67NtdwdftBTgwPLJvV85RRHVoszJlG', NULL, 'uploads/Zahid Saeed_photo.jpg', 1, 10, 1554354713, 1554354713),
-(62, 5, '', '', '31303-8489489-5', 'zahid@gmail.com', 'Student', 'THFxW1QSP_EJRBMlEeo2s5nSipncKdRx', '$2y$13$MxegM3CywmKpEOX9H7YHBO1KDqjw0JfvhXw2x1vsFHPq7Ezxgoel2', NULL, '', 1, 10, 1554354890, 1554354890),
-(63, 5, '', '', '31303-0437738-5', '', 'Parent', '2TbJGsB0LOu3SYnbzDSfFact4AX9Uwad', '$2y$13$RfJaNj86L2/aXS1ptQ0YEevhMK9W1yM0U7OOkJVL.cHdtf2hTI516', NULL, '', 1, 10, 1554354891, 1554354891),
-(64, 5, '', '', '31303-0561894-8', '', 'Student', 'Gx3-xaO4KjFlLPEhlmUFPRcwltF2Kkii', '$2y$13$pxt2LJ.4H4dv9CMCgNN0kucgw/uNcakd/cZh7ZRnmjxWugG6BbxD.', NULL, 'uploads/std_default.jpg', 1, 10, 1554361130, 1554361130),
-(65, 5, '', '', '31303-3456789-8', 'sana@gmail.com', 'Employee', 'CKU0oqIQ3BDUSHjxFuBHI2jvDjPsI4Ka', '$2y$13$gPcSdvqzjZQzLE9HK/YGneH95MRW7NTWZkxzs73WhTRT2MDQOhppq', NULL, 'uploads/Sana Asad_emp_photo.jpg', 1, 10, 1554363082, 1554363082),
-(66, 6, '', '', '31303-4567777-7', '', 'Student', 'XLZkURQ6aK2UiaMkNilamhS_FRnDrYfR', '$2y$13$nnGJRkuULVto2Tly2hWxyeezgK3jqMmzkcslc2HjftfpV4EF9jEXS', NULL, 'uploads/std_default.jpg', 1, 10, 1554535682, 1554535682),
-(67, 6, '', '', '31303-5678987-8', '', 'Parent', 'BMpNtagvU2BB8IB5WIcl3PvSEDCvTfAb', '$2y$13$28blbQRXfZvOnAyq1aJGP.RhpoWEp/BtGnw6UNvAmmQzesE.4RhKC', NULL, 'uploads/std_default.jpg', 1, 10, 1554535683, 1554535683),
 (68, 5, 'Kinza', 'Mustafa', '45102-0511722-2', 'kinza.fatima.522@gmail.com', 'Teacher', 'qEH5YVuWfMLOZ3JgdoeYjokjZSkuaj2-', '$2y$13$kKWHsv4wBumdUKy4BcasVuoaH5CDd2OoelxrJ29fnC8f6R1HI40b.', NULL, 'userphotos/45102-0511722-2_photo.jpg', 1, 10, 1555571135, 1555571135),
-(69, 5, 'Nauman', '', '31303-0511722-2', 'noman@gmail.com', 'Teacher', 'LkTwwUMGN5ESQtuzyjnzLAhDSHAgLwT-', '$2y$13$udjSFi6/Or.uC/JqZQs7suWvAGj0UH0bRMdjwStlKDsasqGgpnHPi', NULL, 'userphotos/31303-0511722-2_photo.jpg', 1, 10, 1555571173, 1555571173);
+(69, 5, 'Nauman', '', '31303-0511722-2', 'noman@gmail.com', 'Teacher', 'LkTwwUMGN5ESQtuzyjnzLAhDSHAgLwT-', '$2y$13$udjSFi6/Or.uC/JqZQs7suWvAGj0UH0bRMdjwStlKDsasqGgpnHPi', NULL, 'userphotos/31303-0511722-2_photo.jpg', 1, 10, 1555571173, 1555571173),
+(97, 5, '', '', 'admin', 'admin@jammiaqadria.com', 'Admin', 'qeScJb_C5FfmfIiXb0MA2WWtyydOUk5L', '$2y$13$OKq.YDLvKljKeu.jdbfM0u/U2kaB5V1kdNBFjMvoN.TZchI7mf6CS', NULL, 'userphotos/admin_photo.jpg', 1, 10, 1560541714, 1560541714);
 
 -- --------------------------------------------------------
 
@@ -2329,13 +2425,22 @@ ALTER TABLE `exams_criteria`
   ADD KEY `std_enroll_head_id` (`class_id`);
 
 --
+-- Indexes for table `exams_room`
+--
+ALTER TABLE `exams_room`
+  ADD PRIMARY KEY (`exam_room_id`),
+  ADD KEY `exams_room_ibfk_2` (`class_head_id`),
+  ADD KEY `exams_room_ibfk_1` (`exam_schedule_id`),
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `exam_room` (`exam_room`);
+
+--
 -- Indexes for table `exams_schedule`
 --
 ALTER TABLE `exams_schedule`
   ADD PRIMARY KEY (`exam_schedule_id`),
-  ADD KEY `exam_criteria_id` (`exam_criteria_id`,`subject_id`,`emp_id`),
-  ADD KEY `subject_id` (`subject_id`),
-  ADD KEY `emp_id` (`emp_id`);
+  ADD KEY `exam_criteria_id` (`exam_criteria_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `fee_month_detail`
@@ -2407,7 +2512,8 @@ ALTER TABLE `marks_details`
 ALTER TABLE `marks_head`
   ADD PRIMARY KEY (`marks_head_id`),
   ADD KEY `std_id` (`std_id`),
-  ADD KEY `exam_criteria_id` (`exam_criteria_id`);
+  ADD KEY `exam_criteria_id` (`exam_criteria_id`),
+  ADD KEY `class_head_id` (`class_head_id`);
 
 --
 -- Indexes for table `marks_weightage_details`
@@ -2454,6 +2560,12 @@ ALTER TABLE `notice`
   ADD PRIMARY KEY (`notice_id`),
   ADD KEY `created_by` (`created_by`),
   ADD KEY `updated_by` (`updated_by`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`);
 
 --
 -- Indexes for table `sms`
@@ -2606,6 +2718,21 @@ ALTER TABLE `teacher_subject_assign_head`
   ADD KEY `teacher_id` (`teacher_id`);
 
 --
+-- Indexes for table `time_table_detail`
+--
+ALTER TABLE `time_table_detail`
+  ADD PRIMARY KEY (`time_table_d_id`),
+  ADD KEY `time_table_h_id` (`time_table_h_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Indexes for table `time_table_head`
+--
+ALTER TABLE `time_table_head`
+  ADD PRIMARY KEY (`time_table_h_id`),
+  ADD KEY `time_table_head_ibfk_1` (`class_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -2629,286 +2756,367 @@ ALTER TABLE `users`
 --
 ALTER TABLE `account_nature`
   MODIFY `account_nature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `account_register`
 --
 ALTER TABLE `account_register`
   MODIFY `account_register_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `account_transactions`
 --
 ALTER TABLE `account_transactions`
   MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
   MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `concession`
 --
 ALTER TABLE `concession`
   MODIFY `concession_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `custom_sms`
 --
 ALTER TABLE `custom_sms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
   MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `emails`
 --
 ALTER TABLE `emails`
   MODIFY `emial_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
 -- AUTO_INCREMENT for table `emp_attendance`
 --
 ALTER TABLE `emp_attendance`
-  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
 --
 -- AUTO_INCREMENT for table `emp_departments`
 --
 ALTER TABLE `emp_departments`
   MODIFY `emp_department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `emp_designation`
 --
 ALTER TABLE `emp_designation`
   MODIFY `emp_designation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `emp_documents`
 --
 ALTER TABLE `emp_documents`
   MODIFY `emp_document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
 --
 -- AUTO_INCREMENT for table `emp_info`
 --
 ALTER TABLE `emp_info`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
 --
 -- AUTO_INCREMENT for table `emp_leave`
 --
 ALTER TABLE `emp_leave`
-  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `emp_reference`
 --
 ALTER TABLE `emp_reference`
-  MODIFY `emp_ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `emp_ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `emp_type`
 --
 ALTER TABLE `emp_type`
   MODIFY `emp_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
   MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `exams_category`
 --
 ALTER TABLE `exams_category`
-  MODIFY `exam_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `exam_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `exams_criteria`
 --
 ALTER TABLE `exams_criteria`
   MODIFY `exam_criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `exams_room`
+--
+ALTER TABLE `exams_room`
+  MODIFY `exam_room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `exams_schedule`
 --
 ALTER TABLE `exams_schedule`
   MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `fee_month_detail`
 --
 ALTER TABLE `fee_month_detail`
   MODIFY `month_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `fee_transaction_detail`
 --
 ALTER TABLE `fee_transaction_detail`
-  MODIFY `fee_trans_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `fee_trans_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `fee_transaction_head`
 --
 ALTER TABLE `fee_transaction_head`
-  MODIFY `fee_trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `fee_trans_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `fee_type`
 --
 ALTER TABLE `fee_type`
   MODIFY `fee_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
   MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `installment`
 --
 ALTER TABLE `installment`
   MODIFY `installment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `institute`
 --
 ALTER TABLE `institute`
   MODIFY `institute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `institute_name`
 --
 ALTER TABLE `institute_name`
   MODIFY `Institute_name_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT for table `marks_details`
 --
 ALTER TABLE `marks_details`
-  MODIFY `marks_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `marks_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `marks_head`
 --
 ALTER TABLE `marks_head`
-  MODIFY `marks_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `marks_head_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `marks_weightage_details`
 --
 ALTER TABLE `marks_weightage_details`
-  MODIFY `weightage_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `weightage_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+
 --
 -- AUTO_INCREMENT for table `marks_weightage_head`
 --
 ALTER TABLE `marks_weightage_head`
-  MODIFY `marks_weightage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `marks_weightage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
 --
 -- AUTO_INCREMENT for table `marks_weightage_type`
 --
 ALTER TABLE `marks_weightage_type`
   MODIFY `weightage_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `msg_of_day`
 --
 ALTER TABLE `msg_of_day`
   MODIFY `msg_of_day_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `notice`
 --
 ALTER TABLE `notice`
   MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
 -- AUTO_INCREMENT for table `sms`
 --
 ALTER TABLE `sms`
   MODIFY `sms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `std_academic_info`
 --
 ALTER TABLE `std_academic_info`
-  MODIFY `academic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `academic_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_attendance`
 --
 ALTER TABLE `std_attendance`
   MODIFY `std_attend_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_class_name`
 --
 ALTER TABLE `std_class_name`
-  MODIFY `class_name_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `class_name_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT for table `std_enrollment_detail`
 --
 ALTER TABLE `std_enrollment_detail`
   MODIFY `std_enroll_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_enrollment_head`
 --
 ALTER TABLE `std_enrollment_head`
-  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `std_fee_details`
 --
 ALTER TABLE `std_fee_details`
-  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_fee_installments`
 --
 ALTER TABLE `std_fee_installments`
   MODIFY `fee_installment_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_fee_pkg`
 --
 ALTER TABLE `std_fee_pkg`
   MODIFY `std_fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `std_guardian_info`
 --
 ALTER TABLE `std_guardian_info`
-  MODIFY `std_guardian_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `std_guardian_info_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_ice_info`
 --
 ALTER TABLE `std_ice_info`
-  MODIFY `std_ice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `std_ice_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_inquiry`
 --
 ALTER TABLE `std_inquiry`
   MODIFY `std_inquiry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `std_personal_info`
 --
 ALTER TABLE `std_personal_info`
-  MODIFY `std_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `std_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `std_sections`
 --
 ALTER TABLE `std_sections`
   MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `std_sessions`
 --
 ALTER TABLE `std_sessions`
   MODIFY `session_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `std_subjects`
 --
 ALTER TABLE `std_subjects`
   MODIFY `std_subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
   MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `teacher_subject_assign_detail`
 --
 ALTER TABLE `teacher_subject_assign_detail`
-  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `teacher_subject_assign_head`
 --
 ALTER TABLE `teacher_subject_assign_head`
-  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `time_table_detail`
+--
+ALTER TABLE `time_table_detail`
+  MODIFY `time_table_d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `time_table_head`
+--
+ALTER TABLE `time_table_head`
+  MODIFY `time_table_h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- Constraints for dumped tables
 --
@@ -3000,12 +3208,20 @@ ALTER TABLE `exams_criteria`
   ADD CONSTRAINT `exams_criteria_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `std_class_name` (`class_name_id`);
 
 --
+-- Constraints for table `exams_room`
+--
+ALTER TABLE `exams_room`
+  ADD CONSTRAINT `exams_room_ibfk_1` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exams_schedule` (`exam_schedule_id`),
+  ADD CONSTRAINT `exams_room_ibfk_2` FOREIGN KEY (`class_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
+  ADD CONSTRAINT `exams_room_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES `emp_info` (`emp_id`),
+  ADD CONSTRAINT `exams_room_ibfk_4` FOREIGN KEY (`exam_room`) REFERENCES `rooms` (`room_id`);
+
+--
 -- Constraints for table `exams_schedule`
 --
 ALTER TABLE `exams_schedule`
   ADD CONSTRAINT `exams_schedule_ibfk_1` FOREIGN KEY (`exam_criteria_id`) REFERENCES `exams_criteria` (`exam_criteria_id`),
-  ADD CONSTRAINT `exams_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
-  ADD CONSTRAINT `exams_schedule_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES `emp_info` (`emp_id`);
+  ADD CONSTRAINT `exams_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
 -- Constraints for table `fee_transaction_detail`
@@ -3021,7 +3237,6 @@ ALTER TABLE `fee_transaction_head`
   ADD CONSTRAINT `fee_transaction_head_ibfk_10` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`),
   ADD CONSTRAINT `fee_transaction_head_ibfk_11` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`),
   ADD CONSTRAINT `fee_transaction_head_ibfk_6` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
-  ADD CONSTRAINT `fee_transaction_head_ibfk_8` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`),
   ADD CONSTRAINT `fee_transaction_head_ibfk_9` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`);
 
 --
@@ -3036,7 +3251,7 @@ ALTER TABLE `marks_details`
 --
 ALTER TABLE `marks_head`
   ADD CONSTRAINT `marks_head_ibfk_1` FOREIGN KEY (`exam_criteria_id`) REFERENCES `exams_criteria` (`exam_criteria_id`),
-  ADD CONSTRAINT `marks_head_ibfk_2` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
+  ADD CONSTRAINT `marks_head_ibfk_3` FOREIGN KEY (`class_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
 
 --
 -- Constraints for table `marks_weightage_details`
@@ -3057,7 +3272,6 @@ ALTER TABLE `marks_weightage_head`
 -- Constraints for table `std_academic_info`
 --
 ALTER TABLE `std_academic_info`
-  ADD CONSTRAINT `std_academic_info_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`),
   ADD CONSTRAINT `std_academic_info_ibfk_3` FOREIGN KEY (`subject_combination`) REFERENCES `std_subjects` (`std_subject_id`),
   ADD CONSTRAINT `std_academic_info_ibfk_4` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`);
 
@@ -3070,7 +3284,6 @@ ALTER TABLE `std_attendance`
   ADD CONSTRAINT `std_attendance_ibfk_3` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
   ADD CONSTRAINT `std_attendance_ibfk_4` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`),
   ADD CONSTRAINT `std_attendance_ibfk_5` FOREIGN KEY (`teacher_id`) REFERENCES `teacher_subject_assign_head` (`teacher_subject_assign_head_id`),
-  ADD CONSTRAINT `std_attendance_ibfk_6` FOREIGN KEY (`student_id`) REFERENCES `std_personal_info` (`std_id`),
   ADD CONSTRAINT `std_attendance_ibfk_7` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
@@ -3083,8 +3296,7 @@ ALTER TABLE `std_class_name`
 -- Constraints for table `std_enrollment_detail`
 --
 ALTER TABLE `std_enrollment_detail`
-  ADD CONSTRAINT `std_enrollment_detail_ibfk_1` FOREIGN KEY (`std_enroll_detail_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
-  ADD CONSTRAINT `std_enrollment_detail_ibfk_2` FOREIGN KEY (`std_enroll_detail_std_id`) REFERENCES `std_personal_info` (`std_id`);
+  ADD CONSTRAINT `std_enrollment_detail_ibfk_1` FOREIGN KEY (`std_enroll_detail_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
 
 --
 -- Constraints for table `std_enrollment_head`
@@ -3096,16 +3308,9 @@ ALTER TABLE `std_enrollment_head`
   ADD CONSTRAINT `std_enrollment_head_ibfk_4` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`);
 
 --
--- Constraints for table `std_fee_details`
---
-ALTER TABLE `std_fee_details`
-  ADD CONSTRAINT `std_fee_details_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
-
---
 -- Constraints for table `std_fee_installments`
 --
 ALTER TABLE `std_fee_installments`
-  ADD CONSTRAINT `std_fee_installments_ibfk_1` FOREIGN KEY (`std_fee_id`) REFERENCES `std_fee_details` (`fee_id`),
   ADD CONSTRAINT `std_fee_installments_ibfk_2` FOREIGN KEY (`installment_no`) REFERENCES `installment` (`installment_id`);
 
 --
@@ -3114,18 +3319,6 @@ ALTER TABLE `std_fee_installments`
 ALTER TABLE `std_fee_pkg`
   ADD CONSTRAINT `std_fee_pkg_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `std_class_name` (`class_name_id`),
   ADD CONSTRAINT `std_fee_pkg_ibfk_2` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`);
-
---
--- Constraints for table `std_guardian_info`
---
-ALTER TABLE `std_guardian_info`
-  ADD CONSTRAINT `std_guardian_info_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
-
---
--- Constraints for table `std_ice_info`
---
-ALTER TABLE `std_ice_info`
-  ADD CONSTRAINT `std_ice_info_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
 
 --
 -- Constraints for table `std_inquiry`
@@ -3171,6 +3364,19 @@ ALTER TABLE `teacher_subject_assign_detail`
 --
 ALTER TABLE `teacher_subject_assign_head`
   ADD CONSTRAINT `teacher_subject_assign_head_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `emp_info` (`emp_id`);
+
+--
+-- Constraints for table `time_table_detail`
+--
+ALTER TABLE `time_table_detail`
+  ADD CONSTRAINT `time_table_detail_ibfk_1` FOREIGN KEY (`time_table_h_id`) REFERENCES `time_table_head` (`time_table_h_id`),
+  ADD CONSTRAINT `time_table_detail_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
+
+--
+-- Constraints for table `time_table_head`
+--
+ALTER TABLE `time_table_head`
+  ADD CONSTRAINT `time_table_head_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
 
 --
 -- Constraints for table `user`

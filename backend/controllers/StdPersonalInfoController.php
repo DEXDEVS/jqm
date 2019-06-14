@@ -278,7 +278,7 @@ class StdPersonalInfoController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-info','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate()){
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
@@ -402,7 +402,7 @@ class StdPersonalInfoController extends Controller
             $message = $_POST['message'];
         
             $type = "xml";
-            $id = "Brookfieldclg";
+            $id = "Brookfieldclgggg";
             $pass = "college42";
             $lang = "English";
             $mask = "Brookfield";

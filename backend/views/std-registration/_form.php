@@ -68,7 +68,7 @@ use yii\helpers\Url;
         <!-- box start -->
         <div class="box box-primary">
             <div class="box-header">
-                <h2 style="color: #001F3F;"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Student Registration Form / طالب علم رجسٹریشن فارم </h2>
+                <h2 style="color: #001F3F;"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Student Registration Form / طالب علم  کا  دا خلہ  فارم</h2>
             </div>
             <div class="box-body">  
                 <!-- Personal info start -->
@@ -87,15 +87,9 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_name')->textInput(['maxlength' => true,'id' => 'std_name', 'required'=> true]) ?>
                 </div>
                 <div class="col-md-4">
-                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 130px; top: 4px"></i>
-                    <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true,'id' => 'std_father_name']) ?>
-                </div>  
-                <div class="col-md-4">
-                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 136px; top: 4px"></i>
+                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 235px; top: 4px"></i>
                     <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
-                </div>     
-            </div>
-            <div class="row"> 
+                </div> 
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 93px; top: 4px"></i>
                     <label>Student DOB</label>
@@ -112,7 +106,24 @@ use yii\helpers\Url;
                             'todayBtn' => true
                         ]
                     ]);?>
-                </div>
+                </div>  
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 252px; top: 4px"></i>
+                  <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true,'id' => 'std_father_name']) ?>
+              </div> 
+              <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 305px; top: 4px"></i>
+                <?= $form->field($model, 'std_father_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_father_contact_no']) ?>
+              </div>  
+              <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 300px; top: 4px"></i>
+                <?= $form->field($model, 'std_father_cnic')->widget(yii\widgets\MaskedInput::class, ['mask' => '99999-9999999-9']) ?>
+              </div>
+            </div>  
+            
+            <div class="row">    
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 4px"></i>
                     <?= $form->field($model, 'std_gender')->dropDownList
@@ -122,53 +133,99 @@ use yii\helpers\Url;
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 121px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
                 </div>
-                <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 4px"></i>
-                    <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'stdBform', 'onchange' => 'generateBarcode();'], 'mask' => '99999-9999999-9']) ?>
-                </div>
-                <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 87px; top: 4px"></i>
-                    <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
-                <div id="barcodeTarget" class="barcodeTarget"></div>
-                <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
-                
-            </div> 
-            <div class="row">  
-                <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 4px"></i>
-                    <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 4px"></i>
-                    <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
-                </div>  
-                <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 95px; top: 4px"></i>
-                    <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
-                </div>   
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i>
+              <div class="col-md-4">
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 4px"></i>
+                  <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
+              </div>
+              <div class="col-md-4">
+                  <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 4px"></i> -->
+                  <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'stdBform', 'onchange' => 'generateBarcode();'], 'mask' => '99999-9999999-9']) ?>
+              </div>
+              <div class="col-md-4">
+                  <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
+                  <div id="barcodeTarget" class="barcodeTarget"></div>
+                  <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: -20px 80px; position: absolute; left: 56px; top: 5px"></canvas>
+              </div>
+            </div>
+             
+            <div class="row">  
+              <div class="col-md-4">
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 87px; top: 4px"></i>
+                  <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
+              </div>
+              <div class="col-md-4">
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 4px"></i>
+                  <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
+              </div>
+              <div class="col-md-4">
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 95px; top: 4px"></i>
+                  <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
+              </div>   
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 230px; top: 4px"></i>
+                    <?= $form->field($model, 'std_residency')->dropDownList
+                    ([ 'عکا متی' => 'عکا متی', 'غیر عکا متی' => 'غیر عکا متی']) ?>
+              </div>
+              <div class="col-md-4">
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 6px"></i>
                     <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true, 'id' => 'std_permanent_address']) ?>
                 </div>
-                <div class="col-md-6">
-                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 213px; top: 6px"></i> -->
+              <div class="col-md-4">
+                  <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
+                  
                     <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true, 'id' => 'std_temporary_address']) ?>
-                </div>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-md-4">
+                  <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
+                  <label>Student Admission Date</label>
+                    <?= DateTimePicker::widget([
+                        'model' => $model,
+                        'attribute' => 'std_admit_date',
+                        'language' => 'en',
+                        'size' => 'ms',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            'startDate' => date('2000-01-01'),
+                            'endDate' => date(''),
+                            'todayBtn' => true
+                        ]
+                    ]);?>
+              </div>
+
+              <div class="col-md-8">
+                  <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
+                  <?= $form->field($model, 'std_other_info')->textInput() ?>
+              </div>
+            </div>
+          <hr>
             <!-- Personal info close -->
+            <!-- Academic Info -->
+            <h3 style="color: #337AB7; margin-top: -10px">
+                <i class="fa fa-info-circle" aria-hidden="true" style="color: #001F3F;"></i>
+                Academic Information / تعلیمی معلومات
+            </h3>
+            <div class="row">
+              <div class="col-md-4">
+                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i> -->
+                <?= $form->field($stdAcademicInfo, 'class_name_id')->dropDownList(
+                  ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active','branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
+                    ['prompt'=>'Select Class', 'id'=>'classId']
+                )?>
+              </div>
+            </div>
             <hr>
+            <!-- Academic Info end -->
             <div class="form-group">
                 <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat']) ?>
                 <a href="std-personal-info" class="btn btn-danger btn-flat">Back</a>
