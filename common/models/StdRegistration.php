@@ -121,4 +121,20 @@ class StdRegistration extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
     }
+
+    public function getPhotoInfo(){
+        $path = Url::to('@web/uploads/');
+        $url = Url::to('@web/uploads/');
+        $filename = $this->std_name.'_photo'.'.jpg';
+        $alt = $this->std_name."'s image not exist!";
+
+        $imageInfo = ['alt'=>$alt];
+
+        if(file_exists($path.$filename)){
+            $imageInfo['url'] = $url.'default.jpg';
+        }  else {
+            $imageInfo['url'] = $url.$filename; 
+        }
+        return $imageInfo;
+    }
 }
