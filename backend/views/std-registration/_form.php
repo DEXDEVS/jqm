@@ -87,7 +87,7 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_name')->textInput(['maxlength' => true,'id' => 'std_name', 'required'=> true]) ?>
                 </div>
                 <div class="col-md-4">
-                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 235px; top: 4px"></i>
+                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 235px; top: 4px"></i> -->
                     <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
                 </div> 
                 <div class="col-md-4">
