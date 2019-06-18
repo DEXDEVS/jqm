@@ -20,45 +20,53 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_id',
-        'value'=>'branch.branch_name',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_father_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_contact_no',
+        'attribute'=>'std_father_contact_no',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_permanent_address',
+    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_residency',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_DOB',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_gender',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_permanent_address',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_temporary_address',
-    // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_email',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_admit_date',
     // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'branch_id',
+    //     'value'=>'branch.branch_name',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_contact_no',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_gender',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_temporary_address',
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_email',
+    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_leave_date',

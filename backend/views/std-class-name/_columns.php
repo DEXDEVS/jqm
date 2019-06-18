@@ -14,11 +14,11 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'class_name_id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_id',
-        'value'=>'branch.branch_name',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'branch_id',
+    //     'value'=>'branch.branch_name',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name',
@@ -27,10 +27,10 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name_description',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'status',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',

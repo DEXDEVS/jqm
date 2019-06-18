@@ -101,7 +101,7 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('2000-01-01'),
+                            'startDate' => date('1990-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
@@ -195,13 +195,12 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('2000-01-01'),
+                            'startDate' => date('1990-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
                     ]);?>
               </div>
-
               <div class="col-md-8">
                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
                   <?= $form->field($model, 'std_other_info')->textInput() ?>

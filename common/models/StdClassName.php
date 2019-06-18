@@ -53,11 +53,11 @@ class StdClassName extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'class_name_id' => 'Class Name ID',
-            'branch_id' => 'Branch Name',
-            'class_name' => 'Class Name',
-            'class_name_description' => 'Class Name Description',
-            'status' => 'Status',
+            'class_name_id' => 'Class ID',
+            'branch_id' => 'Branch Name / برانچ کا نام ',
+            'class_name' => 'Class Name / کلاس کا نام ',
+            'class_name_description' => 'Class Description / کلاس کی وضاحت ',
+            'status' => 'Status / حالت ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
