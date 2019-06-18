@@ -101,7 +101,7 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('1990'),
+                            'startDate' => date('1990-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
@@ -172,7 +172,7 @@ use yii\helpers\Url;
               <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 230px; top: 4px"></i>
                     <?= $form->field($model, 'std_residency')->dropDownList
-                    ([ 'اقامتی' => 'اقامتی', 'غیراقامتی' => 'غیراقامتی']) ?>
+                    ([ 'اقا متی' => 'اقا متی', 'غیراقامتی' => 'غیراقامتی']) ?>
               </div>
               <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 6px"></i>

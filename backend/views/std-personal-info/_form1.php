@@ -172,7 +172,7 @@ use yii\helpers\Url;
               <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 230px; top: 4px"></i>
                     <?= $form->field($model, 'std_residency')->dropDownList
-                    ([ 'عکا متی' => 'عکا متی', 'غیر عکا متی' => 'غیر عکا متی']) ?>
+                    ([  'اقا متی' => 'اقا متی', 'غیراقامتی' => 'غیراقامتی']) ?>
               </div>
               <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 6px"></i>
