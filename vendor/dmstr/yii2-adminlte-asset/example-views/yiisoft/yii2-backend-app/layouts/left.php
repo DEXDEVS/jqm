@@ -386,7 +386,7 @@
                     // SMS start...
                     [
                         'label' => 'Phone Book Directory',
-                        'icon' => 'comments-o',
+                        'icon' => 'phone-square',
                         'url' => 'phone-book',
                     ],
                     // ------------------------------------------------
