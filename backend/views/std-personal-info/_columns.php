@@ -30,14 +30,23 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_permanent_address',
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_residency',
-    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_DOB',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'class_id',
+        'value' =>'class.class_name'
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'std_residency',
+    // ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_admit_date',
@@ -63,10 +72,6 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_email',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
-    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_leave_date',
@@ -119,7 +124,7 @@ return [
                 return Url::to([$action,'id'=>$key]);
         },*/
         'viewOptions'=>['role'=>'','title'=>'View','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
+        'updateOptions'=>['role'=>'','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                           'data-request-method'=>'post',

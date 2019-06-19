@@ -9,12 +9,12 @@
     $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info WHERE std_id = '$id'")->queryAll();
     $number =  $stdPersonalInfo[0]['std_contact_no'];
     $barcode =  $stdPersonalInfo[0]['barcode'];
-  
+    $classID =  $stdPersonalInfo[0]['class_id'];
     // Student Photo...
     $photo = $stdPersonalInfo[0]['std_photo'];
 
-    if ($stdPersonalInfo[0]['std_leave_date'] == '0000-00-00') {
-      $stdLeaveDate = "N/A";
+    if (!$stdPersonalInfo[0]['std_leave_date']) {
+      $stdLeaveDate = $stdPersonalInfo[0]['std_leave_date'];
     }
     else{
       $stdLeaveDate = date('d-m-Y', strtotime($stdPersonalInfo[0]['std_leave_date']));
@@ -34,11 +34,9 @@
         $stdSubjects = $stdSubject[0]['std_subject_name'];
       }
       //var_dump($stdSubjects); 
-      $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdAcademicClass'")->queryAll();
-    }
-     
-
+      $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classID'")->queryAll();
     
+    }    
 
     // fetching student roll number from `std_enrollment_detail` against selected student `$id`
     $stdRollNo = Yii::$app->db->createCommand("SELECT sed.std_roll_no,seh.session_id,seh.section_id
@@ -51,7 +49,7 @@
 <div class="container-fluid">
   <div class="row">
   	<section class="content-header">
-    	<h1 style="color: #3C8DBC;">
+    	<h1 style="color: #3C8DBC; font-family: arial; font-weight: bolder;">
       	<i class="fa fa-user"></i> Student Profile / طالب علم کی تفصیل
     	</h1>
 	    <ol class="breadcrumb">
@@ -59,7 +57,6 @@
 	        <li><a href="./std-personal-info">Back</a></li>
 	    </ol>
   </section>
-  <img src="<?php echo $barcode; ?>">
     <!-- Content Start -->
   	<section class="content">
     <?php 
@@ -127,10 +124,10 @@
                     }
                      ?></a>
                   </li> -->
-                  <!-- <li class="list-group-item" style="height: 50px;">
-                    <b>Class / کلاس</b><br>
+                  <li class="list-group-item" style="height: 50px;">
+                    <b>Class / کلاس</b>
                     <a class="pull-right"><?php echo $className[0]['class_name'] ?></a>
-                  </li> -->
+                  </li>
                   <li class="list-group-item" style="height: 50px;">
                     <b>Email / ای میل</b> <a class="pull-right"><br><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
                   </li>
@@ -143,7 +140,7 @@
                     </a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
-                    <b>Leave Date /  </b> <a class="pull-right"><?php echo $stdLeaveDate; ?></a>
+                    <b>Leave Date / رخصت کی تا ریخ </b> <a class="pull-right"><?php echo $stdLeaveDate; ?></a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
                     <b>Student Residency / طالب علم کی رہائش گاہ </b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_residency']; ?></a>
@@ -333,7 +330,7 @@
                       <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Academic Information</p>
                     </div>
                     <div class="col-md-2 col-md-offset-5">
-                      <?=Html::a(' Edit',['./std-academic-info-update','id'=>$stdAcademicId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
+                     <!--  <?=Html::a(' Edit',['./std-academic-info-update','id'=>$stdAcademicId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?> -->
                     </div>
                   </div>
                   <!-- Academic info start -->

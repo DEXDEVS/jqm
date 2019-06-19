@@ -92,7 +92,7 @@ class StdRegistrationController extends Controller
         $y = date('y');
         global $prntPassword, $stdPassword;
     
-        if ($model->load($request->post()) && $stdAcademicInfo->load($request->post())) {
+        if ($model->load($request->post())) {
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
@@ -125,6 +125,7 @@ class StdRegistrationController extends Controller
 
                     // stdAcademicInfo...
                     $stdAcademicInfo->std_id = $model->std_id;
+                    $stdAcademicInfo->class_name_id = $model->class_id;
                     $stdAcademicInfo->std_enroll_status = 'unsign'; 
                     $stdAcademicInfo->created_by = Yii::$app->user->identity->id; 
                     $stdAcademicInfo->created_at = new \yii\db\Expression('NOW()');

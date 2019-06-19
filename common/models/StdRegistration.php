@@ -23,6 +23,7 @@ use Yii;
  * @property string $std_email
  * @property string $std_photo
  * @property string $std_b_form
+ * @property int $class_id
  * @property string $std_district
  * @property string $std_religion
  * @property string $std_nationality
@@ -41,6 +42,7 @@ use Yii;
  * @property int $delete_status
  *
  * @property Branches $branch
+ * @property StdClassName $class
  */
 class StdRegistration extends \yii\db\ActiveRecord
 {
@@ -60,7 +62,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branch_id', 'std_name', 'std_father_name', 'std_father_contact_no', 'std_father_cnic', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'std_admit_date', 'academic_status'], 'required'],
+            [['branch_id', 'std_name', 'std_father_name', 'std_father_contact_no', 'std_father_cnic', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'std_admit_date', 'academic_status','class_id'], 'required'],
             [['branch_id', 'created_by', 'updated_by', 'delete_status'], 'integer'],
             [['std_DOB', 'std_admit_date', 'std_leave_date', 'std_contact_no', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_leave_date', 'barcode', 'std_other_info', 'std_password', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['std_gender', 'std_residency', 'status', 'academic_status', 'barcode', 'std_other_info'], 'string'],
@@ -98,8 +100,9 @@ class StdRegistration extends \yii\db\ActiveRecord
             'std_email' => 'Email / ای میل',
             'std_photo' => 'Photo / تصویر',
             'std_b_form' => 'B-Form / بی فارم',
+            'class_id' => 'Class / کلا س ',
             'std_district' => 'District / ضلع',
-            'std_religion' => 'Religion / مذہب',
+            'std_religion' => 'Caste / ذات ',
             'std_nationality' => 'Nationality / قومیت',
             'std_tehseel' => 'Tehseel / تحصیل',
             'status' => 'Status / حالت',
@@ -122,6 +125,14 @@ class StdRegistration extends \yii\db\ActiveRecord
         return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClass()
+    {
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
+    }
+
     public function getPhotoInfo(){
         $path = Url::to('@web/uploads/');
         $url = Url::to('@web/uploads/');
@@ -137,4 +148,5 @@ class StdRegistration extends \yii\db\ActiveRecord
         }
         return $imageInfo;
     }
+
 }

@@ -262,8 +262,8 @@ class StdPersonalInfoController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
-
+        $model = $this->findModel($id);     
+        $y = date('y');
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -278,7 +278,7 @@ class StdPersonalInfoController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-info','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->validate()){
+            }else if($model->load($request->post())){
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
@@ -296,6 +296,16 @@ class StdPersonalInfoController extends Controller
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
+
+                        $std_inquiry = Yii::$app->db->createCommand()->update('std_academic_info', [
+                            'class_name_id'  => $model->class_id,
+                            'updated_by' => Yii::$app->user->identity->id,
+                            'updated_at' => new \yii\db\Expression('NOW()'),
+                            'created_by' => $model->created_by,
+                            'created_at' => $model->created_at
+                        ],
+                            ['std_id' => $model->std_id]
+                        )->execute();
                         
                         $transaction->commit();
                         Yii::$app->session->setFlash('warning', "You have successfully add Student...!");
@@ -327,21 +337,34 @@ class StdPersonalInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post())) {
-                 $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
-                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
-                if(!empty($model->std_photo)){
-                    $imageName = $model->std_name.'_photo'; 
-                    $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
-                    //save the path in the db column
-                    $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
-                } else {
-                   $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
+                    $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                    if(!empty($model->std_photo)){
+                        $imageName = $model->std_name.'_photo'; 
+                        $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                        //save the path in the db column
+                        $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                    } else {
+                       $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
+                    }
+
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+
+
+
+                    $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully Update Student Record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
                 }
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
+                
                 return $this->redirect(['view', 'id' => $model->std_id]);
             } else {
                 return $this->render('update', [

@@ -349,8 +349,8 @@
                             ['label' => 'Institute', 'icon' => 'caret-right', 'url' => ["/institute"],],
                             ['label' => 'Branches', 'icon' => 'caret-right', 'url' => ["/branches"],],
                             //['label' => 'Departments', 'icon' => 'caret-right', 'url' => ["/departments"],],
-                            ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
-                            ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
+                            //['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
+                            //['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
                             ['label' => 'Classes', 'icon' => 'caret-right', 'url' => ["/std-class-name"],],
                             // [
                             //     'label' => 'Subjects',
@@ -383,7 +383,12 @@
                     ],
                     // System Settings close...
                     // ------------------------------------------------
-
+                    // SMS start...
+                    [
+                        'label' => 'Phone Book Directory',
+                        'icon' => 'comments-o',
+                        'url' => 'phone-book',
+                    ],
                     // ------------------------------------------------
                     // Multilevel Dropdown....!
                     // [

@@ -101,7 +101,7 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('1990-01-01'),
+                            'startDate' => date('1980-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
@@ -127,7 +127,7 @@ use yii\helpers\Url;
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 4px"></i>
                     <?= $form->field($model, 'std_gender')->dropDownList
-                    ([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '','id' => 'std_gender']) ?>
+                    ([ 'مرد' => 'مرد', 'عورت' => 'عورت', ], ['id' => 'std_gender']) ?>
                 </div>
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
@@ -196,7 +196,7 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('1990-01-01'),
+                            'startDate' => date('1980-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
@@ -218,7 +218,7 @@ use yii\helpers\Url;
             <div class="row">
               <div class="col-md-4">
                 <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i> -->
-                <?= $form->field($stdAcademicInfo, 'class_name_id')->dropDownList(
+                <?= $form->field($model, 'class_id')->dropDownList(
                   ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active','branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
                     ['prompt'=>'Select Class', 'id'=>'classId']
                 )?>
@@ -316,10 +316,21 @@ use yii\helpers\Url;
     generateBarcode();
   });
 
-  $('form#{$model->formName()}').on('beforeSubmit',function(e){
-    // var canvas = document.getElementById("canvasTarget");
-    // var dataURL = canvas.toDataURL("image/png");
-    // var d = document.getElementById('barcode_ID').value = dataURL;   
-    alert("DEXDEVS");
-  }); 
 </script>
+
+<?php
+//$url = \yii\helpers\Url::to("marks-weightage-head/fetch-subjects");
+
+$script = <<< JS
+
+$('form#{$model->formName()}').on('beforeSubmit',function(e){
+    var canvas = document.getElementById("canvasTarget");
+    var dataURL = canvas.toDataURL("image/png");
+    var d = document.getElementById('barcode_ID').value = dataURL;   
+    //alert(d);
+  }); 
+
+JS;
+$this->registerJs($script);
+?>
+</script>  

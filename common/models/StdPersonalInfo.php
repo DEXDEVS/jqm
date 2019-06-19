@@ -58,7 +58,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['std_reg_no', 'std_name', 'std_father_name','std_father_contact_no', 'std_father_cnic', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['branch_id', 'std_b_form', 'std_email', 'std_contact_no', 'std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode', 'std_other_info'], 'safe'],
+            [['branch_id', 'std_b_form', 'std_email', 'std_contact_no', 'std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode', 'std_other_info','class_id', 'std_leave_date'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
@@ -69,6 +69,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             ['std_email','email'],
             [['std_photo'], 'image', 'extensions' => 'jpg'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
         ];
     }
 
@@ -95,7 +96,9 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_photo' => 'Photo / تصویر',
             'std_b_form' => 'B-Form / بی فارم',
             'std_district' => 'District / ضلع',
-            'std_religion' => 'Religion / مذہب',
+            'class_id' => 'Class / کلا س ',
+            'std_religion' => 'Caste / ذات ',
+            'std_leave_date' => 'Leave Date / ',
             'std_nationality' => 'Nationality / قومیت',
             'std_tehseel' => 'Tehseel / تحصیل',
             'status' => 'Status / حالت',
@@ -170,6 +173,11 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function getBranch()
     {
         return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
+    }
+
+    public function getClass()
+    {
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
     }
 
     public function getPhotoInfo(){

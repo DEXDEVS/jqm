@@ -19,7 +19,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
     {
         return [
             [['std_id', 'branch_id', 'created_by', 'updated_by'], 'integer'],
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_father_contact_no', 'std_father_cnic', 'std_contact_no', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_password', 'status', 'std_admit_date', 'std_leave_date', 'academic_status', 'barcode', 'std_other_info', 'created_at', 'updated_at', 'delete_status'], 'safe'],
+            [['std_reg_no', 'std_name', 'std_father_name', 'std_father_contact_no', 'std_father_cnic', 'std_contact_no', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_password', 'status', 'std_admit_date', 'std_leave_date', 'academic_status', 'barcode', 'std_other_info', 'created_at', 'updated_at', 'delete_status', 'class_id'], 'safe'],
         ];
     }
 
@@ -55,6 +55,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
             return $dataProvider;
         }
 
+        $query->joinWith('class');
         $query->andFilterWhere([
             'std_id' => $this->std_id,
             'branch_id' => $this->branch_id,
@@ -89,6 +90,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
             ->andFilterWhere(['like', 'academic_status', $this->academic_status])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
             ->andFilterWhere(['like', 'std_other_info', $this->std_other_info])
+            ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_id])
             ->andFilterWhere(['like', 'delete_status', $this->delete_status]);
 
         return $dataProvider;
