@@ -35,7 +35,7 @@ class StdRegistrationController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form', 'take-webcam-photo'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -63,6 +63,11 @@ class StdRegistrationController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+     public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
     /**
@@ -190,6 +195,11 @@ class StdRegistrationController extends Controller
     public function actionFetchFee()
     {   
         return $this->render('fetch-fee');
+    }
+
+    public function actionTakeWebcamPhoto()
+    {   
+        return $this->render('take-webcam-photo');
     }
 
     /**
