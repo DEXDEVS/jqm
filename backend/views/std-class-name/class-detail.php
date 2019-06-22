@@ -22,8 +22,7 @@ use yii\helpers\Html;
       	<h1 style="color: #3C8DBC; font-family: arial; font-weight: bolder;">
         	
           <?php 
-              echo "<span class='label-success' style='border-radius: 50%; padding: 2px 8px;'> ". $count."</span>" . 'کلاس :'  . $className[0]['class_name'].'   کی تفضیلی معلومات' ;
-          ?>
+              echo "<span class='label-success' style='border-radius: 50%; padding: 2px 8px;'> ". $count."</span>" . 'کلاس :'  . $className[0]['class_name'].'   کی  تفصیلی معلومات'        ?>
           <i class="fa fa-copyright"></i>
       	</h1>
 	    <ol class="breadcrumb" style="color: #3C8DBC;">

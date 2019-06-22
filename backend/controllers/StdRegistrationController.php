@@ -65,7 +65,7 @@ class StdRegistrationController extends Controller
         ]);
     }
 
-     public function beforeAction($action) {
+    public function beforeAction($action) {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -103,12 +103,14 @@ class StdRegistrationController extends Controller
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
 
-                    $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                //  $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                     if(!empty($model->std_photo)){
-                        $imageName = $model->std_name.'_photo'; 
-                        $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                        $image = $model->std_photo;
+                        $model->std_photo = $image;
+                        //$imageName = $model->std_name.'_photo'; 
+                        //$model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
                         //save the path in the db column
-                        $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                        //$model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
                     } else {
                        $model->std_photo = 'uploads/'.'std_default.jpg'; 
                     }

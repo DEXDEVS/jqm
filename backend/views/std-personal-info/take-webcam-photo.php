@@ -23,8 +23,12 @@ use yii\helpers\Url;
   
 <div class="container" style="margin-top: -30px">
     <h1 class="text-center">Capture Webcam Image</h1>
-   
-    <form method="POST" action="std-registration">
+    <?php  
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
+    ?>
+    <form method="POST" action="std-personal-info-update?id=<?php echo $id; ?>">
         <div class="row">
             <div class="col-md-5">
                 <h3 align="center">Webcam Photo</h3>
@@ -63,36 +67,3 @@ use yii\helpers\Url;
  
 </body>
 </html>
-
-<?php
-//     if (isset($_POST['image'])) {
-//         $img = $_POST['image'];
-//         //var_dump($img);
-//         //$folderPath = "upload/"; 
-//         //$folderPath = \yii\helpers\Url::to("std-registration/upload");
-
-// //        $url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
-        
-
-//         $folderPath = Url::to('uploads/');
-
-//         // $relativeBaseUrl = Url::base();
-//         // $absoluteBaseUrl = Url::base(true);
-//         // $httpsAbsoluteBaseUrl = Url::base('https');
-
-//         //$folderPath = Url::isRelative('C:/Users/MRCOM/Pictures/photos/');
-
-//         $image_parts = explode(";base64,", $img);
-//         $image_type_aux = explode("image/", $image_parts[0]);
-//         $image_type = $image_type_aux[1];
-      
-//         $image_base64 = base64_decode($image_parts[1]);
-//         $fileName = uniqid() . '.png';
-      
-//         $file = $folderPath . $fileName;
-//         file_put_contents($file, $image_base64);
-
-//         print_r($fileName);
-//     }
-    
-?>

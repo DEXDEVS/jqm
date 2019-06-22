@@ -71,7 +71,7 @@ class StdRegistration extends \yii\db\ActiveRecord
             [['std_father_contact_no', 'std_father_cnic', 'std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
-            [['std_photo'], 'string', 'max' => 200],
+            [['std_photo'], 'string', 'max' => 50000],
             [['std_password'], 'string', 'max' => 20],
             [['std_reg_no'], 'unique'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],

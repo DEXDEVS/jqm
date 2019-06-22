@@ -62,6 +62,9 @@ use yii\helpers\Url;
 <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
 <?php 
     $branch_id = Yii::$app->user->identity->branch_id;
+    if(isset($_POST['save_photo'])){
+      $image = $_POST['image'];
+    }
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -72,10 +75,19 @@ use yii\helpers\Url;
             </div>
             <div class="box-body">  
                 <!-- Personal info start -->
-            <h3 style="color: #3C8DBC; margin-top: -10px">
-                <i class="fa fa-info-circle" aria-hidden="true" style="color: #001E3E;"></i>
-                Personal Information / ذاتی معلومات <small> <i>( Fields with <span style="color: red;">red stars </span>are required )</i></small> 
-            </h3>
+            <div class="row">
+              <div class="col-md-10">
+                <h3 style="color: #3C8DBC; margin-top: -10px">
+                  <i class="fa fa-info-circle" aria-hidden="true" style="color: #001E3E;"></i>
+                    Personal Information / ذاتی معلومات <small> <i>( Fields with <span style="color: red;">red stars </span>are required )</i></small> 
+                </h3> 
+              </div>
+              <div class="col-md-2" style="position: absolute; top: 20px;right: 45px">
+                <?php if (!empty($image)) { ?>
+                    <img src="<?php echo $image; ?>" width="200px" class="img-circle">
+                <?php } ?>
+              </div>
+            </div>
             <div class="row">
                 <div class="col-md-4">
                     <?= $form->field($model, 'stdInquiryNo')->textInput(['id' => 'inquiryNo']) ?>
@@ -136,6 +148,7 @@ use yii\helpers\Url;
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 121px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
+                     <a href="webcam-photo?id=<?php echo $model->std_id; ?>" class="btn btn-warning fa fa-image" style="position: absolute; right: 15px; top: 20px"> Take Snapshot</a>
                 </div>
             </div>
             <div class="row">
@@ -150,7 +163,7 @@ use yii\helpers\Url;
               <div class="col-md-4">
                   <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
                   <div id="barcodeTarget" class="barcodeTarget"></div>
-                  <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: -20px 80px; position: absolute; left: 56px; top: 5px"></canvas>
+                  <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: -20px 80px; position: absolute; left: 60px; top: 5px"></canvas>
               </div>
             </div>
              
@@ -187,7 +200,7 @@ use yii\helpers\Url;
             <div class="row">
               <div class="col-md-4">
                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
-                  <label>Student Leave Date</label>
+                  <label>Student Admission Date</label>
                     <?= DateTimePicker::widget([
                         'model' => $model,
                         'attribute' => 'std_leave_date',
@@ -222,6 +235,13 @@ use yii\helpers\Url;
                   ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active','branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
                     ['prompt'=>'Select Class', 'id'=>'classId']
                 )?>
+              </div>
+              <div class="col-md-4">
+                <div class="">
+                    <?php  if (!empty($image)) { ?>
+                      <?= $form->field($model, 'std_photo')->textInput(['value' => $image]) ?>        
+                    <?php } ?>
+                  </div>
               </div>
             </div>
             <hr>

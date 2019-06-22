@@ -58,14 +58,14 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['std_reg_no', 'std_name', 'std_father_name','std_father_contact_no', 'std_father_cnic', 'std_DOB', 'std_gender', 'std_residency', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['branch_id', 'std_b_form', 'std_email', 'std_contact_no', 'std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode', 'std_other_info','class_id', 'std_leave_date'], 'safe'],
+            [['branch_id', 'std_b_form', 'std_email', 'std_contact_no', 'std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode', 'std_other_info','class_id', 'std_leave_date', 'std_photo'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
             [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
-            [['std_photo'], 'string', 'max' => 200],
+            [['std_photo'], 'string', 'max' => 50000],
             ['std_email','email'],
             [['std_photo'], 'image', 'extensions' => 'jpg'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
