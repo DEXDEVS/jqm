@@ -19,13 +19,7 @@ use yii\helpers\Url;
 <html>
 <head>
     <title></title>
-     <style>
-      * {
-          color:#7F7F7F;
-          font-family:Arial,sans-serif;
-          font-size:12px;
-          font-weight:normal;
-      }    
+     <style>    
       #config{
           overflow: auto;
           margin-bottom: 10px;
@@ -237,7 +231,7 @@ use yii\helpers\Url;
                 )?>
               </div>
               <div class="col-md-4">
-                <div class="">
+                <div class="invisible">
                     <?php  if (!empty($image)) { ?>
                       <?= $form->field($model, 'std_photo')->textInput(['value' => $image]) ?>        
                     <?php } ?>

@@ -125,12 +125,7 @@ return [
         },*/
         'viewOptions'=>['role'=>'','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'','title'=>'Update', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Are you sure?',
-                          'data-confirm-message'=>'Are you sure want to delete this item'], 
+         
     ],
 
 ];   

@@ -12,20 +12,11 @@ use common\models\StdSessions;
 use common\models\Concession;
 use common\models\StdSubjects;
 use yii\helpers\Url;
-/* @var $this yii\web\View */
-/* @var $model common\models\StdRegistration */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 <html>
 <head>
     <title></title>
-     <style>
-      * {
-          color:#7F7F7F;
-          font-family:Arial,sans-serif;
-          font-size:12px;
-          font-weight:normal;
-      }    
+     <style>  
       #config{
           overflow: auto;
           margin-bottom: 10px;
@@ -264,8 +255,8 @@ use yii\helpers\Url;
 </div>
 </body>
 </html>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="jquery-barcode.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="jquery-barcode.js"></script> -->
 <script type="text/javascript">
     // showNetMonthlyFee function...!
     function showNetAdmissionFee() {
@@ -339,8 +330,6 @@ use yii\helpers\Url;
 </script>
 
 <?php
-//$url = \yii\helpers\Url::to("marks-weightage-head/fetch-subjects");
-
 $script = <<< JS
 
 $('form#{$model->formName()}').on('beforeSubmit',function(e){
