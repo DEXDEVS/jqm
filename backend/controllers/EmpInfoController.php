@@ -134,8 +134,6 @@ class EmpInfoController extends Controller
             }else if($model->load($request->post()) && $model->validate() && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
-                        var_dump($model->emp_name);
-                        die();
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -163,6 +161,7 @@ class EmpInfoController extends Controller
                         } else {
                            $model->emp_cv = '0'; 
                         }
+                        $model->emp_branch_id = Yii::$app->user->identity->branch_id;
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';
@@ -256,6 +255,7 @@ class EmpInfoController extends Controller
                         } else {
                            $model->emp_cv = '0'; 
                         }
+                        $model->emp_branch_id = Yii::$app->user->identity->branch_id;
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';

@@ -67,6 +67,7 @@
                         'items' => [
                             //['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
+                            ['label' => 'Attendance', 'icon' => 'caret-right', 'url' => './attendance',],
                             // ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
                             // ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             // ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
@@ -159,49 +160,51 @@
                     // Exams module close ...
                     // ------------------------------------------------
                     // Employee Module start...
-                    // [
-                    //     'label' => 'Employees',
-                    //     'icon' => 'users',
-                    //     'url' => [""],
-                    //     'items' => [
-                    //         ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
-                    //         ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
-                    //         [
-                    //             'label' => 'Attendance Management',
-                    //             'icon' => 'cancel',
-                    //             'url' => '#',
-                    //             'items' => [
-                    //                 ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
-                    //                  ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
-                    //                 [
-                    //                 'label' => 'Attendance Report',
-                    //                 'icon' => 'list',
-                    //                 'url' => '#',
-                    //                 'items' => [
-                    //                         ['label' => 'Single Employee', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
-                    //                         ['label' => 'All Employees', 'icon' => 'chevron-right', 'url' => './employess-att-report',],
-                    //                     ],
-                    //                 ],  
-                    //             ],
-                    //         ],
-                    //         [
-                    //             'label' => 'Leave Management',
-                    //             'icon' => 'cancel',
-                    //             'url' => '#',
-                    //             'items' => [
-                    //                 ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
-                    //                 ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
-                    //             ],
-                    //         ],
+                    [
+                        'label' => 'Employees',
+                        'icon' => 'users',
+                        'url' => [""],
+                        'items' => [
+                            ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
+                            ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
+                            [
+                                'label' => 'Attendance Management',
+                                'icon' => 'cancel',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
+                                     ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
+                                    [
+                                    'label' => 'Attendance Report',
+                                    'icon' => 'list',
+                                    'url' => '#',
+                                    'items' => [
+                                            ['label' => 'Single Employee', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
+                                            ['label' => 'All Employees', 'icon' => 'chevron-right', 'url' => './employess-att-report',],
+                                        ],
+                                    ],  
+                                ],
+                            ],
+                            [
+                                'label' => 'Leave Management',
+                                'icon' => 'cancel',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
+                                    ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                ],
+                            ],
 
-                    //         ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
-                    //         ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
-                    //         ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
-                    //         ['label' => 'Announce Jobs', 'icon' => 'caret-right', 'url' => './premium-version',],
-                    //     ],
-                    // ],
+                            ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Announce Jobs', 'icon' => 'caret-right', 'url' => './premium-version',],
+                        ],
+                    ],
                     // // ------------------------------------------------
                     // // Employee Module close...
+
+
                     // // Account Module start...
                     // [
                     //     'label' => 'Accounting System',

@@ -6,7 +6,7 @@
 <body>
 <div class="container-fluid" style="margin-top: -10px">
 	<h1 class="well well-sm" align="center">Attendance</h1>	
-	<form  action = "index.php?r=std-attendance/attendance" method="POST">
+	<form  action = "./attendance" method="POST">
     	<div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -18,13 +18,14 @@
             <div class="col-md-6 col-md-offset-2">
                 <div class="form-group">
                     <label>Select Class</label>
-                    <select class="form-control" name="classid" id="classId" required="">
+                    <select class="form-control" name="classid" required="">
+                    	<option value="">Select Class</option>
 							<?php 
-								$className = Yii::$app->db->createCommand("SELECT * FROM std_class")->queryAll();
-								
-								  	foreach ($className as  $value) { ?>	
-									<option value="<?php echo $value["class_id"]; ?>">
-										<?php echo $value["class_name"]; ?>	
+								$stdclassName = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE status = 'Active'")->queryAll();
+								$countClass = count($stdclassName);
+								  	for ($i=0; $i <$countClass ; $i++) { ?>	
+									<option value="<?php echo $stdclassName[$i]['class_name_id']; ?>">
+										<?php echo $stdclassName[$i]['class_name']; ?>	
 									</option>
 							<?php } ?>
 					</select>      
@@ -32,9 +33,9 @@
             </div> 
             <div class="col-md-2">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-info form-control" style="margin-top: 25px;">
+                    <button type="submit" name="submit" class="btn btn-sm form-control" style="margin-top: 25px; background: #1a4977; color: #dce6ef;">
                     <i class="glyphicon glyphicon-share"></i>	
-                	<b>Get Class</b></button>
+                	<b>Take Attendance</b></button>
                 </div>    
             </div>    
         </div>
@@ -47,10 +48,13 @@
 		$classid= $_POST["classid"];
 		$date = date('Y-m-d');
 
-		$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
+		$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid' AND status = 'Active'")->queryAll();
+
+		$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid'")->queryAll();
+
 		?>
 		<hr>
-		<form method="POST" action="index.php?r=std-attendance/attendance">
+		<form method="POST" action="./attendance">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<table width="100%" class="table table-condensed table-hover">
@@ -71,20 +75,22 @@
 						<tr></tr>
 						<tr class="label-primary" style="color: white;">
 							<th>Sr No</th>
-							<th>RollNo</th>
 							<th>Student Name</th>
 							<th style="text-align: center;">Attendance</th>
 						</tr>
 						
-						<?php $length = count($student);
-						//$stdId = array(); 
-						for( $i=0; $i<$length; $i++) { ?>
+						<?php 
+						if(empty($student)){
+							Yii::$app->session->setFlash('warning','No students found.');
+						} else {
+							$length = count($student);
+							//$stdId = array(); 
+						for( $i=0; $i<$length; $i++) { 
+							$stdId = $student[$i]['std_id'];
+							?>
 							<tr>
 								<td><?php echo $i+1 ?></td>
-								<td><?php echo $student[$i]['std_enroll_detail_std_id'] ?></td>
-								<?php $stdId = $student[$i]['std_enroll_detail_std_id'];
-									  $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info  WHERE std_id = '$stdId'")->queryAll();?>
-								<td><?php echo $stdName[0]['std_name'] ?></td>
+								<td><?php echo $student[$i]['std_name'] ?></td>
 								<td align="center">
 									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green">Present </b> &nbsp; &nbsp;| &nbsp; 
 									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red">Absent </b> &nbsp; &nbsp;| &nbsp; 
@@ -95,12 +101,11 @@
 						$stdAttendId[$i] = $stdId;
 						//closing for loop
 						}
+					} //closing of else
 					?>
-					</table>
-				</div>
-			</div>	
-				
-
+						</table>
+					</div>
+				</div>	
 			</div><hr>
 			<div class="row">
 				<div class="col-md-2">
@@ -121,7 +126,6 @@
 						<b>Save Attendance</b></button>
 				</div>
 			</div>
-			
 	    </form> 
 		<?php 
 		// closing of if isset
@@ -129,32 +133,43 @@
 	</div>
 	<!-- container-fluid close -->	
 
-	<?php 	
-		if (isset($_POST["save"])) {
-				$classid = $_POST["classid"];
-				$date = $_POST["date"];
-				$length = $_POST["length"];
-				$stdAttendId = $_POST["stdAttendance"];
-				for($i=0; $i<$length;$i++){
-					$q=$i+1;
-					$std = "std".$q;
-					$status[$i] = $_POST["$std"];
-				}
-				$techerEmail = Yii::$app->user->identity->email;
-				$teacherId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$techerEmail'")->queryAll();
-
-				//var_dump($status);
-				for($i=0; $i<$length; $i++){
-					$attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
-						'teacher_id' => $teacherId[0]['emp_id'],
-						'class_id' => $classid,
-						'date' => $date,
-						'student_id' => $stdAttendId[$i],
-						'status' => $status[$i],
-					])->execute();
-				}
+<?php 	
+	if (isset($_POST["save"])) {
+		$classid = $_POST["classid"];
+		$date = $_POST["date"];
+		$length = $_POST["length"];
+		$stdAttendId = $_POST["stdAttendance"];
+		for($i=0; $i<$length;$i++){
+			$q=$i+1;
+			$std = "std".$q;
+			$status[$i] = $_POST["$std"];
 		}
-	?>
 
+		$transection = Yii::$app->db->beginTransaction();
+		try{
+			for($i=0; $i<$length; $i++){
+				$attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
+					'user_id' 		=> Yii::$app->user->identity->id,
+					'class_name_id' => $classid,
+					'date' 			=> $date,
+					'std_id' 		=> $stdAttendId[$i],
+					'attendance'	=> $status[$i],
+					'created_at'	=> new \yii\db\Expression('NOW()'),
+					'created_by'	=> Yii::$app->user->identity->id,
+				])->execute();
+			} //closing of $i loop
+
+			if($attendance){
+				$transection->commit();
+				Yii::$app->session->setFlash('success', "Attendance marked successfully...!");
+			} //closing of if
+		} //closing of try block
+		catch(Exception $e){
+			$transection->rollback();
+			echo $e;
+			Yii::$app->session->setFlash('warning', "Attendance not marked. Try again!");
+		} //closing of catch
+	} //closing of if isset
+?>
 </body>
 </html>

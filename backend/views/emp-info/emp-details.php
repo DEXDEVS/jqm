@@ -106,12 +106,14 @@
             </div>
         <?php }
       }
+      echo $empInfo[0]['emp_photo'];
     ?>
     <div class="row">
       <div class="col-md-3">
         <!-- Profile Image Start -->
         <div class="box box-primary">
           <div class="box-body box-profile">
+            <img src="<?php echo $empInfo[0]['emp_photo']; ?>">
             <img class="profile-user-img img-responsive img-circle" src="<?php echo $empInfo[0]['emp_photo']; ?>" alt="User profile picture" width="10%">
             <h3 class="profile-username text-center" style="color: #3C8DBC;">
               <?php echo $empInfo[0]['emp_name']; ?>
