@@ -10,17 +10,17 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_attend_id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'teacher.emp_name',
+        'attribute'=>'std_attend_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'class.class_name',
+        'attribute'=>'user_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'class_name_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -28,12 +28,28 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'student.std_name',
+        'attribute'=>'std_id',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'attendance',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_at',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_at',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

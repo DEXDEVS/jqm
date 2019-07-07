@@ -11,11 +11,15 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'std_attend_id',
-            'teacher_id',
-            'class_id',
+            'user_id',
+            'class_name_id',
             'date',
-            'student_id',
-            'status',
+            'std_id',
+            'attendance',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

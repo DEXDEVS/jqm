@@ -18,8 +18,8 @@ class StdAttendanceSearch extends StdAttendance
     public function rules()
     {
         return [
-            [['std_attend_id', 'teacher_id', 'class_name_id','session_id','section_id', 'student_id'], 'integer'],
-            [['date', 'status'], 'safe'],
+            [['std_attend_id', 'user_id', 'class_name_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['date', 'attendance', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -57,15 +57,17 @@ class StdAttendanceSearch extends StdAttendance
 
         $query->andFilterWhere([
             'std_attend_id' => $this->std_attend_id,
-            'teacher_id' => $this->teacher_id,
+            'user_id' => $this->user_id,
             'class_name_id' => $this->class_name_id,
-            'session_id' => $this->session_id,
-            'session_id' => $this->session_id,
             'date' => $this->date,
-            'student_id' => $this->student_id,
+            'std_id' => $this->std_id,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'attendance', $this->attendance]);
 
         return $dataProvider;
     }

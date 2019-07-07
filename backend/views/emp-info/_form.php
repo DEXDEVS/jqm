@@ -14,13 +14,7 @@ use common\models\Branches;
 <html>
 <head>
     <title></title>
-     <style>
-      * {
-          color:#7F7F7F;
-          font-family:Arial,sans-serif;
-          font-size:12px;
-          font-weight:normal;
-      }    
+     <style>  
       #config{
           overflow: auto;
           margin-bottom: 10px;
@@ -163,12 +157,6 @@ use common\models\Branches;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 117px; top: 6px"></i>
-            <?= $form->field($model, 'emp_branch_id')->dropDownList(
-                    ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
-                )?>
-        </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i>
             <?= $form->field($model, 'emp_salary')->textInput() ?>
