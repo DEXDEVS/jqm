@@ -442,10 +442,10 @@ class StdPersonalInfoController extends Controller
             $message = $_POST['message'];
         
             $type = "xml";
-            $id = "Brookfieldclgggg";
-            $pass = "college42";
-            $lang = "English";
-            $mask = "Brookfield";
+            $id = "jamiaqadria";
+            $pass = "jamia105";
+            $lang = "Urdu";
+            $mask = "JamiaQadria";
             $message = urlencode($message);
             // Prepare data for POST request
             $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;

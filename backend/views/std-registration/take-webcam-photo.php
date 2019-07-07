@@ -14,7 +14,6 @@
 <body>
   
 <div class="container" style="margin-top: -30px">
-    
     <h1 class="text-center">Capture Webcam Image</h1>   
     <form method="POST" action="std-registration">
         <div class="row">

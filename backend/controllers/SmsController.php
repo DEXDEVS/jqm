@@ -302,13 +302,12 @@ class SmsController extends Controller
     public static function sendSMS($to, $message){
         // Configuration variables
         $type = "xml";
-        $id = "Brookfieldclg";
-        $pass = "college42";
-        $lang = "English";
-        $mask = "Brookfield";
+        $id = "jamiaqadria";
+        $pass = "jamia105";
+        $lang = "Urdu";
+        $mask = "JamiaQadria";
         // Data for text message
-        // $to = "923317375027";
-        // $message = "Testing sms from brookfield web application";
+        $to = "923317375027";
         $message = urlencode($message);
         // Prepare data for POST request
         $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
@@ -321,5 +320,4 @@ class SmsController extends Controller
         curl_close($ch);
         Yii::$app->session->setFlash('success', $result);     
     }
-
 }

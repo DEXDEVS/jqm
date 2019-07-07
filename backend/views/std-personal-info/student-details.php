@@ -67,10 +67,10 @@
         $message = $_GET['message'];
         // sms ....
         $type = "xml";
-        $id = "Brookfieldclgggg";
-        $pass = "college42";
-        $lang = "English";
-        $mask = "Brookfield";
+        $id = "jamiaqadria";
+        $pass = "jamia105";
+        $lang = "Urdu";
+        $mask = "JamiaQadria";
         // Data for text message
         $message = urlencode($message);
         // Prepare data for POST request
@@ -437,7 +437,7 @@
 $(document).ready(function(){
     var $remaining = $('#remaining'),
     $messages = $remaining.next();
-    var numbers = '<?php //echo $countNumbers; ?>';
+    var numbers = '<?php// echo $countNumbers; ?>';
     $('#message').keyup(function(){
         var chars = this.value.length,
         messages = Math.ceil(chars / 160),
@@ -448,7 +448,7 @@ $(document).ready(function(){
       
         $('#count').val(messages);
       var countSMS = $('#count').val();
-        //var sms = parseInt(countSMS * numbers);
+        var sms = parseInt(countSMS * numbers);
         $('#sms').val("Your Consumed SMS: (" + countSMS+ ")");
     });
     // for parent sms modal...
@@ -465,7 +465,7 @@ $(document).ready(function(){
       
         $('#countt').val(messagess);
       var countSMS = $('#countt').val();
-        //var sms = parseInt(countSMS * numbers);
+        var sms = parseInt(countSMS * numbers);
         $('#smss').val("Your Consumed SMS: (" + countSMS+ ")");
     });
 });
