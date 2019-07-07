@@ -87,7 +87,7 @@ use yii\helpers\Url;
 
       <!-- Message of the day start -->
       <div class="row">
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="info-box bg-navy callout-warning">
             <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
             <div class="info-box-content">
@@ -684,11 +684,11 @@ Modal::end();
       let mins = fullDate.getMinutes();
       let secs = fullDate.getSeconds();
       if (hours>12) {
-        var am = "PM"
+        var am = "AM"
         hours=hours-12;
       }
       else{
-        var am = "AM";
+        var am = "PM";
       }
       if (hours < 12) {
           hours = "0" + hours;

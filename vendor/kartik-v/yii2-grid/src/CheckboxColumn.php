@@ -69,7 +69,7 @@ class CheckboxColumn extends YiiCheckboxColumn
             'width' => '50px'
         ]);
         if (!isset($this->rowSelectedClass)) {
-            $this->rowSelectedClass = $this->grid->getCssClass(GridView::BS_TABLE_DANGER);
+            $this->rowSelectedClass = $this->grid->getCssClass(GridView::BS_TABLE_SUCCESS);
         }
         $id = $this->grid->options['id'];
         $view = $this->grid->getView();

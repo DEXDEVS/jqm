@@ -427,17 +427,14 @@ class StdPersonalInfoController extends Controller
         $request = Yii::$app->request;
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         $array = array();
-        foreach ( $pks as $pk ) {
-            $inquiryStdNo = Yii::$app->db->createCommand("SELECT std_contact_no FROM std_personal_info WHERE std_id = '$pk'")->queryAll();
-            $number = $inquiryStdNo[0]['std_contact_no'];
+        foreach ($pks as $pk) {
+            $inquiryStdNo = Yii::$app->db->createCommand("SELECT std_father_contact_no FROM std_personal_info WHERE std_id = '$pk'")->queryAll();
+            $number = $inquiryStdNo[0]['std_father_contact_no'];
             $numb = str_replace('-', '', $number);
-            $num = str_replace('+', '', $numb);
-                    
+            $num = str_replace('+', '', $numb);     
             $array[] = $num;
         }
-
         $to = implode(',', $array);
-
         if (isset($_POST['message'])) {
             $message = $_POST['message'];
         
@@ -456,9 +453,7 @@ class StdPersonalInfoController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch); //This is the result from SMS4CONNECT
             curl_close($ch);     
-
             Yii::$app->session->setFlash('success', $result);
-
         }
         return $this->redirect(['./std-personal-info']);
     }

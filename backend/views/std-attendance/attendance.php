@@ -4,8 +4,8 @@
 	<title>Attendance</title>
 </head>
 <body>
-<div class="container-fluid" style="margin-top: -10px">
-	<h1 class="well well-sm" align="center">Attendance</h1>	
+<div class="container-fluid" style="margin-top: -40px">
+	<h1 class="well well-sm" align="center" style="font-family: serif;"><b>Student Attendance</b></h1>	
 	<form  action = "./attendance" method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-sm form-control" style="margin-top: 25px; background: #1a4977; color: #dce6ef;">
                     <i class="glyphicon glyphicon-share"></i>	
-                	<b>Take Attendance</b></button>
+                	<b>Get Class</b></button>
                 </div>    
             </div>    
         </div>
@@ -57,31 +57,21 @@
 		<form method="POST" action="./attendance">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<table width="100%" class="table table-condensed table-hover">
-						<tr>
-							<th>Class</th>
-							<th>Date</th>
-						</tr>
-						<tr>
-							<td><?php echo $className[0]['class_name']; ?></td>
-							<td><?php echo $date; ?></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
 					<table width="100%" class="table table-striped table-condensed">
-						<tr></tr>
-						<tr class="label-primary" style="color: white;">
-							<th>Sr No</th>
-							<th>Student Name</th>
-							<th style="text-align: center;">Attendance</th>
+						<tr class="bg-navy">
+							<th class="text-center" colspan="3">
+								Class: <?php echo $className[0]['class_name']; ?> | 
+								Date: <?php echo $date; ?>
+							</th>
 						</tr>
-						
+						<tr class="label-primary" style="color: white;">
+								<th class="text-center">Sr.No</th>
+								<th>Student Name</th>
+								<th style="text-align: center;">Attendance</th>
+							</tr>
 						<?php 
 						if(empty($student)){
-							Yii::$app->session->setFlash('warning','No students found.');
+							Yii::$app->session->setFlash('warning','Sorry! No Students Found in this Class!');
 						} else {
 							$length = count($student);
 							//$stdId = array(); 
@@ -89,12 +79,12 @@
 							$stdId = $student[$i]['std_id'];
 							?>
 							<tr>
-								<td><?php echo $i+1 ?></td>
+								<th class="text-center"><?php echo $i+1 ?></th>
 								<td><?php echo $student[$i]['std_name'] ?></td>
 								<td align="center">
 									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green">Present </b> &nbsp; &nbsp;| &nbsp; 
 									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red">Absent </b> &nbsp; &nbsp;| &nbsp; 
-									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #F7C564;">Leave</b>
+									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #3C8DBC;">Leave</b>
 								</td>
 							</tr>
 					<?php
@@ -105,18 +95,20 @@
 					?>
 						</table>
 					</div>
-				</div>	
-			</div><hr>
+				</div><hr>	
+			</div>
 			<div class="row">
 				<div class="col-md-2">
 	                <div class="form-group">
-	                	<?php foreach ($stdAttendId as $value) {
-	                		echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
-	                	}
-	                	?>
+	                	<?php 
+	                		if (!empty($stdAttendId)) {
+	                			foreach ($stdAttendId as $value) {
+	                			echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
+	                		}?>
 	                	<input type="hidden" name="length" value="<?php echo $length; ?>">
 	                	<input type="hidden" name="classid" value="<?php echo $classid; ?>">
 	                	<input type="hidden" name="date" value="<?php echo $date; ?>">
+
 	                </div>    
 	        	</div>
 			</div>
@@ -126,6 +118,7 @@
 						<b>Save Attendance</b></button>
 				</div>
 			</div>
+			 <?php } ?>
 	    </form> 
 		<?php 
 		// closing of if isset
