@@ -102,18 +102,24 @@ class StdRegistrationController extends Controller
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
-
-                //  $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                    $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                    //var_dump($model->std_photo);
+                    // generate random value to assign photo name....
+                    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        $charactersLength = strlen($characters);
+                        $randomString = '';
+                        for ($i = 0; $i < 15; $i++) {
+                            $randomString .= $characters[rand(0, $charactersLength - 1)];
+                        }
                     if(!empty($model->std_photo)){
-                        $image = $model->std_photo;
-                        $model->std_photo = $image;
-                        //$imageName = $model->std_name.'_photo'; 
-                        //$model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
-                        //save the path in the db column
-                        //$model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                            $imageName = $randomString; 
+                            $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                            //save the path in the db column
+                            $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
                     } else {
                        $model->std_photo = 'uploads/'.'std_default.jpg'; 
                     }
+
                     $model->status     = "Active";
                     $model->academic_status = "Active";
                     $model->created_by = Yii::$app->user->identity->id; 

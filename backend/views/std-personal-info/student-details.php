@@ -20,7 +20,7 @@
       $stdLeaveDate = date('d-m-Y', strtotime($stdPersonalInfo[0]['std_leave_date']));
     }
     
-    //echo $photo;
+    echo $photo;
     
     // Stduent Academic Info..... 
     $stdAcademicInfo = Yii::$app->db->createCommand("SELECT * FROM std_academic_info WHERE std_id = '$id'")->queryAll();
@@ -46,6 +46,7 @@
     WHERE sed.std_enroll_detail_std_id = '$id'")->queryAll();
     
 ?>
+
 <div class="container-fluid">
   <div class="row">
   	<section class="content-header">

@@ -99,7 +99,21 @@ class ExamsReportController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model->validate()){
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0'; 
+                    $model->save();
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('success', "You have Successfully Create Student Exams Report...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new ExamsReport",
@@ -160,7 +174,21 @@ class ExamsReportController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model->validate()){
+                 $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have Successfully Update Student Exams Report...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "ExamsReport #".$id,

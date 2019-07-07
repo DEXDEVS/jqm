@@ -5,7 +5,7 @@
 </head>
 <body>
 <div class="container-fluid" style="margin-top: -40px">
-	<h1 class="well well-sm" align="center" style="font-family: serif;"><b>Student Attendance</b></h1>	
+	<h1 class="well well-sm" align="center" style="font-family: serif;"><b>Student Attendance  طلباء کی حاضری </b></h1>	
 	<form  action = "./attendance" method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-2">
                 <div class="form-group">
-                    <label>Select Class</label>
+                    <label>Select Class کلاس منتخب کریں </label>
                     <select class="form-control" name="classid" required="">
-                    	<option value="">Select Class</option>
+                    	<option value="">Select Class  کلاس منتخب کریں </option>
 							<?php 
 								$stdclassName = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE status = 'Active'")->queryAll();
 								$countClass = count($stdclassName);
@@ -82,9 +82,9 @@
 								<th class="text-center"><?php echo $i+1 ?></th>
 								<td><?php echo $student[$i]['std_name'] ?></td>
 								<td align="center">
-									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green">Present </b> &nbsp; &nbsp;| &nbsp; 
-									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red">Absent </b> &nbsp; &nbsp;| &nbsp; 
-									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #3C8DBC;">Leave</b>
+									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green"> Present حاضر </b> &nbsp; &nbsp;| &nbsp; 
+									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red"> Absent  غیرحاضر  </b> &nbsp; &nbsp;| &nbsp; 
+									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #3C8DBC;"> Leave  چھٹی </b>
 								</td>
 							</tr>
 					<?php

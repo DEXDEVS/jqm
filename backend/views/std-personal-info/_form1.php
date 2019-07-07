@@ -142,7 +142,7 @@ use yii\helpers\Url;
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 121px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
-                     <a href="webcam-photo?id=<?php echo $model->std_id; ?>" class="btn btn-warning fa fa-image" style="position: absolute; right: 15px; top: 20px"> Take Snapshot</a>
+                     <!-- <a href="webcam-photo?id=<?php echo $model->std_id; ?>" class="btn btn-warning fa fa-image" style="position: absolute; right: 15px; top: 20px"> Take Snapshot</a> -->
                 </div>
             </div>
             <div class="row">
@@ -194,7 +194,7 @@ use yii\helpers\Url;
             <div class="row">
               <div class="col-md-4">
                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
-                  <label>Student Admission Date</label>
+                  <label>Student Leave Date</label>
                     <?= DateTimePicker::widget([
                         'model' => $model,
                         'attribute' => 'std_leave_date',

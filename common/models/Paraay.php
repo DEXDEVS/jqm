@@ -32,8 +32,8 @@ class Paraay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'created_by', 'updated_by'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['name'], 'required'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 100],
         ];

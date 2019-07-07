@@ -147,8 +147,6 @@ class StdPersonalInfoController extends Controller
             }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post()) && $stdFeeInstallments->load($request->post())){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
-                        var_dump($model->barcode);
-                        die();
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 
@@ -281,17 +279,23 @@ class StdPersonalInfoController extends Controller
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
-                        //$model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                        $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                        // generate random value to assign photo name....
+                        $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                            $charactersLength = strlen($characters);
+                            $randomString = '';
+                            for ($i = 0; $i < 15; $i++) {
+                                $randomString .= $characters[rand(0, $charactersLength - 1)];
+                            }
                         if(!empty($model->std_photo)){
-                            $image = $model->std_photo;
-                            $model->std_photo = $image;
-                            //$imageName = $model->std_name.'_photo'; 
-                            //$model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                            $imageName = $randomString; 
+                            $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
                             //save the path in the db column
-                            //$model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                            $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
                         } else {
-                           $model->std_photo = 'uploads/'.'std_default.jpg'; 
+                           $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
                         }
+
                         $model->updated_by = Yii::$app->user->identity->id;
                         $model->updated_at = new \yii\db\Expression('NOW()');
                         $model->created_by = $model->created_by;
@@ -341,26 +345,24 @@ class StdPersonalInfoController extends Controller
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
-                    //$model->std_photo = UploadedFile::getInstance($model,'std_photo');
-                    // if(!empty($model->std_photo)){
-                    //     $imageName = $model->std_name.'_photo'; 
-                    //     $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
-                    //     //save the path in the db column
-                    //     $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
-                    // } else {
-                    //    $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
-                    // }
-
+                    $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                     // generate random value to assign photo name....
+                    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        $charactersLength = strlen($characters);
+                        $randomString = '';
+                        for ($i = 0; $i < 15; $i++) {
+                            $randomString .= $characters[rand(0, $charactersLength - 1)];
+                        }
                     if(!empty($model->std_photo)){
-                        $image = $model->std_photo;
-                        $model->std_photo = $image;
-                        //$imageName = $model->std_name.'_photo'; 
-                        //$model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                        $imageName = $randomString; 
+                        $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
                         //save the path in the db column
-                        //$model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                        $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
                     } else {
-                       $model->std_photo = 'uploads/'.'std_default.jpg'; 
+                       $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
                     }
+
+
 
                     $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');

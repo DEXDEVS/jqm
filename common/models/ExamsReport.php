@@ -40,9 +40,9 @@ class ExamsReport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id', 'std_id', 'para_id', 'duration', 'remarks', 'created_by', 'updated_by'], 'required'],
+            [['class_id', 'std_id', 'para_id','start_date',], 'required'],
             [['class_id', 'std_id', 'para_id', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'created_at', 'updated_at'], 'safe'],
+            [['duration','end_date', 'created_at', 'updated_at', 'remarks', 'created_by', 'updated_by'], 'safe'],
             [['remarks'], 'string'],
             [['duration'], 'string', 'max' => 100],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
@@ -58,9 +58,9 @@ class ExamsReport extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'class_id' => 'Class ID',
-            'std_id' => 'Std ID',
-            'para_id' => 'Para ID',
+            'class_id' => 'Class',
+            'std_id' => 'Student',
+            'para_id' => 'Para',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'duration' => 'Duration',

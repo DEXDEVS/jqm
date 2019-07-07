@@ -139,7 +139,7 @@ use yii\helpers\Url;
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 121px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
-                     <a href="take-webcam-photo" class="btn btn-warning fa fa-image" style="position: absolute; right: 15px; top: 20px"> Take Snapshot</a>
+                     <!-- <a href="take-webcam-photo" class="btn btn-warning fa fa-image" style="position: absolute; right: 15px; top: 20px"> Take Snapshot</a> -->
                 </div>
             </div>
             <div class="row">
