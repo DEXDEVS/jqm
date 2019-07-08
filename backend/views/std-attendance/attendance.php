@@ -15,7 +15,7 @@
             </div>    
         </div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-2">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label>Select Class کلاس منتخب کریں </label>
                     <select class="form-control" name="classid" required="">
@@ -30,6 +30,12 @@
 							<?php } ?>
 					</select>      
                 </div>    
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Select Date</label>
+                    <input type="date" name="date" class="form-control" required="">  
+                </div>    
             </div> 
             <div class="col-md-2">
                 <div class="form-group">
@@ -40,21 +46,28 @@
             </div>    
         </div>
     </form>
-    
-
 <?php
-	if(isset($_POST["submit"])){
-		 
+	if(isset($_POST["submit"])){ 
 		$classid= $_POST["classid"];
-		$date = date('Y-m-d');
+		$date = $_POST["date"];
+		//$date = date('Y-m-d');
 
 		$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid' AND status = 'Active'")->queryAll();
 
-		$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid'")->queryAll();
+		$stdAttendance = Yii::$app->db->createCommand("SELECT a.attendance FROM std_attendance as a WHERE a.class_name_id = '$classid' AND a.date = '$date' ")->queryAll();
+
+		if(!empty($stdAttendance)){
+			Yii::$app->session->setFlash('warning','Attendance for this class Already taken');
+		} else {
+			$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid'")->queryAll();
+
+			if(empty($student)){
+				Yii::$app->session->setFlash('warning','Sorry! No Students Found in this Class!');
+			} else {
 
 		?>
 		<hr>
-		<form method="POST" action="./attendance">
+		<form method="POST" action="./monthly-class-atten-view">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<table width="100%" class="table table-striped table-condensed">
@@ -65,16 +78,13 @@
 							</th>
 						</tr>
 						<tr class="label-primary" style="color: white;">
-								<th class="text-center">Sr.No</th>
-								<th>Student Name</th>
-								<th style="text-align: center;">Attendance</th>
-							</tr>
+							<th class="text-center">Sr.No</th>
+							<th>Student Name</th>
+							<th style="text-align: center;">Attendance</th>
+						</tr>
 						<?php 
-						if(empty($student)){
-							Yii::$app->session->setFlash('warning','Sorry! No Students Found in this Class!');
-						} else {
 							$length = count($student);
-							//$stdId = array(); 
+							
 						for( $i=0; $i<$length; $i++) { 
 							$stdId = $student[$i]['std_id'];
 							?>
@@ -89,21 +99,17 @@
 							</tr>
 					<?php
 						$stdAttendId[$i] = $stdId;
-						//closing for loop
-						}
-					} //closing of else
+						} //closing for loop
 					?>
-						</table>
-					</div>
-				</div><hr>	
-			</div>
+					</table>
+				</div>
+			</div><hr>	
 			<div class="row">
 				<div class="col-md-2">
 	                <div class="form-group">
 	                	<?php 
-	                		if (!empty($stdAttendId)) {
-	                			foreach ($stdAttendId as $value) {
-	                			echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
+                			foreach ($stdAttendId as $value) {
+                			echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
 	                		}?>
 	                	<input type="hidden" name="length" value="<?php echo $length; ?>">
 	                	<input type="hidden" name="classid" value="<?php echo $classid; ?>">
@@ -118,51 +124,15 @@
 						<b>Save Attendance</b></button>
 				</div>
 			</div>
-			 <?php } ?>
+		<?php } //(empty($student))
+		?>
 	    </form> 
 		<?php 
-		// closing of if isset
-			} ?>
-	</div>
-	<!-- container-fluid close -->	
+		} //(!empty($stdAttendance))
+	} // closing of if isset
+	?>
+</div>
+<!-- container-fluid close -->	
 
-<?php 	
-	if (isset($_POST["save"])) {
-		$classid = $_POST["classid"];
-		$date = $_POST["date"];
-		$length = $_POST["length"];
-		$stdAttendId = $_POST["stdAttendance"];
-		for($i=0; $i<$length;$i++){
-			$q=$i+1;
-			$std = "std".$q;
-			$status[$i] = $_POST["$std"];
-		}
-
-		$transection = Yii::$app->db->beginTransaction();
-		try{
-			for($i=0; $i<$length; $i++){
-				$attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
-					'user_id' 		=> Yii::$app->user->identity->id,
-					'class_name_id' => $classid,
-					'date' 			=> $date,
-					'std_id' 		=> $stdAttendId[$i],
-					'attendance'	=> $status[$i],
-					'created_at'	=> new \yii\db\Expression('NOW()'),
-					'created_by'	=> Yii::$app->user->identity->id,
-				])->execute();
-			} //closing of $i loop
-
-			if($attendance){
-				$transection->commit();
-				Yii::$app->session->setFlash('success', "Attendance marked successfully...!");
-			} //closing of if
-		} //closing of try block
-		catch(Exception $e){
-			$transection->rollback();
-			echo $e;
-			Yii::$app->session->setFlash('warning', "Attendance not marked. Try again!");
-		} //closing of catch
-	} //closing of if isset
-?>
 </body>
 </html>

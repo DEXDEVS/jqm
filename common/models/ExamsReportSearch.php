@@ -18,8 +18,8 @@ class ExamsReportSearch extends ExamsReport
     public function rules()
     {
         return [
-            [['id', 'class_id', 'std_id', 'para_id', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'duration', 'remarks', 'created_at', 'updated_at'], 'safe'],
+            [['id','created_by', 'updated_by'], 'integer'],
+            [[ 'class_id', 'std_id', 'para_id', 'start_date', 'end_date', 'duration', 'remarks', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,12 +54,14 @@ class ExamsReportSearch extends ExamsReport
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('class');
+        $query->joinWith('std');
+        $query->joinWith('para');
         $query->andFilterWhere([
             'id' => $this->id,
-            'class_id' => $this->class_id,
-            'std_id' => $this->std_id,
-            'para_id' => $this->para_id,
+            // 'class_id' => $this->class_id,
+            // 'std_id' => $this->std_id,
+            // 'para_id' => $this->para_id,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'created_at' => $this->created_at,
@@ -69,7 +71,10 @@ class ExamsReportSearch extends ExamsReport
         ]);
 
         $query->andFilterWhere(['like', 'duration', $this->duration])
-            ->andFilterWhere(['like', 'remarks', $this->remarks]);
+            ->andFilterWhere(['like', 'remarks', $this->remarks])
+            ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_id])
+            ->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id])
+            ->andFilterWhere(['like', 'paraay.name', $this->para_id]);
 
         return $dataProvider;
     }

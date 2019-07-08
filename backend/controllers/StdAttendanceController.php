@@ -31,7 +31,7 @@ class StdAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete', 'bulk-sms', 'attendance'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete', 'bulk-sms', 'attendance','view-attendance','datewise-std-atten-view','datewise-class-atten-view','daterangewise-std-atten-view','daterangewise-class-atten-view','monthly-class-atten-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,6 +60,36 @@ class StdAttendanceController extends Controller
     public function actionAttendance()
     {   
         return $this->render('attendance');
+    }
+
+    public function actionViewAttendance()
+    {   
+        return $this->render('view-attendance');
+    }
+
+    public function actionDatewiseStdAttenView()
+    {   
+        return $this->render('datewise-std-atten-view');
+    }
+
+    public function actionDatewiseClassAttenView()
+    {   
+        return $this->render('datewise-class-atten-view');
+    }
+
+    public function actionDaterangewiseStdAttenView()
+    {   
+        return $this->render('daterangewise-std-atten-view');
+    }
+
+    public function actionDaterangewiseClassAttenView()
+    {   
+        return $this->render('daterangewise-class-atten-view');
+    }
+
+    public function actionMonthlyClassAttenView()
+    {   
+        return $this->render('monthly-class-atten-view');
     }
 
     public function actionIndex()

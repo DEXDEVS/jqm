@@ -68,6 +68,15 @@
                             //['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Attendance', 'icon' => 'caret-right', 'url' => './attendance',],
+                            [
+                                'label' => 'Attendance Reports',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Date Wise', 'icon' => 'chevron-right', 'url' => './view-attendance',],
+                                    ['label' => 'Month Wise', 'icon' => 'chevron-right', 'url' => './monthly-class-atten-view',],
+                                ],
+                            ],
                             // ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
                             // ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             // ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
