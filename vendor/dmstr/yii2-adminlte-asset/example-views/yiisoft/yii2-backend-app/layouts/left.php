@@ -69,6 +69,35 @@
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Attendance', 'icon' => 'caret-right', 'url' => './attendance',],
                             ['label' => 'Exams Report', 'icon' => 'caret-right', 'url' => './exams-report',],
+                            [
+                                'label' => 'Attendance Reports',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Date Wise', 'icon' => 'chevron-right', 'url' => './view-attendance',],
+                                    ['label' => 'Month Wise', 'icon' => 'chevron-right', 'url' => './monthly-class-atten-view',],
+                                ],
+                            ],
+                            // ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
+                            // ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Attendance System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // [
+                            //     'label' => 'Online Admission',
+                            //     'icon' => 'caret-right',
+                            //     'url' => '#',
+                            //     'items' => [
+                            //         ['label' => 'Announcment', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                            //         ['label' => 'Merit Module', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                            //         ['label' => 'Scholarship', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                            //         ['label' => 'Entry Test', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                            //     ],
+                            // ],
+                            //['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./std-promote"],],
+                            
+                            //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],
+                            // ['label' => 'Students Enrolment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
+                            // ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => ["/teacher-subject-assign-head"],],
                         ],
                     ],
                     // ------------------------------------------------
