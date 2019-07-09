@@ -307,7 +307,7 @@ class SmsController extends Controller
         $lang = "Urdu";
         $mask = "JamiaQadria";
         // Data for text message
-        $to = "923317375027";
+        //$to = $to;
         $message = urlencode($message);
         // Prepare data for POST request
         $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;

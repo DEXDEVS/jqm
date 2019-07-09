@@ -72,7 +72,7 @@ use common\models\Branches;
             <?= $form->field($model, 'emp_father_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 6px"></i>
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic', 'onchange' => 'generateBarcode();'],  'mask' => '99999-9999999-9']) ?>
         </div>
     </div>    
@@ -82,12 +82,12 @@ use common\models\Branches;
             <?= $form->field($model, 'emp_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
         </div>
         <div class="col-md-4">
-             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i> 
+             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i> --> 
             <?= $form->field($model, 'emp_email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i>
-            <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i> -->
+            <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ]) ?>
         </div>
     </div> 
     <div class="col-md-12">
@@ -152,13 +152,13 @@ use common\models\Branches;
                 )?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i>
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i> -->
             <?= $form->field($model, 'group_by')->dropDownList([ 'Faculty' => 'Faculty', 'Non-Faculty' => 'Non-Faculty', ], ['prompt' => 'Select Group']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i>
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_salary')->textInput() ?>
         </div>
         <div class="col-md-4">

@@ -402,7 +402,7 @@
                     <div class="col-md-5">
                       <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Exams Report</p>
                     </div>
-                    <div class="col-md-3 col-md-offset-4">
+                    <div class="col-md-3 col-md-offset-4 invisible">
                       <?=Html::a(' Add Exams Report',['./exams-report-create','std_id'=>$id,'class_id'=>$classID],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Add Exams Report', 'data-toggle'=>'tooltip']) ?>
                     </div>
                   </div>
