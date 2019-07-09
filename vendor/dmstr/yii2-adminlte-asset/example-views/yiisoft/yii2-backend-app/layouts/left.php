@@ -68,7 +68,7 @@
                             //['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Attendance', 'icon' => 'caret-right', 'url' => './attendance',],
-                            ['label' => 'Exams Report', 'icon' => 'caret-right', 'url' => './exams-report',],
+                            //['label' => 'Exams Report', 'icon' => 'caret-right', 'url' => './exams-report',],
                             [
                                 'label' => 'Attendance Reports',
                                 'icon' => 'caret-right',

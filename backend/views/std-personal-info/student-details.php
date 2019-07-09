@@ -407,7 +407,7 @@
                     </div>
                   </div>
                   <!-- Exams Report info start -->
-                    <div class="row">
+                    <div class="row invisible">
                       <div class="col-md-12">
                         <table class="table table-condensed table-bordered table-hover table-responsive table-striped">
                           <thead>
