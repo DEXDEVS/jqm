@@ -8,6 +8,7 @@ use common\models\ExamsReportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +23,20 @@ class ExamsReportController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-days-count'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,6 +51,12 @@ class ExamsReportController extends Controller
      * Lists all ExamsReport models.
      * @return mixed
      */
+
+    public function actionFetchDaysCount()
+    { 
+        return $this->render('fetch-days-count');
+    }
+
     public function actionIndex()
     {    
         $searchModel = new ExamsReportSearch();

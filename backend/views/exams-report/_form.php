@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use common\models\StdClassName;
 use common\models\StdPersonalInfo;
 use common\models\Paraay;
+use kartik\date\DatePicker;
 use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
@@ -79,13 +80,13 @@ use dosamigos\datetimepicker\DateTimePicker;
         <div class="col-md-6">
             <?= $form->field($model, 'class_id')->dropDownList(
                 ArrayHelper::map(StdClassName::find()->all(),'class_name_id','class_name'),
-                ['prompt'=>'Select Class',]
+                ['prompt'=>'Select Class','id'=> 'classId']
             )?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'std_id')->dropDownList(
                 ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-                ['prompt'=>'Select Student',]
+                ['prompt'=>'Select Student','id'=>'stdent']
             )?>
         </div>
     </div>
@@ -97,21 +98,14 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ['prompt'=>'Select Paraa',]
             )?>
         </div>
-        <div class="col-md-6">  
-            <label>Start Date</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'start_date',
-                'language' => 'en',
-                'size' => 'ms',
-                'clientOptions' => [
-                    'autoclose' => true,
+        <div class="col-md-6">   
+            <?= $form->field($model, 'start_date')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Enter start date'],
+                'pluginOptions' => [
                     'format' => 'yyyy-mm-dd',
-                    'startDate' => date('2000-01-01'),
-                    'endDate' => date(''),
-                    'todayBtn' => true
+                    'autoclose'=>true
                 ]
-            ]);?>     
+            ]); ?> 
         </div>
     </div>    
 
@@ -126,3 +120,31 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php ActiveForm::end(); ?>
     
 </div>
+<?php
+//$url = \yii\helpers\Url::to("exams-report/fetch-days-count");
+
+$script = <<< JS
+
+$('#classId').on('change',function(){
+   var classId = $(this).val();
+    $.get('./std-personal-info/get-student',{classId : classId},function(data){
+        
+        var data =  $.parseJSON(data);
+        $('#stdent').empty();
+        var options = '';
+        $('#stdent').append("<option>"+"Select Student"+"</option>");
+            for(var i=0; i<data.length; i++) { 
+                options += '<option value="'+data[i].std_id+'">'+data[i].std_name+'</option>';
+            }
+            console.log(data);
+        // Append to the html
+        $('#stdent').append(options);
+    });
+  
+ });
+
+JS;
+$this->registerJs($script);
+?>
+</script> 
+
