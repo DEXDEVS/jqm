@@ -483,6 +483,7 @@ class StdPersonalInfoController extends Controller
     public function actionGetStudent($classId){
         // fine the zip code from the locations table
         $student = StdPersonalInfo::find()
+                ->select(['std_name'])
                 ->innerJoinWith('stdAcademicInfos')
                 ->where(['class_name_id' => $classId, 'std_enroll_status'=> 'unsign'])
                 ->all();

@@ -19,7 +19,7 @@ use dosamigos\datetimepicker\DateTimePicker;
         </div>
         <div class="col-md-6">
          <?= $form->field($model, 'starting_date')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Enter birth date ...', 'id'=>'startDate'],
+                'options' => ['placeholder' => 'Enter start date ...', 'id'=>'startDate'],
                 'pluginOptions' => [
                     'format' => 'yyyy-mm-dd',
                     'autoclose'=>true

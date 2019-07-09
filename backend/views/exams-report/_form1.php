@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
@@ -38,29 +39,30 @@ $paraName = $paraName[0]['name'];
             <input type="text" class="form-control" value="<?php echo $paraName; ?>">
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'start_date')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'start_date')->textInput(['readonly' => true, 'id' => 'startDate']) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label>End Date</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'end_date',
-                'language' => 'en',
-                'size' => 'ms',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd',
-                    'startDate' => date('2000-01-01'),
-                    'endDate' => date(''),
-                    'todayBtn' => true
-                ]
-            ]);?>
+                <?= DateTimePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'end_date',
+                    'language' => 'en',
+                    'size' => 'ms',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                        //'startDate' => date('1990-01-01'),
+                        //'endDate' => date(''),
+                        'todayBtn' => true
+                    ],
+                    'options' => ['id' => 'endDate',]
+                ]);?> 
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'duration')->textInput() ?>
+            <?= $form->field($model, 'duration')->textInput(['id'=>'duration','readonly'=>true]) ?>
         </div>
     </div>
 
@@ -91,3 +93,27 @@ $paraName = $paraName[0]['name'];
     <?php ActiveForm::end(); ?>
     
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<?php
+//$url = \yii\helpers\Url::to("exams-report/fetch-days-count");
+
+$script = <<< JS
+
+$('#endDate').on('change',function(){
+   
+    var endDate = $('#endDate').val();
+    var startDate = $('#startDate').val();
+    var firstDate = moment(startDate);
+    var secondDate = moment(endDate);
+
+    var days = Math.abs(firstDate.diff(secondDate,'days'));
+   // alert(days+" days"); 
+    $('#duration').val(days+" دن");
+  
+ });
+
+JS;
+$this->registerJs($script);
+?>
+</script> 
+
