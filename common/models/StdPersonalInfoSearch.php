@@ -86,7 +86,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
             ->andFilterWhere(['like', 'std_nationality', $this->std_nationality])
             ->andFilterWhere(['like', 'std_tehseel', $this->std_tehseel])
             ->andFilterWhere(['like', 'std_password', $this->std_password])
-            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'std_personal_info.status', $this->status])
             ->andFilterWhere(['like', 'academic_status', $this->academic_status])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
             ->andFilterWhere(['like', 'std_other_info', $this->std_other_info])

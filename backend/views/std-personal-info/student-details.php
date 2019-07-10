@@ -20,8 +20,6 @@
       $stdLeaveDate = date('d-m-Y', strtotime($stdPersonalInfo[0]['std_leave_date']));
     }
     
-    echo $photo;
-    
     // Stduent Academic Info..... 
     $stdAcademicInfo = Yii::$app->db->createCommand("SELECT * FROM std_academic_info WHERE std_id = '$id'")->queryAll();
     if (!empty($stdAcademicInfo)) {

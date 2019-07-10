@@ -209,8 +209,10 @@ use yii\helpers\Url;
                         ]
                     ]);?>
               </div>
-
-              <div class="col-md-8">
+              <div class="col-md-4">
+                <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
+            </div>
+              <div class="col-md-4">
                   <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 4px"></i> -->
                   <?= $form->field($model, 'std_other_info')->textInput() ?>
               </div>
