@@ -171,31 +171,9 @@ class EmpInfoController extends Controller
                         $empRefModel->emp_id = $model->emp_id;
                         $empRefModel->save();
 
-                        $user = new User();
-                        $empPassword = rand(1000, 10000);
-                        $user->branch_id = $model->emp_branch_id;
-                        $user->username = $model->emp_cnic;
-                        $user->email = $model->emp_email;
-                        $user->user_photo = $model->emp_photo;
-                        if($model->group_by == 'Faculty'){
-                            $user->user_type = 'Teacher';
-                        } else {
-                            $user->user_type = 'Employee';
-                        }
-                        $user->setPassword($empPassword);
-                        $user->generateAuthKey();
-                        $user->save();
-                        $transaction->commit();
-
-                        // SMS....
-                        $contact = $model->emp_contact_no;
-                        $num = str_replace('-', '', $contact);
-                        $to = str_replace('+', '', $num);
-                        $message = "AOA! \nCongradulations! You have become a part of Brookfield Family. \n\nYour Login credentials (username :".$model->emp_cnic.", Password: ".$empPassword.") ";
-                        $sms = SmsController::sendSMS($to, $message);
                         return $this->redirect(['index']);
 
-                        Yii::$app->session->setFlash('success', "You have successfully add employee...!");
+                        Yii::$app->session->setFlash('success', "You have Successfully Add Employee...!");
                     } catch (Exception $e) {
                         $transaction->rollBack();
                         Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
@@ -265,31 +243,9 @@ class EmpInfoController extends Controller
                         $empRefModel->emp_id = $model->emp_id;
                         $empRefModel->save();
 
-                        $user = new User();
-                        $empPassword = rand(1000, 10000);
-                        $user->branch_id = $model->emp_branch_id;
-                        $user->username = $model->emp_cnic;
-                        $user->email = $model->emp_email;
-                        $user->user_photo = $model->emp_photo;
-                        if($model->group_by == 'Faculty'){
-                            $user->user_type = 'Teacher';
-                        } else {
-                            $user->user_type = 'Employee';
-                        }
-                        $user->setPassword($empPassword);
-                        $user->generateAuthKey();
-                        $user->save();
-                        $transaction->commit();
-
-                        // SMS....
-                        $contact = $model->emp_contact_no;
-                        $num = str_replace('-', '', $contact);
-                        $to = str_replace('+', '', $num);
-                        $message = "AOA! \nCongratulations! You have become a part of Brookfield Family. \n\nYour Login credentials (username :".$model->emp_cnic.", Password: ".$empPassword.") ";
-                        $sms = SmsController::sendSMS($to, $message);
                         return $this->redirect(['index']);
 
-                        Yii::$app->session->setFlash('success', "You have successfully add employee...!");
+                        Yii::$app->session->setFlash('success', "You have Successfully Add Employee...!");
                     } catch (Exception $e) {
                         $transaction->rollBack();
                         Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");

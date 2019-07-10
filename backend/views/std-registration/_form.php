@@ -86,7 +86,7 @@ use yii\helpers\Url;
             </div> 
             <div class="row">
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 170px; top: 4px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 205px; top: 4px"></i>
                     <?= $form->field($model, 'std_name')->textInput(['maxlength' => true,'id' => 'std_name', 'required'=> true]) ?>
                 </div>
                 <div class="col-md-4">
@@ -94,7 +94,7 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
                 </div> 
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 93px; top: 4px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 110px; top: 4px"></i>
                     <label>Student DOB</label>
                     <?= DateTimePicker::widget([
                         'model' => $model,
@@ -113,22 +113,22 @@ use yii\helpers\Url;
             </div>
             <div class="row">
               <div class="col-md-4">
-                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 252px; top: 4px"></i>
+                   <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 312px; top: 4px"></i>
                   <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true,'id' => 'std_father_name']) ?>
               </div> 
               <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 305px; top: 4px"></i>
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 353px; top: 4px"></i>
                 <?= $form->field($model, 'std_father_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_father_contact_no']) ?>
               </div>  
               <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 300px; top: 4px"></i>
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 350px; top: 4px"></i>
                 <?= $form->field($model, 'std_father_cnic')->widget(yii\widgets\MaskedInput::class, ['mask' => '99999-9999999-9']) ?>
               </div>
             </div>  
             
             <div class="row">    
                 <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 4px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 110px; top: 4px"></i>
                     <?= $form->field($model, 'std_gender')->dropDownList
                     ([ 'مرد' => 'مرد', 'عورت' => 'عورت', ], ['id' => 'std_gender']) ?>
                 </div>
@@ -144,7 +144,7 @@ use yii\helpers\Url;
             </div>
             <div class="row">
               <div class="col-md-4">
-                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 4px"></i>
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 4px"></i>
                   <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
               </div>
               <div class="col-md-4">
@@ -160,11 +160,11 @@ use yii\helpers\Url;
              
             <div class="row">  
               <div class="col-md-4">
-                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 87px; top: 4px"></i>
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 108px; top: 4px"></i>
                   <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
               </div>
               <div class="col-md-4">
-                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 4px"></i>
+                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 4px"></i>
                   <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
               </div>
               <div class="col-md-4">
@@ -174,12 +174,12 @@ use yii\helpers\Url;
             </div>
             <div class="row">
               <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 230px; top: 4px"></i>
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 275px; top: 4px"></i>
                     <?= $form->field($model, 'std_residency')->dropDownList
                     ([ 'اقا متی' => 'اقا متی', 'غیراقامتی' => 'غیراقامتی']) ?>
               </div>
               <div class="col-md-4">
-                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 180px; top: 6px"></i>
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 220px; top: 6px"></i>
                     <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true, 'id' => 'std_permanent_address']) ?>
                 </div>
               <div class="col-md-4">
@@ -221,7 +221,7 @@ use yii\helpers\Url;
             </h3>
             <div class="row">
               <div class="col-md-4">
-                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i> -->
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 100px; top: 6px"></i>
                 <?= $form->field($model, 'class_id')->dropDownList(
                   ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active','branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
                     ['prompt'=>'Select Class', 'id'=>'classId']

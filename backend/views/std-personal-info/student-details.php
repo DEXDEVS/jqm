@@ -196,8 +196,21 @@
           <div class="col-md-9">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#personal" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user-circle" ></i> Personal Info</a></li>
-                <li><a href="#academic" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-book"></i> Academic Info</a></li>
+                <li class="active">
+                  <a href="#personal" data-toggle="tab" style="color: #3C8DBC;">
+                    <i class="fa fa-user-circle" ></i> Personal Info
+                  </a>
+                </li>
+                <li>
+                  <a href="#academic" data-toggle="tab" style="color: #3C8DBC;">
+                    <i class="fa fa-book"></i> Academic Info
+                  </a>
+                </li>
+                <li>
+                  <a href="#exams_report" data-toggle="tab" style="color: #3C8DBC;">
+                    <i class="fa fa-etsy"></i> Exams Report
+                  </a>
+                </li>
               </ul>
               <!-- student personal info Tab start -->
               <div class="tab-content">
@@ -378,44 +391,69 @@
                           </thead>
                         </table>
                       </div>
-                      <div class="col-md-6">
-                         <!-- <table class="table table-striped table-hover">
-                          <thead>
-                            <tr>
-                              <th>Previous Class:</th>
-                              <td><?php echo $stdAcademicInfo[0]['previous_class']?></td>
-                            </tr>
-                            <tr>
-                              <th>Previous Class Roll No:</th>
-                              <td><?php echo $stdAcademicInfo[0]['previous_class_rollno']?></td>
-                            </tr>
-                            <tr>
-                              <th>Passing Year:</th>
-                              <td><?php echo $stdAcademicInfo[0]['passing_year']?></td>
-                            </tr>
-                            <tr>
-                              <th>Obtained Marks:</th>
-                              <td><?php echo $stdAcademicInfo[0]['obtained_marks']?></td>
-                            </tr>
-                            <tr>
-                              <th>Total Marks:</th>
-                              <td><?php echo $stdAcademicInfo[0]['total_marks']?></td>
-                            </tr>
-                            <tr>
-                              <th>Grades:</th>
-                              <td><?php echo $stdAcademicInfo[0]['grades']?></td>
-                            </tr>
-                            <tr>
-                              <th>Percentage:</th>
-                              <td><?php echo round($stdAcademicInfo[0]['percentage'],2)."%"?></td>
-                            </tr> -->
-                          </thead>
-                        </table> 
-                      </div>
                     </div>
                   <!-- Academic info close -->
                 </div>
                 <!-- Academic tab close here -->
+                <!-- ****************** -->
+                <!-- Exams Report tab start here -->
+                <div class="tab-pane" id="exams_report">
+                 <div class="row">
+                    <div class="col-md-5">
+                      <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Exams Report</p>
+                    </div>
+                    <div class="col-md-3 col-md-offset-4 invisible">
+                      <?=Html::a(' Add Exams Report',['./exams-report-create','std_id'=>$id,'class_id'=>$classID],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Add Exams Report', 'data-toggle'=>'tooltip']) ?>
+                    </div>
+                  </div>
+                  <!-- Exams Report info start -->
+                    <div class="row invisible">
+                      <div class="col-md-12">
+                        <table class="table table-condensed table-bordered table-hover table-responsive table-striped">
+                          <thead>
+                            <tr class="bg-primary">
+                              <th>Sr.No</th>
+                              <th>Class</th>
+                              <th>Paraa</th>
+                              <th>Start Date</th>
+                              <th>End Date</th>
+                              <th>Duration</th>
+                              <th>Remarks</th>
+                              <th class="text-center">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php  
+                            // Exams Report...
+                              $examsReport = Yii::$app->db->createCommand("SELECT * FROM exams_report WHERE std_id = '$id'")->queryAll();
+                              foreach ($examsReport as $key => $value) { 
+                                $paraId = $value['para_id'];
+                                $paraay = Yii::$app->db->createCommand("SELECT name FROM paraay WHERE id = '$paraId'")->queryAll();
+                                $paraName = $paraay[0]['name'];        
+                                $classId = $value['class_id'];
+                                $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'")->queryAll();
+                                $className = $class[0]['class_name'];
+                                $report = Yii::$app->db->createCommand("SELECT * FROM exams_report WHERE class_id = '$classId' AND std_id = '$id' AND para_id = $paraId")->queryAll();
+                              
+                            ?>
+                            <tr>
+                              <th class="text-center"><?php echo $key+1; ?></th>
+                              <td><?php echo $className; ?></td>
+                              <td><?php echo $paraName; ?></td>
+                              <td><?php echo $value['start_date']; ?></td>
+                              <td><?php echo $value['end_date']; ?></td>
+                              <td><?php echo $value['duration']; ?></td>
+                              <td><?php echo $value['remarks']; ?></td>
+                              <td class="text-center"><?=Html::a('',['./exams-report-update','std_id'=>$id,'class_id'=>$value['class_id']],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Update Exams Report', 'data-toggle'=>'tooltip']) ?></td>
+                            </tr>
+                            <?php } ?>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  <!-- Exams Report info close -->
+                </div>
+                <!-- Exams Report tab close here -->
                 <!-- *********************** -->
             </div>
             <!-- /.nav-tabs-custom -->

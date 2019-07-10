@@ -16,6 +16,65 @@ use dosamigos\datetimepicker\DateTimePicker;
 <div class="exams-report-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <?php  
+        if (isset($_GET['std_id']) && (isset($_GET['class_id']))) { 
+            $stdID = $_GET['std_id'];
+            $classID = $_GET['class_id'];      
+
+            $student = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$stdID'")->queryAll();
+            $stdName = $student[0]['std_name'];
+
+            $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classID'")->queryAll();
+
+            $className = $class[0]['class_name'];
+    ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Class</label>
+                    <input type="text" value="<?php echo $className; ?>" readonly class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>Student</label>
+                    <input type="text" value="<?php echo $stdName; ?>" readonly class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'para_id')->dropDownList(
+                        ArrayHelper::map(Paraay::find()->all(),'id','name'),
+                        ['prompt'=>'Select Paraa',]
+                    )?>
+                </div>
+                <div class="col-md-6">  
+                    <label>Start Date</label>
+                    <?= DateTimePicker::widget([
+                        'model' => $model,
+                        'attribute' => 'start_date',
+                        'language' => 'en',
+                        'size' => 'ms',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            'startDate' => date('2000-01-01'),
+                            'endDate' => date(''),
+                            'todayBtn' => true
+                        ]
+                    ]);?>     
+                </div>
+            </div>
+
+            <div class="row invisible">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'class_id')->textInput(['value'=> $classID]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'std_id')->textInput(['value'=> $stdID]) ?>
+                </div>
+            </div>
+
+    <?php } else { ?>
 
     <div class="row">
         <div class="col-md-6">
@@ -49,6 +108,8 @@ use dosamigos\datetimepicker\DateTimePicker;
             ]); ?> 
         </div>
     </div>    
+
+    <?php } ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
