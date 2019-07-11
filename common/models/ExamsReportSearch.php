@@ -19,7 +19,7 @@ class ExamsReportSearch extends ExamsReport
     {
         return [
             [['id','created_by', 'updated_by'], 'integer'],
-            [[ 'class_id', 'std_id', 'para_id', 'start_date', 'end_date', 'duration', 'remarks', 'created_at', 'updated_at'], 'safe'],
+            [[ 'class_id', 'std_id', 'para_id', 'course_id','start_date', 'end_date', 'duration', 'remarks', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class ExamsReportSearch extends ExamsReport
         $query->joinWith('class');
         $query->joinWith('std');
         $query->joinWith('para');
+        $query->joinWith('stdCourse');
         $query->andFilterWhere([
             'id' => $this->id,
             // 'class_id' => $this->class_id,
@@ -74,7 +75,8 @@ class ExamsReportSearch extends ExamsReport
             ->andFilterWhere(['like', 'remarks', $this->remarks])
             ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_id])
             ->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id])
-            ->andFilterWhere(['like', 'paraay.name', $this->para_id]);
+            ->andFilterWhere(['like', 'paraay.name', $this->para_id])
+            ->andFilterWhere(['like', 'std_course.course_name', $this->course_id]);
 
         return $dataProvider;
     }

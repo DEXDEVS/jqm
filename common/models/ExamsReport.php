@@ -11,6 +11,7 @@ use Yii;
  * @property int $class_id
  * @property int $std_id
  * @property int $para_id
+ * @property int $course_id
  * @property string $start_date
  * @property string $end_date
  * @property string $duration
@@ -40,14 +41,15 @@ class ExamsReport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id', 'std_id', 'para_id','start_date',], 'required'],
-            [['class_id', 'std_id', 'para_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_id', 'std_id', 'para_id','start_date', 'course_id'], 'required'],
+            [['class_id', 'std_id', 'para_id', 'course_id', 'created_by', 'updated_by'], 'integer'],
             [['duration','end_date', 'created_at', 'updated_at', 'remarks', 'created_by', 'updated_by'], 'safe'],
             [['remarks'], 'string'],
             [['duration'], 'string', 'max' => 100],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
             [['para_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paraay::className(), 'targetAttribute' => ['para_id' => 'id']],
+            [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdCourse::className(), 'targetAttribute' => ['course_id' => 'course_id']], 
         ];
     }
 
@@ -61,6 +63,7 @@ class ExamsReport extends \yii\db\ActiveRecord
             'class_id' => 'Class',
             'std_id' => 'Student',
             'para_id' => 'Para',
+            'course_id' => 'Course',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'duration' => 'Duration',
@@ -95,4 +98,12 @@ class ExamsReport extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Paraay::className(), ['id' => 'para_id']);
     }
+
+   /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getStdCourse() 
+   { 
+       return $this->hasOne(StdCourse::className(), ['course_id' => 'course_id']); 
+   } 
 }

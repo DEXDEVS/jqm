@@ -56,8 +56,8 @@ CrudAsset::register($this);
                     'columns' => $gridColumns
                 ]),
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/std-registration'],
-                    ['role'=>'','title'=> 'Create new Std Personal Infos','class'=>'btn btn-success']).
+                    // Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/std-registration'],
+                    // ['role'=>'','title'=> 'Create new Std Personal Infos','class'=>'btn btn-success']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
                     '{toggleData}'

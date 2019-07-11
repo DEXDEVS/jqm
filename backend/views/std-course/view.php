@@ -3,22 +3,15 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ExamsReport */
+/* @var $model common\models\StdCourse */
 ?>
-<div class="exams-report-view">
+<div class="std-course-view">
  
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'class_id',
-            'std_id',
-            'para_id',
-            'course_id',
-            'start_date',
-            'end_date',
-            'duration',
-            'remarks:ntext',
+            'class_name',
             'created_at',
             'updated_at',
             'created_by',

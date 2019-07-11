@@ -16,6 +16,9 @@ $stdName = $stdName[0]['std_name'];
 $paraName = Yii::$app->db->createCommand("SELECT name FROM paraay WHERE id = '$model->para_id'")->queryAll();
 $paraName = $paraName[0]['name'];
 
+$courseName = Yii::$app->db->createCommand("SELECT course_name FROM std_course WHERE course_id = '$model->course_id'")->queryAll();
+$courseName = $courseName[0]['course_name'];
+
 ?>
 
 <div class="exams-report-form">
@@ -23,20 +26,24 @@ $paraName = $paraName[0]['name'];
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label>Class</label>
-            <input type="text" class="form-control" value="<?php echo $className; ?>">
+            <input type="text" class="form-control" value="<?php echo $className; ?>" readonly="">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label>Student</label>
-            <input type="text" class="form-control" value="<?php echo $stdName; ?>">
+            <input type="text" class="form-control" value="<?php echo $stdName; ?>" readonly="">
+        </div>
+        <div class="col-md-4">
+            <label>Course</label>
+            <input type="text" class="form-control" value="<?php echo $courseName; ?>" readonly="">
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label>Para</label>
-            <input type="text" class="form-control" value="<?php echo $paraName; ?>">
+            <input type="text" class="form-control" value="<?php echo $paraName; ?>" readonly="">
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'start_date')->textInput(['readonly' => true, 'id' => 'startDate']) ?>
@@ -73,14 +80,17 @@ $paraName = $paraName[0]['name'];
     </div>
 
     <div class="row invisible">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'class_id')->hiddenInput() ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'std_id')->hiddenInput() ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'para_id')->hiddenInput() ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'course_id')->hiddenInput() ?>
         </div>
     </div>
   

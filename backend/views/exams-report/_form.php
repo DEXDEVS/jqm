@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use common\models\StdClassName;
 use common\models\StdPersonalInfo;
 use common\models\Paraay;
+use common\models\StdCourse;
 use kartik\date\DatePicker;
 use dosamigos\datetimepicker\DateTimePicker;
 
@@ -47,6 +48,14 @@ use dosamigos\datetimepicker\DateTimePicker;
                         ['prompt'=>'Select Paraa',]
                     )?>
                 </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'course_id')->dropDownList(
+                        ArrayHelper::map(StdCourse::find()->all(),'course_id','course_name'),
+                        ['prompt'=>'Select Course',]
+                    )?>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">  
                     <label>Start Date</label>
                     <?= DateTimePicker::widget([
@@ -98,14 +107,30 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ['prompt'=>'Select Paraa',]
             )?>
         </div>
-        <div class="col-md-6">   
-            <?= $form->field($model, 'start_date')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Enter start date'],
-                'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
-                    'autoclose'=>true
-                ]
-            ]); ?> 
+        <div class="col-md-6">
+            <?= $form->field($model, 'course_id')->dropDownList(
+                ArrayHelper::map(StdCourse::find()->all(),'course_id','course_name'),
+                ['prompt'=>'Select Course',]
+            )?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Start Date</label>
+                <?= DateTimePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'start_date',
+                    'language' => 'en',
+                    'size' => 'ms',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                        //'startDate' => date('1990-01-01'),
+                        //'endDate' => date(''),
+                        'todayBtn' => true
+                    ],
+                    'options' => ['id' => 'endDate',]
+                ]);?> 
         </div>
     </div>    
 

@@ -10,45 +10,13 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_id',
-        'value' => 'class.class_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_id',
-        'value' => 'std.std_name',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'para_id',
-        'value' => 'para.name',
-    ],
-     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'course_id',
-        'value' => 'stdCourse.course_name',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'start_date',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'end_date',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'duration',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'remarks',
+        'attribute'=>'class_name',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -58,14 +26,14 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_by',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_by',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'created_by',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'updated_by',
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
