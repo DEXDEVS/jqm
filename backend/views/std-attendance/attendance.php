@@ -59,7 +59,7 @@
 		if(!empty($stdAttendance)){
 			Yii::$app->session->setFlash('warning','Attendance for this class Already taken');
 		} else {
-			$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid'")->queryAll();
+			$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid' AND status = 'Active'")->queryAll();
 
 			if(empty($student)){
 				Yii::$app->session->setFlash('warning','Sorry! No Students Found in this Class!');

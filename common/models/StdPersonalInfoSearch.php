@@ -41,7 +41,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
      */
     public function search($params)
     {
-        $query = StdPersonalInfo::find();
+        $query = StdPersonalInfo::find()->where(['std_personal_info.status'=>'Active']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
