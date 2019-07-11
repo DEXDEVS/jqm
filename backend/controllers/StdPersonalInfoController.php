@@ -40,7 +40,7 @@ class StdPersonalInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student', 'bulk-sms', 'take-webcam-photo'],
+                        'actions' => ['logout', 'index', 'index1', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student', 'bulk-sms', 'take-webcam-photo'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -67,6 +67,17 @@ class StdPersonalInfoController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndex1()
+    {    
+        $searchModel = new StdPersonalInfoSearch();
+        $dataProvider = $searchModel->search1(Yii::$app->request->queryParams);
+
+        return $this->render('index1', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
