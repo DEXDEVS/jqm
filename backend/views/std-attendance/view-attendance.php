@@ -48,7 +48,7 @@ if(isset($_POST['view-atten'])) {
     $teacherHeadId = Yii::$app->user->identity->id;  
     
     ?>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title></title>
@@ -408,7 +408,7 @@ body{
                                         </div>    
                                     </div>
                                     <?php 
-                                        $students = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$class_name_id' AND branch_id = '$branch_id' ")->queryAll();
+                                        $students = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$class_name_id' AND branch_id = '$branch_id' AND status = 'Active' ")->queryAll();
                                         $stdCount = count($students);
 
                                     ?>
@@ -493,7 +493,7 @@ body{
                                         </div>
                                     </div> 
                                         <?php 
-                                            $students = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$class_name_id' AND branch_id = '$branch_id' ")->queryAll();
+                                            $students = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$class_name_id' AND branch_id = '$branch_id' AND status = 'Active' ")->queryAll();
                                             $stdCount = count($students);
                                         ?>
                                     <div class="col-md-4">

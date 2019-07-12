@@ -496,7 +496,7 @@ class StdPersonalInfoController extends Controller
         $student = StdPersonalInfo::find()
                 ->select(['std_name'])
                 ->innerJoinWith('stdAcademicInfos')
-                ->where(['class_name_id' => $classId, 'std_enroll_status'=> 'unsign'])
+                ->where(['class_name_id' => $classId, 'std_enroll_status'=> 'unsign', 'std_personal_info.status'=>'Active'])
                 ->all();
         echo Json::encode($student); 
     }
