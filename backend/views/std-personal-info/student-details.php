@@ -414,6 +414,7 @@
                             <tr class="bg-primary">
                               <th>Sr.No</th>
                               <th>Class</th>
+                              <th>Course</th>
                               <th>Paraa</th>
                               <th>Start Date</th>
                               <th>End Date</th>
@@ -432,12 +433,15 @@
                                 $paraName = $paraay[0]['name'];        
                                 $classId = $value['class_id'];
                                 $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'")->queryAll();
+                                $courseId = $value['course_id'];
+                                $course = Yii::$app->db->createCommand("SELECT course_name FROM std_course WHERE course_id = '$courseId'")->queryAll();
                                 $className = $class[0]['class_name'];
                                 $report = Yii::$app->db->createCommand("SELECT * FROM exams_report WHERE class_id = '$classId' AND std_id = '$id' AND para_id = $paraId")->queryAll();
                             ?>
                             <tr>
                               <th class="text-center"><?php echo $key+1; ?></th>
                               <td><?php echo $className; ?></td>
+                              <td><?php echo $course[0]['course_name']; ?></td>
                               <td><?php echo $paraName; ?></td>
                               <td><?php echo $value['start_date']; ?></td>
                               <td><?php echo $value['end_date']; ?></td>
