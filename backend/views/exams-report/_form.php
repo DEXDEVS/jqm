@@ -30,6 +30,11 @@ use dosamigos\datetimepicker\DateTimePicker;
 
             $className = $class[0]['class_name'];
     ?>
+    <div class="row" style="margin-top: -30px">
+        <div class="col-md-12">
+            <h1 class="well well-sm text-center bg-navy" style="font-family: serif;">Create Exams Report</h1>
+        </div>
+    </div>
             <div class="row">
                 <div class="col-md-6">
                     <label>Class</label>
@@ -74,6 +79,14 @@ use dosamigos\datetimepicker\DateTimePicker;
                 </div>
             </div>
 
+            <br>
+
+            <?php if (!Yii::$app->request->isAjax){ ?>
+                <div class="form-group">
+                    <?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-flat' : 'btn btn-primary']) ?>
+                </div>
+            <?php } ?>
+            
             <div class="row invisible">
                 <div class="col-md-6">
                     <?= $form->field($model, 'class_id')->textInput(['value'=> $classID]) ?>
@@ -134,13 +147,15 @@ use dosamigos\datetimepicker\DateTimePicker;
         </div>
     </div>    
 
-    <?php } ?>
+    
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
+
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
     
