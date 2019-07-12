@@ -402,12 +402,12 @@
                     <div class="col-md-5">
                       <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Exams Report</p>
                     </div>
-                    <div class="col-md-3 col-md-offset-4 invisible">
+                    <div class="col-md-3 col-md-offset-4">
                       <?=Html::a(' Add Exams Report',['./exams-report-create','std_id'=>$id,'class_id'=>$classID],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Add Exams Report', 'data-toggle'=>'tooltip']) ?>
                     </div>
                   </div>
                   <!-- Exams Report info start -->
-                    <div class="row invisible">
+                    <div class="row">
                       <div class="col-md-12">
                         <table class="table table-condensed table-bordered table-hover table-responsive table-striped">
                           <thead>
@@ -434,7 +434,6 @@
                                 $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'")->queryAll();
                                 $className = $class[0]['class_name'];
                                 $report = Yii::$app->db->createCommand("SELECT * FROM exams_report WHERE class_id = '$classId' AND std_id = '$id' AND para_id = $paraId")->queryAll();
-                              var_dump($report);
                             ?>
                             <tr>
                               <th class="text-center"><?php echo $key+1; ?></th>
@@ -444,7 +443,7 @@
                               <td><?php echo $value['end_date']; ?></td>
                               <td><?php echo $value['duration']; ?></td>
                               <td><?php echo $value['remarks']; ?></td>
-                              <td class="text-center"><?=Html::a('',['./exams-report-update','id'=>$id,'class_id'=>$value['class_id']],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Update Exams Report', 'data-toggle'=>'tooltip']) ?></td>
+                              <td class="text-center"><?=Html::a('',['./exams-report-update','id'=>$report[0]['id']],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Update Exams Report', 'data-toggle'=>'tooltip']) ?></td>
                             </tr>
                             <?php } ?>
                           </tbody>
