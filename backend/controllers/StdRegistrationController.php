@@ -103,7 +103,6 @@ class StdRegistrationController extends Controller
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
                     $model->std_photo = UploadedFile::getInstance($model,'std_photo');
-                    //var_dump($model->std_photo);
                     // generate random value to assign photo name....
                     $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
                         $charactersLength = strlen($characters);
