@@ -40,7 +40,7 @@ class StdPersonalInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'index1', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student', 'bulk-sms', 'take-webcam-photo'],
+                        'actions' => ['logout', 'index', 'std-inactive-index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student', 'bulk-sms', 'take-webcam-photo'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,12 +72,12 @@ class StdPersonalInfoController extends Controller
         ]);
     }
 
-    public function actionIndex1()
+    public function actionStdInactiveIndex()
     {    
         $searchModel = new StdPersonalInfoSearch();
-        $dataProvider = $searchModel->search1(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchInactiveStd(Yii::$app->request->queryParams);
 
-        return $this->render('index1', [
+        return $this->render('std-inactive-index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

@@ -96,7 +96,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
         return $dataProvider;
     }
 
-    public function search1($params)
+    public function searchInactiveStd($params)
     {
         $query = StdPersonalInfo::find()->where(['std_personal_info.status'=>'Inactive']);
 

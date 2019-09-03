@@ -16,7 +16,7 @@ use dosamigos\datetimepicker\DateTimePicker;
 
 <div class="exams-report-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
     
     <?php  
         if (isset($_GET['std_id']) && (isset($_GET['class_id']))) { 
@@ -33,7 +33,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             <div class="row">
                 <div class="col-md-6">
                     <label>Class</label>
-                    <input type="text" value="<?php echo $className; ?>" readonly class="form-control">
+                    <input type="text" value="<?php echo $className; ?>" readonly class="form-control" id="classId">
                 </div>
                 <div class="col-md-6">
                     <label>Student</label>
@@ -45,13 +45,13 @@ use dosamigos\datetimepicker\DateTimePicker;
                 <div class="col-md-6">
                     <?= $form->field($model, 'para_id')->dropDownList(
                         ArrayHelper::map(Paraay::find()->all(),'id','name'),
-                        ['prompt'=>'Select Paraa',]
+                        ['prompt'=>'Select Paraa','id'=>'paraa']
                     )?>
                 </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'course_id')->dropDownList(
                         ArrayHelper::map(StdCourse::find()->all(),'course_id','course_name'),
-                        ['prompt'=>'Select Course',]
+                        ['prompt'=>'Select Course','id'=>'course']
                     )?>
                 </div>
             </div>
@@ -104,13 +104,13 @@ use dosamigos\datetimepicker\DateTimePicker;
         <div class="col-md-6">
             <?= $form->field($model, 'para_id')->dropDownList(
                 ArrayHelper::map(Paraay::find()->all(),'id','name'),
-                ['prompt'=>'Select Paraa',]
+                ['prompt'=>'Select Paraa','id'=>'paraa']
             )?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'course_id')->dropDownList(
                 ArrayHelper::map(StdCourse::find()->all(),'course_id','course_name'),
-                ['prompt'=>'Select Course',]
+                ['prompt'=>'Select Course','id'=>'course']
             )?>
         </div>
     </div>
@@ -149,6 +149,24 @@ use dosamigos\datetimepicker\DateTimePicker;
 //$url = \yii\helpers\Url::to("exams-report/fetch-days-count");
 
 $script = <<< JS
+
+$('#course').on('change',function(){
+   var course = $(this).val();
+    $.get('./exams-report/get-record',{course : course,},function(data){
+        
+        var data =  $.parseJSON(data);
+        $('#stdent').empty();
+        var options = '';
+        $('#stdent').append("<option>"+"Select Student"+"</option>");
+            for(var i=0; i<data.length; i++) { 
+                options += '<option value="'+data[i].std_id+'">'+data[i].std_name+'</option>';
+            }
+            console.log(data);
+        // Append to the html
+        $('#stdent').append(options);
+    });
+  
+ });
 
 $('#classId').on('change',function(){
    var classId = $(this).val();

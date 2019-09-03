@@ -89,8 +89,8 @@ if (isset($_POST["save"])) {
 
     $user_id = Yii::$app->user->identity->id;
     $branch_id = Yii::$app->user->identity->branch_id;
-    $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id'")->queryAll();
-
+    $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id' AND status = 'Active'")->queryAll();
+    //print_r($stdInfo);
         $countStd = count($stdInfo);
         
     ?>
@@ -237,7 +237,7 @@ if (isset($_POST["save"])) {
 
         //fetching students
         $branch_id = Yii::$app->user->identity->branch_id;
-        $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id'")->queryAll();
+        $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id' AND status = 'Active'")->queryAll();
         $countStd = count($stdInfo);
 
         $user_id = Yii::$app->user->identity->id;

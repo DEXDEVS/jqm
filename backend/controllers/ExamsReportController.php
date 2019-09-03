@@ -31,7 +31,7 @@ class ExamsReportController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-days-count'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-days-count','get-record'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,6 +55,15 @@ class ExamsReportController extends Controller
     public function actionFetchDaysCount()
     { 
         return $this->render('fetch-days-count');
+    }
+
+    public function actionGetRecord($paraaId, $courseId){
+        // fine record of students not duplicate
+        $student = ExamsReport::find()
+                ->select(['std_id'])
+                ->where(['para_id' => $paraaId, 'course_id'=> 'courseId'])
+                ->all();
+        echo Json::encode($student); 
     }
 
     public function actionIndex()
