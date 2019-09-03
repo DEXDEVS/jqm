@@ -24,6 +24,12 @@ $courseName = $courseName[0]['course_name'];
 <div class="exams-report-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <div class="row" style="margin-top: -30px">
+        <div class="col-md-12">
+            <h1 class="well well-sm text-center bg-navy" style="font-family: serif;">Update Exams Report</h1>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-4">
@@ -78,7 +84,13 @@ $courseName = $courseName[0]['course_name'];
             <?= $form->field($model, 'remarks')->textarea(['rows' => 6]) ?>
         </div>
     </div>
-
+  
+	<?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-flat']) ?>
+	    </div>
+	<?php } ?>
+        
     <div class="row invisible">
         <div class="col-md-3">
             <?= $form->field($model, 'class_id')->hiddenInput() ?>
@@ -92,13 +104,7 @@ $courseName = $courseName[0]['course_name'];
         <div class="col-md-3">
             <?= $form->field($model, 'course_id')->hiddenInput() ?>
         </div>
-    </div>
-  
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
+    </div>    
 
     <?php ActiveForm::end(); ?>
     

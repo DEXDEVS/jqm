@@ -168,7 +168,7 @@ class ExamsReportController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['./std-personal-info-view', 'id' => $model->std_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -243,7 +243,7 @@ class ExamsReportController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['./std-personal-info-view', 'id' => $model->std_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

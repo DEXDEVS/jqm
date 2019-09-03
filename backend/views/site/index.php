@@ -70,15 +70,15 @@ use yii\helpers\Url;
           <div class="small-box bg-red">
             <div class="inner">
               <?php 
-              $query = (new \yii\db\Query())->from('branches')->where(['status'=>'Active']);
-              $id = $query->count('branch_id'); ?>
+              $query = (new \yii\db\Query())->from('std_personal_info')->where(['status' => 'Inactive']);
+              $id = $query->count('std_id'); ?>
               <h3><?php echo $id; ?></h3>
-              <p>Active Branches</p>
+              <p>Inactive Students</p>
             </div>
             <div class="icon">
-              <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>
+              <i class="fa fa-users"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="std-personal-info-inactive" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
