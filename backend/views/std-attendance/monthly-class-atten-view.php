@@ -1,4 +1,5 @@
 <?php 
+use backend\controllers\SmsController;
 if (isset($_POST["save"])) {
 		$class_name_id = $_POST["classid"];
 		$date = $_POST["date"];
@@ -24,51 +25,50 @@ if (isset($_POST["save"])) {
 				])->execute();
 			} //closing of $i loop
 
-     // if($attendance == 1){
-     //        $query = Yii::$app->db->createCommand("SELECT att.std_id, att.attendance 
-     //             FROM std_atten_incharge as att
-     //             WHERE att.teacher_id = '$teacherHeadId' 
-     //             AND att.class_name_id = '$classnameid'
-     //             AND att.session_id = '$sessionid'
-     //             AND att.section_id = '$sectionid'
-     //             AND CAST(date AS DATE) = '$date'
-     //             AND att.attendance != 'P'")->queryAll();
+         if($attendance == 1){
+            $user_id = Yii::$app->user->identity->id;
+                $query = Yii::$app->db->createCommand("SELECT att.std_id, att.attendance 
+                     FROM std_attendance as att
+                     WHERE att.user_id = '$user_id' 
+                     AND att.class_name_id = '$class_name_id'
+                     AND CAST(date AS DATE) = '$date'
+                     AND att.attendance != 'P'")->queryAll();
 
-     //            $c = count($query);
+                    $c = count($query);
+//var_dump($c);
+                for ($i=0; $i < $c ; $i++) { 
+                     $stdID = $query[$i]['std_id'];
+                     $stdStatus = $query[$i]['attendance'];
+                     $stdInfo = Yii::$app->db->createCommand("SELECT std.std_reg_no,std.std_name, std.std_father_name, std.std_father_contact_no
+                         FROM std_personal_info as std 
+                         WHERE std.std_id = '$stdID'")->queryAll();
 
-     //        for ($i=0; $i < $c ; $i++) { 
-     //             $stdID = $query[$i]['std_id'];
-     //             $stdStatus = $query[$i]['attendance'];
-     //             $stdInfo = Yii::$app->db->createCommand("SELECT std.std_reg_no,std.std_name, std.std_father_name, sg.guardian_contact_no_1
-     //                 FROM std_personal_info as std 
-     //                 INNER JOIN std_guardian_info as sg
-     //                 ON std.std_id = sg.std_id
-     //                 WHERE std.std_id = '$stdID'")->queryAll();
-             
-     //         $regNo[$i] = $stdInfo[0]['std_reg_no'];
-     //         $contact[$i] = $stdInfo[0]['guardian_contact_no_1'];
-     //         if ($stdStatus == 'L') {
-     //             $num = str_replace('-', '', $contact[$i]);
-     //                 $to = str_replace('+', '', $num);
-     //                 $leaveSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Leave SMS'")->queryAll();
-     //                 $leaveMsg = $leaveSMS[0]['sms_template'];
-     //                 $msg = substr($leaveMsg,0,16);
-     //                 $msg2 = substr($leaveMsg,17);
-     //                 $message = $msg." ".$regNo[$i]." ".$msg2;
-                    
-     //         //$sms = SmsController::sendSMS($to, $message);
-     //         } else {
-     //         $num = str_replace('-', '', $contact[$i]);
-     //             $to = str_replace('+', '', $num);
-     //             $absentSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Absent SMS'")->queryAll();
-     //             $absentMsg = $absentSMS[0]['sms_template'];
-     //                 $msg = substr($absentMsg,0,16);
-     //                 $msg2 = substr($absentMsg,17);
-     //                 $message = $msg." ".$regNo[$i]." ".$msg2;
-     //             //$sms = SmsController::sendSMS($to, $message);
-     //             }
-     //        }
-     // }
+                    $stdName[$i] = $stdInfo[0]['std_name'];
+                    $contact[$i] = $stdInfo[0]['std_father_contact_no'];
+                     // if ($stdStatus == 'L') {
+                     //     $num = str_replace('-', '', $contact[$i]);
+                     //         $to = str_replace('+', '', $num);
+                     //         $leaveSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Leave SMS'")->queryAll();
+                     //         $leaveMsg = $leaveSMS[0]['sms_template'];
+                     //         $msg = substr($leaveMsg,0,16);
+                     //         $msg2 = substr($leaveMsg,17);
+                     //         $message = $msg." ".$regNo[$i]." ".$msg2;
+                            
+                     // //$sms = SmsController::sendSMS($to, $message);
+                     // } 
+                    if ($stdStatus == 'A') {
+                        $num = str_replace('-', '', $contact[$i]);
+                        $to = str_replace('+', '', $num);
+                        $absentSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Absent SMS'")->queryAll();
+                         $absentMsg = $absentSMS[0]['sms_template'];
+                             $msg = substr($absentMsg,0,69);
+                             $msg2 = substr($absentMsg,69);
+                             $message = $msg." ".$stdName[$i]." ".$msg2;
+                             //var_dump($message);
+                         $sms = SmsController::sendSMS($to, $message);
+                    }
+                }
+         }
 		if($attendance){
 			$transection->commit();
 			Yii::$app->session->setFlash('success', "Attendance marked successfully...!");

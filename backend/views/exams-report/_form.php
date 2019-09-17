@@ -42,7 +42,7 @@ use dosamigos\datetimepicker\DateTimePicker;
                 </div>
                 <div class="col-md-6">
                     <label>Student</label>
-                    <input type="text" value="<?php echo $stdName; ?>" readonly class="form-control">
+                    <input type="text" value="<?php echo $stdName; ?>" readonly class="form-control" id="stdId">
                 </div>
             </div>
 
@@ -167,39 +167,22 @@ $script = <<< JS
 
 $('#course').on('change',function(){
    var course = $(this).val();
-    $.get('./exams-report/get-record',{course : course,},function(data){
+   var paraa = $('#paraa').val();
+   var stdId = $('#stdId').val();
+   
+    $.get('./exams-report/get-record',{course : course, paraa: paraa, stdId: stdId},function(data){
         
         var data =  $.parseJSON(data);
-        $('#stdent').empty();
-        var options = '';
-        $('#stdent').append("<option>"+"Select Student"+"</option>");
-            for(var i=0; i<data.length; i++) { 
-                options += '<option value="'+data[i].std_id+'">'+data[i].std_name+'</option>';
+        //console.log(data);
+            if( !$.isArray(data) ||  !data.length ){
+                alert("Record not Found.!");
+            } else {
+                alert("Student Already Registered in this Paraa and Course.!");
             }
-            console.log(data);
-        // Append to the html
-        $('#stdent').append(options);
     });
   
  });
 
-$('#classId').on('change',function(){
-   var classId = $(this).val();
-    $.get('./std-personal-info/get-student',{classId : classId},function(data){
-        
-        var data =  $.parseJSON(data);
-        $('#stdent').empty();
-        var options = '';
-        $('#stdent').append("<option>"+"Select Student"+"</option>");
-            for(var i=0; i<data.length; i++) { 
-                options += '<option value="'+data[i].std_id+'">'+data[i].std_name+'</option>';
-            }
-            console.log(data);
-        // Append to the html
-        $('#stdent').append(options);
-    });
-  
- });
 
 JS;
 $this->registerJs($script);

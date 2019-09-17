@@ -3,6 +3,7 @@
   use yii\helpers\Html;
   use yii\bootstrap\Modal;
   use common\models\StdPersonalInfo;
+  use backend\controllers\SmsController;
 
     $id = $_GET['id'];
     // Stduent Personal Info..... 
@@ -65,41 +66,11 @@
         $to = str_replace('+', '', $num);
         $message = $_GET['message'];
         // sms ....
-        $type = "xml";
-        $id = "jamiaqadria";
-        $pass = "jamia105";
-        $lang = "Urdu";
-        $mask = "JamiaQadria";
-        // Data for text message
-        $message = urlencode($message);
-        // Prepare data for POST request
-        $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
-        // Send the POST request with cURL
-        $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch); //This is the result from SMS4CONNECT
-        curl_close($ch);
+        $sms = SmsController::sendSMS($to, $message);
         
-        if ($result) { ?>
-            <div id="alert" class="alert alert-success">
-              <?php echo $result; ?>
-            </div>
-        <?php }
       }
     ?>
-      <?php 
-        // display success message
-        if (Yii::$app->session->hasFlash('success')) { ?>
-          <div class="row">
-            <div class="col-md-6 alert alert-success alert-dismissable">
-               <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-               <h4><i class="icon fa fa-check"></i>Saved!</h4>
-               <?= Yii::$app->session->getFlash('success') ?>
-          </div>
-          </div>
-      <?php } ?>
+      
         <div class="row">
           <div class="col-md-3">
             <!-- Profile Image -->
@@ -131,7 +102,7 @@
                     <b>Email / ای میل</b> <a class="pull-right"><br><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
-                    <b>Contact # / رابطہ نمبر</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
+                    <b>Contact # / رابطہ نمبر</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_father_contact_no']; ?></a>
                   </li>
                   <li class="list-group-item" style="height: 50px;">
                     <b>Admission Date / داخلہ کی تاریخ </b> <a class="pull-right"><?php echo date('d-m-Y', strtotime($stdPersonalInfo[0]['std_admit_date'])); ?>
@@ -238,7 +209,7 @@
                               <form method="get" action="">
                                 <div class="modal-body">  
                                   <label>Reciever Name</label>
-                                  <input type="hidden" name="to" value="<?php echo $stdPersonalInfo[0]['std_contact_no']; ?>" class="form-control">
+                                  <input type="hidden" name="to" value="<?php echo $stdPersonalInfo[0]['std_father_contact_no']; ?>" class="form-control">
                                   <input type="text" name="std_name" value="<?php echo $stdPersonalInfo[0]['std_name']; ?>" class="form-control" readonly=""><br>
                                   <label>SMS Content</label>
                                     <textarea name="message" rows="5" class="form-control" id="message"></textarea>
@@ -402,12 +373,12 @@
                     <div class="col-md-5">
                       <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Exams Report</p>
                     </div>
-                    <div class="col-md-3 col-md-offset-4 invisible">
+                    <div class="col-md-3 col-md-offset-4">
                       <?=Html::a(' Add Exams Report',['./exams-report-create','std_id'=>$id,'class_id'=>$classID],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Add Exams Report', 'data-toggle'=>'tooltip']) ?>
                     </div>
                   </div>
                   <!-- Exams Report info start -->
-                    <div class="row invisible">
+                    <div class="row">
                       <div class="col-md-12">
                         <table class="table table-condensed table-bordered table-hover table-responsive table-striped">
                           <thead>
@@ -430,13 +401,18 @@
                               foreach ($examsReport as $key => $value) { 
                                 $paraId = $value['para_id'];
                                 $paraay = Yii::$app->db->createCommand("SELECT name FROM paraay WHERE id = '$paraId'")->queryAll();
-                                $paraName = $paraay[0]['name'];        
+                                $paraName = $paraay[0]['name'];
+
                                 $classId = $value['class_id'];
                                 $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'")->queryAll();
+                                $className = $class[0]['class_name'];
+
                                 $courseId = $value['course_id'];
                                 $course = Yii::$app->db->createCommand("SELECT course_name FROM std_course WHERE course_id = '$courseId'")->queryAll();
-                                $className = $class[0]['class_name'];
-                                $report = Yii::$app->db->createCommand("SELECT * FROM exams_report WHERE class_id = '$classId' AND std_id = '$id' AND para_id = $paraId")->queryAll();
+                                
+                                $report = Yii::$app->db->createCommand("SELECT id FROM exams_report WHERE class_id = '$classId' AND std_id = '$id' AND para_id = $paraId AND course_id = '$courseId' ")->queryAll();
+                                // var_dump($report);
+                                // echo "<br><br>";
                             ?>
                             <tr>
                               <th class="text-center"><?php echo $key+1; ?></th>

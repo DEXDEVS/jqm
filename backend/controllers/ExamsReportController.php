@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\Json;
 
 /**
  * ExamsReportController implements the CRUD actions for ExamsReport model.
@@ -57,11 +58,11 @@ class ExamsReportController extends Controller
         return $this->render('fetch-days-count');
     }
 
-    public function actionGetRecord($paraaId, $courseId){
+    public function actionGetRecord($course, $paraa, $stdId){
         // fine record of students not duplicate
         $student = ExamsReport::find()
                 ->select(['std_id'])
-                ->where(['para_id' => $paraaId, 'course_id'=> 'courseId'])
+                ->where(['para_id' => $paraa, 'course_id'=> $course, 'std_id' => $stdId])
                 ->all();
         echo Json::encode($student); 
     }
@@ -207,6 +208,7 @@ class ExamsReportController extends Controller
             }else if($model->load($request->post()) && $model->validate()){
                  $transaction = \Yii::$app->db->beginTransaction();
                 try {
+                    
                     $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');
                     $model->created_by = $model->created_by;
@@ -243,6 +245,57 @@ class ExamsReportController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    
+                    $stdPersonalInfo = Yii::$app->db->createCommand("SELECT p.std_name, p.std_father_contact_no, e.* 
+                        FROM std_personal_info as p
+                        INNER JOIN exams_report as e
+                        ON e.std_id = p.std_id
+                        WHERE p.std_id = '$model->std_id'
+                        AND e.class_id = '$model->class_id'
+                        AND e.course_id = '$model->course_id'
+                        AND e.para_id = '$model->para_id'")->queryAll();
+
+                    $std_name = $stdPersonalInfo[0]['std_name'];
+                    $contact = $stdPersonalInfo[0]['std_father_contact_no'];
+                    $paraaId = $stdPersonalInfo[0]['para_id'];
+                    $start_date = $stdPersonalInfo[0]['start_date'];
+                    $end_date = $stdPersonalInfo[0]['end_date'];
+                    $duration = $stdPersonalInfo[0]['duration'];
+
+                    $para_name = Yii::$app->db->createCommand("SELECT name 
+                        FROM paraay
+                        WHERE id = '$paraaId'")->queryAll();
+                    $paraaName = $para_name[0]['name'];
+
+                    $num = str_replace('-', '', $contact);
+                    $to = str_replace('+', '', $num);
+
+                    $examSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Exam SMS'")->queryAll();
+                    $examMsg = $examSMS[0]['sms_template'];
+                    $msg = substr($examMsg,0,69);
+                    $msg2 = substr($examMsg,69,14);
+                    $msg3 = substr($examMsg,89,14);
+                    $msg4 = substr($examMsg,124,37);
+                    $msg5 = substr($examMsg,180,8);
+                    $msg6 = substr($examMsg,192);
+                    $message = $msg." ".$std_name." ".$msg2." ".$paraaName." ".$msg3." ".$start_date." ".$msg4." ".$end_date." ".$msg5." ".$duration." ".$msg6;
+                    
+                    $sms = SmsController::sendSMS($to, $message);
+                        
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have Successfully Update Student Exams Report...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return $this->redirect(['./std-personal-info-view', 'id' => $model->std_id]);
             } else {
                 return $this->render('update', [
