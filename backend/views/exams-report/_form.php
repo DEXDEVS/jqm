@@ -174,11 +174,11 @@ $('#course').on('change',function(){
         
         var data =  $.parseJSON(data);
         //console.log(data);
-            if( !$.isArray(data) ||  !data.length ){
-                alert("Record not Found.!");
-            } else {
-                alert("Student Already Registered in this Paraa and Course.!");
-            }
+            // if( !$.isArray(data) ||  !data.length ){
+            //     alert("Record not Found.!");
+            // } else {
+            //     alert("Student Already Registered in this Paraa and Course.!");
+            // }
     });
   
  });
