@@ -12,7 +12,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel common\models\StdPersonalInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Student\'s Information');
+$this->title = Yii::t('app', 'Inactive Student\'s Information');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -70,7 +70,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => '', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Student Personal Information',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Inactive Student Personal Information',
                 // 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                     // 'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',

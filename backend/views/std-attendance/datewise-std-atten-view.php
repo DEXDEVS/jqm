@@ -19,7 +19,7 @@
         $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$class_name_id'")->queryAll();
 
         $branch_id = Yii::$app->user->identity->branch_id;
-        $student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id' AND std_id = '$studentId'")->queryAll();
+        $student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id' AND std_id = '$studentId' AND status = 'Active'")->queryAll();
 
 ?>
 <div class="container-fluid">

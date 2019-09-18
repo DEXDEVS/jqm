@@ -67,7 +67,7 @@
                         'items' => [
                             //['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
-                            //['label' => 'Inactive Students', 'icon' => 'caret-right', 'url' => './std-personal-info-inactive',],
+                            ['label' => 'Inactive Students', 'icon' => 'caret-right', 'url' => './std-personal-info-inactive',],
                             ['label' => 'Attendance', 'icon' => 'caret-right', 'url' => './attendance',],
                             //['label' => 'Exams Report', 'icon' => 'caret-right', 'url' => './exams-report',],
                             [

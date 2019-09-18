@@ -41,7 +41,8 @@ if (isset($_POST["save"])) {
                      $stdStatus = $query[$i]['attendance'];
                      $stdInfo = Yii::$app->db->createCommand("SELECT std.std_reg_no,std.std_name, std.std_father_name, std.std_father_contact_no
                          FROM std_personal_info as std 
-                         WHERE std.std_id = '$stdID'")->queryAll();
+                         WHERE std.std_id = '$stdID'
+                        AND status = 'Active'")->queryAll();
 
                     $stdName[$i] = $stdInfo[0]['std_name'];
                     $contact[$i] = $stdInfo[0]['std_father_contact_no'];
@@ -141,8 +142,8 @@ if (isset($_POST["save"])) {
                             $day  = date('Y-m-d',strtotime($var));
                             $result = date("D", strtotime($day));
                            $stdAtten = Yii::$app->db->createCommand("SELECT i.attendance FROM std_attendance as i WHERE i.user_id = '$user_id' AND i.class_name_id = '$class_name_id' AND i.std_id = '$stdID' AND i.date = '$day'")->queryAll();
-                            
-                            if ($result == 'Sun') {
+                            //var_dump($result);
+                            if ($result == 'Fri') {
                                  echo "<td class='danger' style='padding:1px 1px;'></td>";
                              } 
                             else if (empty($stdAtten)) {
@@ -285,7 +286,7 @@ if (isset($_POST["save"])) {
                                 $result = date("D", strtotime($day));
                                $stdAtten = Yii::$app->db->createCommand("SELECT i.attendance FROM std_attendance as i WHERE i.user_id = '$user_id' AND i.class_name_id = '$class_name_id' AND i.std_id = '$stdID' AND i.date = '$day'")->queryAll();
                                 
-                                if ($result == 'Sun') {
+                                if ($result == 'Fri') {
                                      echo "<td class='danger' style='padding:1px 1px;'></td>";
                                  } 
                                 else if (empty($stdAtten)) {

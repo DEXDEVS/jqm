@@ -59,7 +59,7 @@
 		if(!empty($stdAttendance)){
 			Yii::$app->session->setFlash('warning','Attendance for this class Already taken');
 		} else {
-			$student = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE class_id = '$classid' AND status = 'Active'")->queryAll();
+			$student = Yii::$app->db->createCommand("SELECT std_id, std_name, std_father_name FROM std_personal_info WHERE class_id = '$classid' AND status = 'Active'")->queryAll();
 
 			if(empty($student)){
 				Yii::$app->session->setFlash('warning','Sorry! No Students Found in this Class!');
@@ -72,7 +72,7 @@
 				<div class="col-md-8 col-md-offset-2">
 					<table width="100%" class="table table-striped table-condensed">
 						<tr class="bg-navy">
-							<th class="text-center" colspan="3">
+							<th class="text-center" colspan="4">
 								Class: <?php echo $className[0]['class_name']; ?> | 
 								Date: <?php echo $date; ?>
 							</th>
@@ -80,6 +80,7 @@
 						<tr class="label-primary" style="color: white;">
 							<th class="text-center">Sr.No</th>
 							<th>Student Name</th>
+							<th>Father Name</th>
 							<th style="text-align: center;">Attendance</th>
 						</tr>
 						<?php 
@@ -91,6 +92,7 @@
 							<tr>
 								<th class="text-center"><?php echo $i+1 ?></th>
 								<td><?php echo $student[$i]['std_name'] ?></td>
+								<td><?php echo $student[$i]['std_father_name'] ?></td>
 								<td align="center">
 									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green"> Present حاضر </b> &nbsp; &nbsp;| &nbsp; 
 									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red"> Absent  غیرحاضر  </b> &nbsp; &nbsp;| &nbsp; 

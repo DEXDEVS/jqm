@@ -14,7 +14,7 @@
 
         $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$class_name_id'")->queryAll();
 
-        $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id'")->queryAll();
+        $stdInfo = Yii::$app->db->createCommand("SELECT std_id, std_name FROM std_personal_info WHERE branch_id = '$branch_id' AND class_id = '$class_name_id' AND status = 'Active'")->queryAll();
     
 	    $countstd = count($stdInfo);
 
